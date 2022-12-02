@@ -1,25 +1,48 @@
-# Kubernetes Template Project
+# minikube GUI
 
-The Kubernetes Template Project is a template for starting new projects in the GitHub organizations owned by Kubernetes. All Kubernetes projects, at minimum, must have the following files:
+## Usage
 
-- a `README.md` outlining the project goals, sponsoring sig, and community contact information
-- an `OWNERS` with the project leads listed as approvers ([docs on `OWNERS` files][owners])
-- a `CONTRIBUTING.md` outlining how to contribute to the project
-- an unmodified copy of `code-of-conduct.md` from this repo, which outlines community behavior and the consequences of breaking the code
-- a `LICENSE` which must be Apache 2.0 for code projects, or [Creative Commons 4.0] for documentation repositories, without any custom content
-- a `SECURITY_CONTACTS` with the contact points for the Product Security Team 
-  to reach out to for triaging and handling of incoming issues. They must agree to abide by the
-  [Embargo Policy](https://git.k8s.io/security/private-distributors-list.md#embargo-policy)
-  and will be removed and replaced if they violate that agreement.
+### Prerequisites
+
+- minikube setup and available on your path, follow the [Getting Start doc](https://minikube.sigs.k8s.io/docs/start/) if not already done
+
+### Running
+
+#### From binary (end-user)
+
+View our documentation for downloading and running the GUI: [Setting Up minikube GUI](https://minikube.sigs.k8s.io/docs/tutorials/setup_minikube_gui/)
+
+#### From Qt Creator
+
+Open in [Qt Creator](https://doc.qt.io/qtcreator/) via:
+
+```shell
+qtcreator minikube.pro
+```
+
+#### From Command Line
+
+```console
+$ qmake
+$ make
+...
+$ ./minikube
+```
 
 ## Community, discussion, contribution, and support
 
-Learn how to engage with the Kubernetes community on the [community page](http://kubernetes.io/community/).
+minikube GUI is a Kubernetes [#sig-cluster-lifecycle](https://github.com/kubernetes/community/tree/master/sig-cluster-lifecycle) project.
 
-You can reach the maintainers of this project at:
+* [**#minikube on Kubernetes Slack**](https://kubernetes.slack.com) - Live chat with minikube developers!
+* [minikube-users mailing list](https://groups.google.com/g/minikube-users)
+* [minikube-dev mailing list](https://groups.google.com/g/minikube-dev)
 
-- [Slack](https://slack.k8s.io/)
-- [Mailing List](https://groups.google.com/a/kubernetes.io/g/dev)
+* [Contributing](https://minikube.sigs.k8s.io/docs/contrib/)
+* [Development Roadmap](https://minikube.sigs.k8s.io/docs/contrib/roadmap/)
+
+Join our meetings:
+* [Bi-weekly office hours, Mondays @ 11am PST](https://tinyurl.com/minikube-oh)
+* [Triage Party](https://minikube.sigs.k8s.io/docs/contrib/triage/)
 
 ### Code of conduct
 
