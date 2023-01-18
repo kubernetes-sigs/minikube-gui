@@ -20,13 +20,13 @@ limitations under the License.
 #include "cluster.h"
 #include "logger.h"
 
-#include <QString>
 #include <QDialog>
-#include <QStringList>
+#include <QIcon>
 #include <QObject>
 #include <QProcess>
 #include <QProcessEnvironment>
-#include <QIcon>
+#include <QString>
+#include <QStringList>
 
 class CommandRunner : public QObject
 {

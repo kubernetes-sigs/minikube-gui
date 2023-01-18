@@ -16,8 +16,8 @@ limitations under the License.
 
 #include "hyperkit.h"
 
-#include <QProcess>
 #include <QMessageBox>
+#include <QProcess>
 
 HyperKit::HyperKit(QIcon icon)
 {

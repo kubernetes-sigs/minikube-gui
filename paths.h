@@ -1,11 +1,11 @@
 /*
-Copyright 2022 The Kubernetes Authors All rights reserved.
+Copyright 2023 The Kubernetes Authors All rights reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
-    http://www.apache.org/licenses/LICENSE-2.0
+ http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,28 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#ifndef HYPERKIT_H
-#define HYPERKIT_H
+#ifndef PATHS_H
+#define PATHS_H
 
-#include <QIcon>
-#include <QObject>
 #include <QStringList>
 
-class HyperKit : public QObject
+class Paths
 {
-    Q_OBJECT
-
 public:
-    explicit HyperKit(QIcon icon);
-    bool hyperkitPermissionFix(QStringList args, QString text);
-
-signals:
-    void rerun(QStringList args);
-
-private:
-    void hyperkitPermission();
-    bool showHyperKitMessage();
-    QIcon m_icon;
+    static QStringList minikubePaths();
 };
 
-#endif // HYPERKIT_H
+#endif // PATHS_H

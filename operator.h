@@ -22,9 +22,9 @@ limitations under the License.
 #include "cluster.h"
 #include "commandrunner.h"
 #include "errormessage.h"
+#include "hyperkit.h"
 #include "progresswindow.h"
 #include "tray.h"
-#include "hyperkit.h"
 #include "updater.h"
 
 #include <QStackedWidget>

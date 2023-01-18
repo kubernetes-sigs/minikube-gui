@@ -16,9 +16,9 @@ limitations under the License.
 
 #include "logger.h"
 
-#include <QStandardPaths>
-#include <QFile>
 #include <QDir>
+#include <QFile>
+#include <QStandardPaths>
 #include <QTextStream>
 
 Logger::Logger()

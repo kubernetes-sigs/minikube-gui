@@ -17,11 +17,11 @@ limitations under the License.
 #ifndef ERRORMESSAGE_H
 #define ERRORMESSAGE_H
 
-#include <QObject>
 #include <QDialog>
 #include <QFormLayout>
-#include <QLabel>
 #include <QIcon>
+#include <QLabel>
+#include <QObject>
 
 class ErrorMessage : public QObject
 {
