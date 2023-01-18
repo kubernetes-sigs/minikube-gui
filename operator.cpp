@@ -15,10 +15,12 @@ limitations under the License.
 */
 
 #include "operator.h"
+#include "paths.h"
 
-#include <QPushButton>
-#include <QJsonObject>
+#include <QDir>
 #include <QJsonDocument>
+#include <QJsonObject>
+#include <QPushButton>
 #include <QStandardPaths>
 
 Operator::Operator(AdvancedView *advancedView, BasicView *basicView, CommandRunner *commandRunner,
@@ -316,8 +318,7 @@ static QString minikubePath()
     if (!minikubePath.isEmpty()) {
         return minikubePath;
     }
-    QStringList path = { "/usr/local/bin" };
-    return QStandardPaths::findExecutable("minikube", path);
+    return QStandardPaths::findExecutable("minikube", Paths::minikubePaths());
 }
 
 void Operator::sshConsole()

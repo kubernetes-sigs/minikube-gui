@@ -7,6 +7,7 @@ HEADERS       = window.h \
                 hyperkit.h \
                 logger.h \
                 operator.h \
+                paths.h \
                 progresswindow.h \
                 tray.h \
                 updater.h
@@ -19,6 +20,7 @@ SOURCES       = main.cpp \
                 hyperkit.cpp \
                 logger.cpp \
                 operator.cpp \
+                paths.cpp \
                 progresswindow.cpp \
                 tray.cpp \
                 updater.cpp \

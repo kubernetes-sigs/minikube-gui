@@ -15,43 +15,44 @@ limitations under the License.
 */
 
 #include "window.h"
+#include "paths.h"
 
 #ifndef QT_NO_SYSTEMTRAYICON
 
 #include <QAction>
 #include <QCheckBox>
+#include <QCloseEvent>
 #include <QComboBox>
 #include <QCoreApplication>
-#include <QCloseEvent>
+#include <QDebug>
+#include <QDialogButtonBox>
+#include <QDir>
+#include <QFontDialog>
+#include <QFormLayout>
 #include <QGroupBox>
+#include <QHeaderView>
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QJsonObject>
 #include <QLabel>
 #include <QLineEdit>
 #include <QMenu>
+#include <QMessageBox>
+#include <QNetworkAccessManager>
+#include <QProcess>
+#include <QProcessEnvironment>
 #include <QPushButton>
 #include <QSpinBox>
+#include <QStackedWidget>
+#include <QStandardPaths>
+#include <QTableView>
 #include <QTextEdit>
 #include <QVBoxLayout>
-#include <QMessageBox>
-#include <QProcess>
-#include <QDebug>
-#include <QJsonDocument>
-#include <QJsonObject>
-#include <QJsonArray>
-#include <QTableView>
-#include <QHeaderView>
-#include <QFormLayout>
-#include <QDialogButtonBox>
-#include <QStandardPaths>
-#include <QDir>
-#include <QFontDialog>
-#include <QStackedWidget>
-#include <QProcessEnvironment>
-#include <QNetworkAccessManager>
 
 #ifndef QT_NO_TERMWIDGET
+#include "qtermwidget.h"
 #include <QApplication>
 #include <QMainWindow>
-#include "qtermwidget.h"
 #endif
 
 const QVersionNumber version = QVersionNumber::fromString("0.0.1");
@@ -115,8 +116,7 @@ static QString minikubePath()
     if (!minikubePath.isEmpty()) {
         return minikubePath;
     }
-    QStringList path = { "/usr/local/bin" };
-    return QStandardPaths::findExecutable("minikube", path);
+    return QStandardPaths::findExecutable("minikube", Paths::minikubePaths());
 }
 
 void Window::checkForMinikube()

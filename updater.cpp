@@ -16,18 +16,18 @@ limitations under the License.
 
 #include "updater.h"
 
-#include <QJsonObject>
-#include <QJsonDocument>
-#include <QJsonArray>
 #include <QDialog>
-#include <QLabel>
-#include <QFormLayout>
 #include <QDialogButtonBox>
+#include <QDir>
+#include <QEventLoop>
+#include <QFormLayout>
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QLabel>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
-#include <QEventLoop>
 #include <QStandardPaths>
-#include <QDir>
 
 Updater::Updater(QVersionNumber version, QIcon icon)
 {

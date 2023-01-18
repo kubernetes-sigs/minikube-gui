@@ -18,9 +18,9 @@ limitations under the License.
 #define CLUSTER_H
 
 #include <QAbstractListModel>
-#include <QString>
 #include <QList>
 #include <QMap>
+#include <QString>
 
 class Cluster
 {

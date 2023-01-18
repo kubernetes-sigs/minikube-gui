@@ -15,13 +15,15 @@ limitations under the License.
 */
 
 #include "commandrunner.h"
+#include "paths.h"
 
-#include <QStandardPaths>
-#include <QJsonObject>
+#include <QDebug>
+#include <QDir>
 #include <QJsonArray>
 #include <QJsonDocument>
+#include <QJsonObject>
 #include <QJsonParseError>
-#include <QDebug>
+#include <QStandardPaths>
 
 CommandRunner::CommandRunner(QDialog *parent, Logger *logger)
 {
@@ -45,7 +47,8 @@ void CommandRunner::executeCommand(QString program, QStringList args)
     }
     QString out = process->readAllStandardOutput();
     QString err = process->readAllStandardError();
-    QString log = QString("The following command failed:\n%1 %2\n\nStdout:\n%3\n\nStderr:\n%4\n\n")
+    QString log = QString("The following command failed:\n%1 "
+                          "%2\n\nStdout:\n%3\n\nStderr:\n%4\n\n")
                           .arg(program, args.join(" "), out, err);
     m_logger->log(log);
     delete process;
@@ -236,7 +239,7 @@ void CommandRunner::outputReady()
 void CommandRunner::setMinikubePath()
 {
     m_env = QProcessEnvironment::systemEnvironment();
-    QString path = m_env.value("PATH") + ":/usr/local/bin";
+    QString path = m_env.value("PATH") + ":" + Paths::minikubePaths().join(":");
     m_env.insert("PATH", path);
 }
 #endif
@@ -247,8 +250,7 @@ void CommandRunner::minikubePath()
     if (!m_minikubePath.isEmpty()) {
         return;
     }
-    QStringList path = { "/usr/local/bin" };
-    m_minikubePath = QStandardPaths::findExecutable("minikube", path);
+    m_minikubePath = QStandardPaths::findExecutable("minikube", Paths::minikubePaths());
 }
 
 bool CommandRunner::isRunning()

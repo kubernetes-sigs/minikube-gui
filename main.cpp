@@ -18,8 +18,9 @@ limitations under the License.
 
 #ifndef QT_NO_SYSTEMTRAYICON
 
-#include <QMessageBox>
 #include "window.h"
+
+#include <QMessageBox>
 
 int main(int argc, char *argv[])
 {

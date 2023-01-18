@@ -18,12 +18,12 @@ limitations under the License.
 #define PROGRESSWINDOW_H
 
 #include <QDialog>
-#include <QObject>
+#include <QIcon>
 #include <QLabel>
+#include <QObject>
 #include <QProcess>
 #include <QProgressBar>
 #include <QString>
-#include <QIcon>
 
 class ProgressWindow : public QObject
 {

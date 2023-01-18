@@ -16,12 +16,12 @@ limitations under the License.
 
 #include "errormessage.h"
 
-#include <QFormLayout>
 #include <QDialogButtonBox>
-#include <QLabel>
 #include <QDir>
-#include <QTextOption>
+#include <QFormLayout>
+#include <QLabel>
 #include <QTextEdit>
+#include <QTextOption>
 
 ErrorMessage::ErrorMessage(QDialog *parent, QIcon icon)
 {

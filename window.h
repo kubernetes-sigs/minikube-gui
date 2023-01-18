@@ -17,14 +17,14 @@ limitations under the License.
 #ifndef WINDOW_H
 #define WINDOW_H
 
-#include <QSystemTrayIcon>
 #include <QFormLayout>
-#include <QStackedWidget>
 #include <QProcessEnvironment>
+#include <QProgressBar>
+#include <QStackedWidget>
+#include <QSystemTrayIcon>
 #include <QVersionNumber>
 #include <QtNetwork/QNetworkAccessManager>
 #include <QtNetwork/QNetworkReply>
-#include <QProgressBar>
 
 #ifndef QT_NO_SYSTEMTRAYICON
 
@@ -46,15 +46,15 @@ class QTableView;
 class QProcess;
 QT_END_NAMESPACE
 
-#include "basicview.h"
 #include "advancedview.h"
-#include "progresswindow.h"
-#include "operator.h"
+#include "basicview.h"
 #include "errormessage.h"
-#include "tray.h"
 #include "hyperkit.h"
-#include "updater.h"
 #include "logger.h"
+#include "operator.h"
+#include "progresswindow.h"
+#include "tray.h"
+#include "updater.h"
 
 class Window : public QDialog
 {

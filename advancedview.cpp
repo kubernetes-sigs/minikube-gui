@@ -16,15 +16,15 @@ limitations under the License.
 
 #include "advancedview.h"
 
-#include <QHeaderView>
-#include <QTableView>
-#include <QHBoxLayout>
-#include <QLabel>
-#include <QDialog>
-#include <QFormLayout>
-#include <QDialogButtonBox>
-#include <QLineEdit>
 #include <QComboBox>
+#include <QDialog>
+#include <QDialogButtonBox>
+#include <QFormLayout>
+#include <QHBoxLayout>
+#include <QHeaderView>
+#include <QLabel>
+#include <QLineEdit>
+#include <QTableView>
 
 AdvancedView::AdvancedView(QIcon icon)
 {
@@ -142,7 +142,8 @@ void AdvancedView::update(Cluster cluster)
     startButton->setText(getStartLabel(isRunning));
     QString startToolTip = "";
     if (isRunning) {
-        startToolTip = "Restart an already running minikube instance to pickup config changes.";
+        startToolTip = "Restart an already running minikube instance to pickup "
+                       "config changes.";
     }
     startButton->setToolTip(startToolTip);
 }

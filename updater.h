@@ -17,9 +17,9 @@ limitations under the License.
 #ifndef UPDATER_H
 #define UPDATER_H
 
+#include <QIcon>
 #include <QObject>
 #include <QVersionNumber>
-#include <QIcon>
 
 class Updater : public QObject
 {
