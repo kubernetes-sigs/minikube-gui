@@ -31,7 +31,7 @@ public:
     QWidget *basicView;
     void update(Cluster cluster);
     void disableButtons();
-    void setFA(QFont font, QWidget *wid);
+    void setFont(QFont font, QWidget *wid);
 signals:
     void start();
     void stop();
