@@ -15,13 +15,10 @@ limitations under the License.
 */
 
 #include "basicview.h"
-
 #include <QVBoxLayout>
-
 #include <QFontDatabase>
 #include <QFont>
 #include <QDebug>
-#include <QChar>
 
 const QString startIcon = "\uf04b";
 const QString stopIcon = "\uf04d";
@@ -31,14 +28,14 @@ const QString deleteIcon = "\uf1f8";
 const QString reloadIcon = "\uf021";
 
 void BasicView::setFA(QWidget *wid)
-    {
+{
     if (QFontDatabase::addApplicationFont(":/images/FontAwesome.otf") < 0)
         qWarning() << "FontAwesome cannot be loaded !";
     QFont font;
     font.setFamily("FontAwesome");
     font.setPixelSize(20);
     wid->setFont(font);
-    }
+}
 BasicView::BasicView()
 {
     basicView = new QWidget();
@@ -67,7 +64,6 @@ BasicView::BasicView()
 
     QHBoxLayout *buttonLayoutRow1 = new QHBoxLayout;
 
-
     buttonLayoutRow1->addWidget(startButton);
     buttonLayoutRow1->addWidget(stopButton);
     buttonLayoutRow1->addWidget(pauseButton);
@@ -80,15 +76,12 @@ BasicView::BasicView()
     buttonLayoutRow2->addWidget(dashboardButton);
     buttonLayoutRow2->addWidget(advancedButton);
 
-
     QVBoxLayout *BasicLayout = new QVBoxLayout;
     BasicLayout->addLayout(buttonLayoutRow1);
     BasicLayout->addLayout(buttonLayoutRow2);
     basicView->setLayout(BasicLayout);
 
-
     basicView->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
-
 
     connect(startButton, &QPushButton::clicked, this, &BasicView::start);
     connect(stopButton, &QAbstractButton::clicked, this, &BasicView::stop);
@@ -99,9 +92,7 @@ BasicView::BasicView()
     connect(sshButton, &QAbstractButton::clicked, this, &BasicView::ssh);
     connect(dashboardButton, &QAbstractButton::clicked, this, &BasicView::dashboard);
     connect(advancedButton, &QAbstractButton::clicked, this, &BasicView::advanced);
-
 }
-
 
 static QString getPauseLabel(bool isPaused)
 {
@@ -110,8 +101,6 @@ static QString getPauseLabel(bool isPaused)
     }
     return pauseIcon;
 }
-
-
 
 static QString getStartLabel(bool isRunning)
 {
