@@ -15,39 +15,74 @@ limitations under the License.
 */
 
 #include "basicview.h"
-
 #include <QVBoxLayout>
+#include <QFontDatabase>
+#include <QFont>
+#include <QDebug>
+#include <QToolTip>
 
+const QString startIcon = "\uf04b";
+const QString stopIcon = "\uf04d";
+const QString pauseIcon = "\uf04c";
+const QString unPauseIcon = "\ue22f";
+const QString deleteIcon = "\uf1f8";
+const QString reloadIcon = "\uf021";
+
+void BasicView::setFont(QFont font, QWidget *wid)
+{
+    wid->setFont(font);
+}
 BasicView::BasicView()
 {
-    basicView = new QWidget();
+    if (QFontDatabase::addApplicationFont(":/fonts/FontAwesome.otf") < 0)
+        qWarning() << "FontAwesome cannot be loaded !";
+    QFont faFont;
+    faFont.setFamily("FontAwesome");
+    faFont.setPixelSize(20);
 
-    startButton = new QPushButton(tr("Start"));
-    stopButton = new QPushButton(tr("Stop"));
-    pauseButton = new QPushButton(tr("Pause"));
-    deleteButton = new QPushButton(tr("Delete"));
-    refreshButton = new QPushButton(tr("Refresh"));
+    basicView = new QWidget();
+    startButton = new QPushButton(startIcon);
+    setFont(faFont, startButton);
+
+    stopButton = new QPushButton(stopIcon);
+    setFont(faFont, stopButton);
+
+    pauseButton = new QPushButton(pauseIcon);
+    setFont(faFont, pauseButton);
+
+    deleteButton = new QPushButton(deleteIcon);
+    setFont(faFont, deleteButton);
+
+    refreshButton = new QPushButton(tr("Refresh GUI"));
     dockerEnvButton = new QPushButton(tr("docker-env"));
     dockerEnvButton->setToolTip(
             "Opens a terminal where the docker-cli points to docker engine inside "
             "minikube\n(Useful for building docker images directly inside minikube)");
     sshButton = new QPushButton(tr("SSH"));
     dashboardButton = new QPushButton(tr("Dashboard"));
-    advancedButton = new QPushButton(tr("Advanced View"));
+    advancedButton = new QPushButton(tr("Multi-cluster View"));
 
     disableButtons();
 
-    QVBoxLayout *buttonLayout = new QVBoxLayout;
-    basicView->setLayout(buttonLayout);
-    buttonLayout->addWidget(startButton);
-    buttonLayout->addWidget(stopButton);
-    buttonLayout->addWidget(pauseButton);
-    buttonLayout->addWidget(deleteButton);
-    buttonLayout->addWidget(refreshButton);
-    buttonLayout->addWidget(dockerEnvButton);
-    buttonLayout->addWidget(sshButton);
-    buttonLayout->addWidget(dashboardButton);
-    buttonLayout->addWidget(advancedButton);
+    QHBoxLayout *buttonLayoutRow1 = new QHBoxLayout;
+
+    buttonLayoutRow1->addWidget(startButton);
+    buttonLayoutRow1->addWidget(stopButton);
+    buttonLayoutRow1->addWidget(pauseButton);
+    buttonLayoutRow1->addWidget(deleteButton);
+
+    QVBoxLayout *buttonLayoutRow2 = new QVBoxLayout;
+    buttonLayoutRow2->addWidget(refreshButton);
+    buttonLayoutRow2->addWidget(dockerEnvButton);
+    buttonLayoutRow2->addWidget(sshButton);
+    buttonLayoutRow2->addWidget(dashboardButton);
+    buttonLayoutRow2->addWidget(advancedButton);
+
+    QVBoxLayout *BasicLayout = new QVBoxLayout;
+    BasicLayout->addLayout(buttonLayoutRow1);
+    BasicLayout->addLayout(buttonLayoutRow2);
+    basicView->setLayout(BasicLayout);
+
     basicView->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
 
     connect(startButton, &QPushButton::clicked, this, &BasicView::start);
@@ -64,17 +99,17 @@ BasicView::BasicView()
 static QString getPauseLabel(bool isPaused)
 {
     if (isPaused) {
-        return "Unpause";
+        return unPauseIcon;
     }
-    return "Pause";
+    return pauseIcon;
 }
 
 static QString getStartLabel(bool isRunning)
 {
     if (isRunning) {
-        return "Restart";
+        return reloadIcon;
     }
-    return "Start";
+    return startIcon;
 }
 
 void BasicView::update(Cluster cluster)
@@ -96,13 +131,26 @@ void BasicView::update(Cluster cluster)
     dockerEnvButton->setEnabled(false);
     sshButton->setEnabled(false);
 #endif
+
+    QFont tooltipFont = QToolTip::font();
+    tooltipFont.setPointSize(20);
+    QToolTip::setFont(tooltipFont);
+
     pauseButton->setText(getPauseLabel(isPaused));
+    QString pauseToolTip = "Pause Kubernetes cluster";
+    if (isPaused) {
+        pauseToolTip = "Unpause Kubernetes";
+    }
+    pauseButton->setToolTip(pauseToolTip);
+
     startButton->setText(getStartLabel(isRunning));
-    QString startToolTip = "";
+    QString startToolTip = "Start the default cluster";
     if (isRunning) {
-        startToolTip = "Restart an already running minikube instance to pickup config changes.";
+        startToolTip = "Restart (reconfigure) an already running cluster";
     }
     startButton->setToolTip(startToolTip);
+    deleteButton->setToolTip("Delete the default cluster");
+    stopButton->setToolTip("Stop the default cluster");
 }
 
 void BasicView::disableButtons()

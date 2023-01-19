@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>images/minikube.png</file>
+        <file>fonts/FontAwesome.otf</file>
     </qresource>
 </RCC>

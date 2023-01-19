@@ -81,7 +81,7 @@ Window::Window()
     layout = new QVBoxLayout;
     layout->addWidget(stackedWidget);
     setLayout(layout);
-    resize(200, 300);
+    resize(250, 300);
     setWindowTitle(tr("minikube"));
     setWindowIcon(*trayIconIcon);
 }
