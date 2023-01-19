@@ -144,9 +144,9 @@ void BasicView::update(Cluster cluster)
     pauseButton->setToolTip(pauseToolTip);
 
     startButton->setText(getStartLabel(isRunning));
-    QString startToolTip = "Start a default cluster";
+    QString startToolTip = "Start the default cluster";
     if (isRunning) {
-        startToolTip = "Restart an already running minikube instance to pickup config changes.";
+        startToolTip = "Restart (reconfigure) an already running cluster";
     }
     startButton->setToolTip(startToolTip);
     deleteButton->setToolTip("Delete the default cluster");
