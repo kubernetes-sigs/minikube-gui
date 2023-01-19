@@ -26,6 +26,7 @@ limitations under the License.
 const QString startIcon = "\uf04b";
 const QString stopIcon = "\uf04d";
 const QString pauseIcon = "\uf04c";
+const QString unPauseIcon = "\ue22f";
 const QString deleteIcon = "\uf1f8";
 const QString reloadIcon = "\uf021";
 
@@ -105,9 +106,9 @@ BasicView::BasicView()
 static QString getPauseLabel(bool isPaused)
 {
     if (isPaused) {
-        return "Unpause";
+        return unPauseIcon;
     }
-    return "\uf04c";
+    return pauseIcon;
 }
 
 
