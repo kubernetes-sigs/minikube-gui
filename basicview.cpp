@@ -28,7 +28,7 @@ const QString unPauseIcon = "\ue22f";
 const QString deleteIcon = "\uf1f8";
 const QString reloadIcon = "\uf021";
 
-void BasicView::setFA(QFont font, QWidget *wid)
+void BasicView::setFont(QFont font, QWidget *wid)
 {
     wid->setFont(font);
 }
@@ -36,22 +36,22 @@ BasicView::BasicView()
 {
     if (QFontDatabase::addApplicationFont(":/fonts/FontAwesome.otf") < 0)
         qWarning() << "FontAwesome cannot be loaded !";
-    QFont font;
-    font.setFamily("FontAwesome");
-    font.setPixelSize(20);
+    QFont faFont;
+    faFont.setFamily("FontAwesome");
+    faFont.setPixelSize(20);
 
     basicView = new QWidget();
     startButton = new QPushButton(startIcon);
-    setFA(font, startButton);
+    setFA(faFont, startButton);
 
     stopButton = new QPushButton(stopIcon);
-    setFA(font, stopButton);
+    setFA(faFont, stopButton);
 
     pauseButton = new QPushButton(pauseIcon);
-    setFA(font, pauseButton);
+    setFA(faFont, pauseButton);
 
     deleteButton = new QPushButton(deleteIcon);
-    setFA(font, deleteButton);
+    setFA(faFont, deleteButton);
 
     refreshButton = new QPushButton(tr("Refresh GUI"));
     dockerEnvButton = new QPushButton(tr("docker-env"));
