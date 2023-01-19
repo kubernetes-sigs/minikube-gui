@@ -19,6 +19,7 @@ limitations under the License.
 #include <QFontDatabase>
 #include <QFont>
 #include <QDebug>
+#include <QToolTip>
 
 const QString startIcon = "\uf04b";
 const QString stopIcon = "\uf04d";
@@ -33,7 +34,7 @@ void BasicView::setFA(QFont font, QWidget *wid)
 }
 BasicView::BasicView()
 {
-    if (QFontDatabase::addApplicationFont(":/images/FontAwesome.otf") < 0)
+    if (QFontDatabase::addApplicationFont(":/fonts/FontAwesome.otf") < 0)
         qWarning() << "FontAwesome cannot be loaded !";
     QFont font;
     font.setFamily("FontAwesome");
@@ -130,13 +131,26 @@ void BasicView::update(Cluster cluster)
     dockerEnvButton->setEnabled(false);
     sshButton->setEnabled(false);
 #endif
+
+    QFont tooltipFont = QToolTip::font();
+    tooltipFont.setPointSize(20);
+    QToolTip::setFont(tooltipFont);
+
     pauseButton->setText(getPauseLabel(isPaused));
+    QString pauseToolTip = "Pause Kubernetes cluster";
+    if (isPaused) {
+        pauseToolTip = "Unpause Kubernetes";
+    }
+    pauseButton->setToolTip(pauseToolTip);
+
     startButton->setText(getStartLabel(isRunning));
-    QString startToolTip = "";
+    QString startToolTip = "Start a default cluster";
     if (isRunning) {
         startToolTip = "Restart an already running minikube instance to pickup config changes.";
     }
     startButton->setToolTip(startToolTip);
+    deleteButton->setToolTip("Delete the default cluster");
+    stopButton->setToolTip("Stop the default cluster");
 }
 
 void BasicView::disableButtons()
