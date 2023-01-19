@@ -172,7 +172,7 @@ void Operator::toBasicView()
 {
     m_isBasicView = true;
     m_stackedWidget->setCurrentIndex(0);
-    m_parent->resize(200, 300);
+    m_parent->resize(250, 300);
     updateButtons();
 }
 

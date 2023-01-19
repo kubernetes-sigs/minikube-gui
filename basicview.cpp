@@ -18,14 +18,41 @@ limitations under the License.
 
 #include <QVBoxLayout>
 
+#include <QFontDatabase>
+#include <QFont>
+#include <QDebug>
+#include <QChar>
+
+const QString startIcon = "\uf04b";
+const QString stopIcon = "\uf04d";
+const QString pauseIcon = "\uf04c";
+const QString deleteIcon = "\uf1f8";
+const QString reloadIcon = "\uf021";
+
+void BasicView::setFA(QWidget *wid)
+    {
+    if (QFontDatabase::addApplicationFont(":/images/FontAwesome.otf") < 0)
+        qWarning() << "FontAwesome cannot be loaded !";
+    QFont font;
+    font.setFamily("FontAwesome");
+    font.setPixelSize(20);
+    wid->setFont(font);
+    }
 BasicView::BasicView()
 {
     basicView = new QWidget();
+    startButton = new QPushButton(startIcon);
+    setFA(startButton);
 
-    startButton = new QPushButton(tr("Start"));
-    stopButton = new QPushButton(tr("Stop"));
-    pauseButton = new QPushButton(tr("Pause"));
-    deleteButton = new QPushButton(tr("Delete"));
+    stopButton = new QPushButton(stopIcon);
+    setFA(stopButton);
+
+    pauseButton = new QPushButton(pauseIcon);
+    setFA(pauseButton);
+
+    deleteButton = new QPushButton(deleteIcon);
+    setFA(deleteButton);
+
     refreshButton = new QPushButton(tr("Refresh"));
     dockerEnvButton = new QPushButton(tr("docker-env"));
     dockerEnvButton->setToolTip(
@@ -33,22 +60,34 @@ BasicView::BasicView()
             "minikube\n(Useful for building docker images directly inside minikube)");
     sshButton = new QPushButton(tr("SSH"));
     dashboardButton = new QPushButton(tr("Dashboard"));
-    advancedButton = new QPushButton(tr("Advanced View"));
+    advancedButton = new QPushButton(tr("Multi-cluster View"));
 
     disableButtons();
 
-    QVBoxLayout *buttonLayout = new QVBoxLayout;
-    basicView->setLayout(buttonLayout);
-    buttonLayout->addWidget(startButton);
-    buttonLayout->addWidget(stopButton);
-    buttonLayout->addWidget(pauseButton);
-    buttonLayout->addWidget(deleteButton);
-    buttonLayout->addWidget(refreshButton);
-    buttonLayout->addWidget(dockerEnvButton);
-    buttonLayout->addWidget(sshButton);
-    buttonLayout->addWidget(dashboardButton);
-    buttonLayout->addWidget(advancedButton);
+    QHBoxLayout *buttonLayoutRow1 = new QHBoxLayout;
+
+
+    buttonLayoutRow1->addWidget(startButton);
+    buttonLayoutRow1->addWidget(stopButton);
+    buttonLayoutRow1->addWidget(pauseButton);
+    buttonLayoutRow1->addWidget(deleteButton);
+
+    QVBoxLayout *buttonLayoutRow2 = new QVBoxLayout;
+    buttonLayoutRow2->addWidget(refreshButton);
+    buttonLayoutRow2->addWidget(dockerEnvButton);
+    buttonLayoutRow2->addWidget(sshButton);
+    buttonLayoutRow2->addWidget(dashboardButton);
+    buttonLayoutRow2->addWidget(advancedButton);
+
+
+    QVBoxLayout *BasicLayout = new QVBoxLayout;
+    BasicLayout->addLayout(buttonLayoutRow1);
+    BasicLayout->addLayout(buttonLayoutRow2);
+    basicView->setLayout(BasicLayout);
+
+
     basicView->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
+
 
     connect(startButton, &QPushButton::clicked, this, &BasicView::start);
     connect(stopButton, &QAbstractButton::clicked, this, &BasicView::stop);
@@ -59,22 +98,26 @@ BasicView::BasicView()
     connect(sshButton, &QAbstractButton::clicked, this, &BasicView::ssh);
     connect(dashboardButton, &QAbstractButton::clicked, this, &BasicView::dashboard);
     connect(advancedButton, &QAbstractButton::clicked, this, &BasicView::advanced);
+
 }
+
 
 static QString getPauseLabel(bool isPaused)
 {
     if (isPaused) {
         return "Unpause";
     }
-    return "Pause";
+    return "\uf04c";
 }
+
+
 
 static QString getStartLabel(bool isRunning)
 {
     if (isRunning) {
-        return "Restart";
+        return reloadIcon;
     }
-    return "Start";
+    return startIcon;
 }
 
 void BasicView::update(Cluster cluster)
