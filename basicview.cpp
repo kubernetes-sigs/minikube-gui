@@ -42,16 +42,16 @@ BasicView::BasicView()
 
     basicView = new QWidget();
     startButton = new QPushButton(startIcon);
-    setFA(faFont, startButton);
+    setFont(faFont, startButton);
 
     stopButton = new QPushButton(stopIcon);
-    setFA(faFont, stopButton);
+    setFont(faFont, stopButton);
 
     pauseButton = new QPushButton(pauseIcon);
-    setFA(faFont, pauseButton);
+    setFont(faFont, pauseButton);
 
     deleteButton = new QPushButton(deleteIcon);
-    setFA(faFont, deleteButton);
+    setFont(faFont, deleteButton);
 
     refreshButton = new QPushButton(tr("Refresh GUI"));
     dockerEnvButton = new QPushButton(tr("docker-env"));
