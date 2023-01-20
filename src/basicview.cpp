@@ -33,6 +33,7 @@ BasicView::BasicView()
     deleteButton = new QPushButton(Constants::deleteIcon);
     refreshButton = new QPushButton(tr("Refresh GUI"));
     dockerEnvButton = new QPushButton("docker-env");
+    sshButton = new QPushButton("SSH");
     dashboardButton = new QPushButton(tr("Dashboard"));
     advancedButton = new QPushButton(tr("Multi-cluster View"));
 
@@ -44,7 +45,6 @@ BasicView::BasicView()
     dockerEnvButton->setToolTip(
             tr("Opens a terminal where the docker-cli points to docker engine inside "
                "minikube\n(Useful for building docker images directly inside minikube)"));
-    sshButton = new QPushButton("SSH");
     deleteButton->setToolTip(tr("Delete the default cluster"));
     stopButton->setToolTip(tr("Stop the default cluster"));
 
