@@ -30,7 +30,7 @@ void Fonts::initFonts()
 
 void Fonts::loadFontAwesome()
 {
-    if (QFontDatabase::addApplicationFont(":/fonts/FontAwesome.otf") < 0)
+    if (QFontDatabase::addApplicationFont(":resources/fonts/FontAwesome.otf") < 0)
         qWarning() << "FontAwesome cannot be loaded!";
     fontAwesome.setFamily("FontAwesome");
     fontAwesome.setPixelSize(20);

@@ -1,35 +1,35 @@
-HEADERS       = window.h \
-                advancedview.h \
-                basicview.h \
-                cluster.h \
-                commandrunner.h \
-                constants.h \
-                errormessage.h \
-                fonts.h \
-                hyperkit.h \
-                logger.h \
-                operator.h \
-                paths.h \
-                progresswindow.h \
-                tray.h \
-                updater.h
-SOURCES       = main.cpp \
-                advancedview.cpp \
-                basicview.cpp \
-                cluster.cpp \
-                commandrunner.cpp \
-                errormessage.cpp \
-                fonts.cpp \
-                hyperkit.cpp \
-                logger.cpp \
-                operator.cpp \
-                paths.cpp \
-                progresswindow.cpp \
-                tray.cpp \
-                updater.cpp \
-                window.cpp
+HEADERS       = src/window.h \
+                src/advancedview.h \
+                src/basicview.h \
+                src/cluster.h \
+                src/commandrunner.h \
+                src/constants.h \
+                src/errormessage.h \
+                src/fonts.h \
+                src/hyperkit.h \
+                src/logger.h \
+                src/operator.h \
+                src/paths.h \
+                src/progresswindow.h \
+                src/tray.h \
+                src/updater.h
+SOURCES       = src/main.cpp \
+                src/advancedview.cpp \
+                src/basicview.cpp \
+                src/cluster.cpp \
+                src/commandrunner.cpp \
+                src/errormessage.cpp \
+                src/fonts.cpp \
+                src/hyperkit.cpp \
+                src/logger.cpp \
+                src/operator.cpp \
+                src/paths.cpp \
+                src/progresswindow.cpp \
+                src/tray.cpp \
+                src/updater.cpp \
+                src/window.cpp
 RESOURCES     = minikube.qrc
-ICON          = images/minikube.icns
+ICON          = resources/images/minikube.icns
 
 QT += widgets network
 requires(qtConfig(combobox))
