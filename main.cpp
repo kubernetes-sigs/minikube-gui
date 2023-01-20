@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
 
     if (!QSystemTrayIcon::isSystemTrayAvailable()) {
-        QMessageBox::critical(0, QObject::tr("minikube"), QObject::tr("No system tray detected."));
+        QMessageBox::critical(0, "minikube", QObject::tr("No system tray detected."));
         return 1;
     }
     QApplication::setQuitOnLastWindowClosed(false);

@@ -55,8 +55,8 @@ AdvancedView::AdvancedView(QIcon icon)
     deleteButton = new QPushButton(tr("Delete"));
     refreshButton = new QPushButton(tr("Refresh"));
     createButton = new QPushButton(tr("Create"));
-    dockerEnvButton = new QPushButton(tr("docker-env"));
-    sshButton = new QPushButton(tr("SSH"));
+    dockerEnvButton = new QPushButton("docker-env");
+    sshButton = new QPushButton("SSH");
     dashboardButton = new QPushButton(tr("Dashboard"));
     basicButton = new QPushButton(tr("Basic View"));
 

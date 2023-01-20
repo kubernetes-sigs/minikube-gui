@@ -3,7 +3,9 @@ HEADERS       = window.h \
                 basicview.h \
                 cluster.h \
                 commandrunner.h \
+                constants.h \
                 errormessage.h \
+                fonts.h \
                 hyperkit.h \
                 logger.h \
                 operator.h \
@@ -17,6 +19,7 @@ SOURCES       = main.cpp \
                 cluster.cpp \
                 commandrunner.cpp \
                 errormessage.cpp \
+                fonts.cpp \
                 hyperkit.cpp \
                 logger.cpp \
                 operator.cpp \
