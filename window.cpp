@@ -17,6 +17,7 @@ limitations under the License.
 #include "window.h"
 #include "paths.h"
 #include "fonts.h"
+#include "constants.h"
 
 #ifndef QT_NO_SYSTEMTRAYICON
 
@@ -83,7 +84,7 @@ Window::Window()
     layout = new QVBoxLayout;
     layout->addWidget(stackedWidget);
     setLayout(layout);
-    resize(250, 300);
+    resize(Constants::basicViewWidth, Constants::basicViewHeight);
     setWindowTitle("minikube");
     setWindowIcon(*trayIconIcon);
 }

@@ -16,6 +16,7 @@ limitations under the License.
 
 #include "operator.h"
 #include "paths.h"
+#include "constants.h"
 
 #include <QDir>
 #include <QJsonDocument>
@@ -172,7 +173,7 @@ void Operator::toBasicView()
 {
     m_isBasicView = true;
     m_stackedWidget->setCurrentIndex(0);
-    m_parent->resize(250, 300);
+    m_parent->resize(Constants::basicViewWidth, Constants::basicViewHeight);
     updateButtons();
 }
 
