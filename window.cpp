@@ -16,6 +16,8 @@ limitations under the License.
 
 #include "window.h"
 #include "paths.h"
+#include "fonts.h"
+#include "constants.h"
 
 #ifndef QT_NO_SYSTEMTRAYICON
 
@@ -61,6 +63,7 @@ Window::Window()
 {
     trayIconIcon = new QIcon(":/images/minikube.png");
     checkForMinikube();
+    Fonts::initFonts();
 
     stackedWidget = new QStackedWidget;
     logger = new Logger();
@@ -81,8 +84,8 @@ Window::Window()
     layout = new QVBoxLayout;
     layout->addWidget(stackedWidget);
     setLayout(layout);
-    resize(250, 300);
-    setWindowTitle(tr("minikube"));
+    resize(Constants::basicViewWidth, Constants::basicViewHeight);
+    setWindowTitle("minikube");
     setWindowIcon(*trayIconIcon);
 }
 
@@ -100,7 +103,7 @@ void Window::closeEvent(QCloseEvent *event)
     }
 #endif
     if (tray->isVisible()) {
-        QMessageBox::information(this, tr("minikube"),
+        QMessageBox::information(this, "minikube",
                                  tr("minikube will minimize to the "
                                     "system tray. To terminate the program, "
                                     "choose <b>Quit</b> in the context menu "
@@ -127,7 +130,7 @@ void Window::checkForMinikube()
     }
 
     QDialog dialog;
-    dialog.setWindowTitle(tr("minikube"));
+    dialog.setWindowTitle("minikube");
     dialog.setWindowIcon(*trayIconIcon);
     dialog.setModal(true);
     QFormLayout form(&dialog);
