@@ -21,6 +21,7 @@ limitations under the License.
 
 #include <QObject>
 #include <QPushButton>
+#include <QLabel>
 
 class BasicView : public QObject
 {
@@ -44,6 +45,7 @@ signals:
     void advanced();
 
 private:
+    QLabel *topStatus;
     QPushButton *startButton;
     QPushButton *stopButton;
     QPushButton *pauseButton;

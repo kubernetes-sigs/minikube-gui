@@ -23,10 +23,18 @@ limitations under the License.
 #include <QFontDatabase>
 #include <QToolTip>
 #include <QVBoxLayout>
+#include <QLabel>
 
 BasicView::BasicView()
 {
     basicView = new QWidget();
+
+    topStatus = new QLabel("nil");
+    QVBoxLayout *topBar = new QVBoxLayout;
+    topStatus->setAlignment(Qt::AlignCenter);
+
+    topBar->addWidget(topStatus);
+
     startButton = new QPushButton(Constants::startIcon);
     stopButton = new QPushButton(Constants::stopIcon);
     pauseButton = new QPushButton(Constants::pauseIcon);
@@ -65,6 +73,7 @@ BasicView::BasicView()
     buttonLayoutRow2->addWidget(advancedButton);
 
     QVBoxLayout *BasicLayout = new QVBoxLayout;
+    BasicLayout->addLayout(topBar);
     BasicLayout->addLayout(buttonLayoutRow1);
     BasicLayout->addLayout(buttonLayoutRow2);
     basicView->setLayout(BasicLayout);
@@ -122,6 +131,7 @@ void BasicView::update(Cluster cluster)
     bool exists = !cluster.isEmpty();
     bool isRunning = cluster.status() == "Running";
     bool isPaused = cluster.status() == "Paused";
+    topStatus->setText(cluster.status());
     stopButton->setEnabled(isRunning || isPaused);
     pauseButton->setEnabled(isRunning || isPaused);
     deleteButton->setEnabled(exists);
