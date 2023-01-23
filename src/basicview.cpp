@@ -27,6 +27,10 @@ limitations under the License.
 BasicView::BasicView()
 {
     basicView = new QWidget();
+    QVBoxLayout *TopLayout = new QVBoxLayout;
+
+    statusButton = new QPushButton(cluster.status());
+
     startButton = new QPushButton(Constants::startIcon);
     stopButton = new QPushButton(Constants::stopIcon);
     pauseButton = new QPushButton(Constants::pauseIcon);
@@ -90,7 +94,7 @@ static QString getPauseLabel(bool isPaused)
     return Constants::pauseIcon;
 }
 
-static QString getStartLabel(bool isRunning,bool isPaused)
+static QString getStartLabel(bool isRunning, bool isPaused)
 {
     if (isRunning || isPaused) {
         return Constants::reloadIcon;
@@ -135,7 +139,7 @@ void BasicView::update(Cluster cluster)
 #endif
     pauseButton->setText(getPauseLabel(isPaused));
     pauseButton->setToolTip(getPauseToolTip(isPaused));
-    startButton->setText(getStartLabel(isRunning,isPaused));
+    startButton->setText(getStartLabel(isRunning, isPaused));
     startButton->setToolTip(getStartToolTip(isRunning, isPaused));
 }
 
