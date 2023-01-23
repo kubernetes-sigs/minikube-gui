@@ -110,7 +110,7 @@ static QString getPauseLabel(bool isPaused)
     return "Pause";
 }
 
-static QString getStartLabel(bool isRunning)
+static QString getStartLabel(bool isRunning, bool isPaused)
 {
     if (isRunning) {
         return "Restart";
@@ -139,7 +139,7 @@ void AdvancedView::update(Cluster cluster)
     sshButton->setEnabled(false);
 #endif
     pauseButton->setText(getPauseLabel(isPaused));
-    startButton->setText(getStartLabel(isRunning));
+    startButton->setText(getStartLabel(isRunning, isPaused));
     QString startToolTip = "";
     if (isRunning) {
         startToolTip = "Restart an already running minikube instance to pickup "
