@@ -112,7 +112,7 @@ static QString getPauseLabel(bool isPaused)
 
 static QString getStartLabel(bool isRunning, bool isPaused)
 {
-    if (isRunning) {
+    if (isRunning || isPaused) {
         return "Restart";
     }
     return "Start";
