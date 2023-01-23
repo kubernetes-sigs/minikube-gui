@@ -27,10 +27,6 @@ limitations under the License.
 BasicView::BasicView()
 {
     basicView = new QWidget();
-    QVBoxLayout *TopLayout = new QVBoxLayout;
-
-    statusButton = new QPushButton(cluster.status());
-
     startButton = new QPushButton(Constants::startIcon);
     stopButton = new QPushButton(Constants::stopIcon);
     pauseButton = new QPushButton(Constants::pauseIcon);
