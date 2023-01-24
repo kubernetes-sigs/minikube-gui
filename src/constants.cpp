@@ -14,23 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#ifndef CONSTANTS_H
-#define CONSTANTS_H
+#include "constants.h"
 
-#include <QString>
-
-class Constants
-{
-public:
-    const static int basicViewHeight = 300;
-    const static int basicViewWidth = 250;
-    static const QString startIcon;
-    static const QString stopIcon;
-    static const QString pauseIcon;
-    static const QString unPauseIcon;
-    static const QString deleteIcon;
-    static const QString reloadIcon;
-    static const QString createIcon;
-};
-
-#endif // CONSTANTS_H
+const QString Constants::startIcon = "\uf04b";
+const QString Constants::stopIcon = "\uf04d";
+const QString Constants::pauseIcon = "\uf04c";
+const QString Constants::unPauseIcon = "\uf04b";
+const QString Constants::deleteIcon = "\uf1f8";
+const QString Constants::reloadIcon = "\uf021";
+const QString Constants::createIcon = "\uf0fe"
