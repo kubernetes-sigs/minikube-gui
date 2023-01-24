@@ -30,6 +30,7 @@ public:
     inline static const QString unPauseIcon = "\uf04b";
     inline static const QString deleteIcon = "\uf1f8";
     inline static const QString reloadIcon = "\uf021";
+    inline static const QString createIcon = "\uf0fe";
 };
 
 #endif // CONSTANTS_H

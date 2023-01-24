@@ -29,7 +29,7 @@ BasicView::BasicView()
 {
     basicView = new QWidget();
 
-    topStatus = new QLabel("nil");
+    topStatus = new QLabel("Loading ...");
     QVBoxLayout *topBar = new QVBoxLayout;
     topStatus->setAlignment(Qt::AlignCenter);
 
@@ -99,8 +99,12 @@ static QString getPauseLabel(bool isPaused)
     return Constants::pauseIcon;
 }
 
-static QString getStartLabel(bool isRunning, bool isPaused)
+static QString getStartLabel(bool exists, bool isRunning, bool isPaused)
 {
+    if  (!exists)  {
+        return Constants::createIcon;
+    }
+
     if (isRunning || isPaused) {
         return Constants::reloadIcon;
     }
@@ -115,12 +119,16 @@ static QString getPauseToolTip(bool isPaused)
     return "Pause Kubernetes cluster";
 }
 
-static QString getStartToolTip(bool isRunning, bool isPaused)
+static QString getStartToolTip(bool exists,bool isRunning, bool isPaused)
 {
+    if (!exists) {
+        return "Create a new cluster";
+    }
+
     if (isRunning || isPaused) {
         return "Restart (reconfigure) an already running cluster";
     }
-    return "Start the default cluster";
+    return "Start the cluster";
 }
 
 void BasicView::update(Cluster cluster)
@@ -145,8 +153,8 @@ void BasicView::update(Cluster cluster)
 #endif
     pauseButton->setText(getPauseLabel(isPaused));
     pauseButton->setToolTip(getPauseToolTip(isPaused));
-    startButton->setText(getStartLabel(isRunning, isPaused));
-    startButton->setToolTip(getStartToolTip(isRunning, isPaused));
+    startButton->setText(getStartLabel(exists,isRunning, isPaused));
+    startButton->setToolTip(getStartToolTip(exists,isRunning, isPaused));
 }
 
 void BasicView::disableButtons()

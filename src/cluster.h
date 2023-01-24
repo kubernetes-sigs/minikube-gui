@@ -28,7 +28,7 @@ public:
     Cluster() : Cluster("") { }
     Cluster(const QString &name)
         : m_name(name),
-          m_status(""),
+          m_status("No Cluster Exists"),
           m_driver(""),
           m_container_runtime(""),
           m_k8s_version(""),

@@ -19,13 +19,14 @@ limitations under the License.
 #include <QDebug>
 #include <QFontDatabase>
 #include <QToolTip>
+#include <QPalette>
 
 QFont Fonts::fontAwesome;
 
 void Fonts::initFonts()
 {
     loadFontAwesome();
-    setToolTipFont();
+    setToolTipStyle();
 }
 
 void Fonts::loadFontAwesome()
@@ -36,11 +37,16 @@ void Fonts::loadFontAwesome()
     fontAwesome.setPixelSize(20);
 }
 
-void Fonts::setToolTipFont()
+void Fonts::setToolTipStyle()
 {
     QFont tooltipFont = QToolTip::font();
-    tooltipFont.setPointSize(20);
+    tooltipFont.setPointSize(18);
     QToolTip::setFont(tooltipFont);
+    QPalette palette;
+    palette.setColor(QPalette::ToolTipText, Qt::black);
+    palette.setColor(QPalette::ToolTipBase, Qt::lightGray);
+    QToolTip::setPalette(palette);
+
 }
 
 void Fonts::setFontAwesome(QWidget *wid)
