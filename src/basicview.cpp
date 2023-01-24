@@ -90,9 +90,9 @@ static QString getPauseLabel(bool isPaused)
     return Constants::pauseIcon;
 }
 
-static QString getStartLabel(bool isRunning)
+static QString getStartLabel(bool isRunning, bool isPaused)
 {
-    if (isRunning) {
+    if (isRunning || isPaused) {
         return Constants::reloadIcon;
     }
     return Constants::startIcon;
@@ -106,9 +106,9 @@ static QString getPauseToolTip(bool isPaused)
     return "Pause Kubernetes cluster";
 }
 
-static QString getStartToolTip(bool isRunning)
+static QString getStartToolTip(bool isRunning, bool isPaused)
 {
-    if (isRunning) {
+    if (isRunning || isPaused) {
         return "Restart (reconfigure) an already running cluster";
     }
     return "Start the default cluster";
@@ -135,8 +135,8 @@ void BasicView::update(Cluster cluster)
 #endif
     pauseButton->setText(getPauseLabel(isPaused));
     pauseButton->setToolTip(getPauseToolTip(isPaused));
-    startButton->setText(getStartLabel(isRunning));
-    startButton->setToolTip(getStartToolTip(isRunning));
+    startButton->setText(getStartLabel(isRunning, isPaused));
+    startButton->setToolTip(getStartToolTip(isRunning, isPaused));
 }
 
 void BasicView::disableButtons()

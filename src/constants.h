@@ -27,7 +27,7 @@ public:
     inline static const QString startIcon = "\uf04b";
     inline static const QString stopIcon = "\uf04d";
     inline static const QString pauseIcon = "\uf04c";
-    inline static const QString unPauseIcon = "\ue22f";
+    inline static const QString unPauseIcon = "\uf04b";
     inline static const QString deleteIcon = "\uf1f8";
     inline static const QString reloadIcon = "\uf021";
 };
