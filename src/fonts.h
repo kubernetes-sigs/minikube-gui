@@ -28,7 +28,7 @@ public:
 
 private:
     static void loadFontAwesome();
-    static void setToolTipFont();
+    static void setToolTipStyle();
     static QFont fontAwesome;
 };
 
