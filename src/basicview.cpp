@@ -153,7 +153,7 @@ void BasicView::update(Cluster cluster)
 #endif
     pauseButton->setText(getPauseLabel(isPaused));
     pauseButton->setToolTip(getPauseToolTip(isPaused));
-    startButton->setText(getStartLabel(exists,isRunning, isPaused));
+    startButton->setText(getStartLabel(exists, isRunning, isPaused));
     startButton->setToolTip(getStartToolTip(exists,isRunning, isPaused));
 }
 
