@@ -18,6 +18,7 @@ SOURCES       = src/main.cpp \
                 src/basicview.cpp \
                 src/cluster.cpp \
                 src/commandrunner.cpp \
+                src/constants.cpp \
                 src/errormessage.cpp \
                 src/fonts.cpp \
                 src/hyperkit.cpp \
