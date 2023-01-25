@@ -119,7 +119,7 @@ static QString getPauseToolTip(bool isPaused)
     return "Pause Kubernetes cluster";
 }
 
-static QString getStartToolTip(bool exists,bool isRunning, bool isPaused)
+static QString getStartToolTip(bool exists, bool isRunning, bool isPaused)
 {
     if (!exists) {
         return "Create a new cluster";
