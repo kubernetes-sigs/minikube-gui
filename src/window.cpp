@@ -61,7 +61,7 @@ const QVersionNumber version = QVersionNumber::fromString("0.0.1");
 
 Window::Window()
 {
-    trayIconIcon = new QIcon(":/images/minikube.png");
+    trayIconIcon = new QIcon(":/resources/images/minikube.png");
     checkForMinikube();
     Fonts::initFonts();
 
