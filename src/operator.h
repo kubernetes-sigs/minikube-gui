@@ -64,8 +64,10 @@ private:
     Cluster selectedCluster();
     void sshConsole();
     void dockerEnv();
+    void mount(QString, QString);
     void dashboardBrowser();
     void dashboardClose();
+    void mountClose();
     void pauseMinikube();
     void unpauseMinikube();
     void restoreWindow();
@@ -83,6 +85,7 @@ private:
     Updater *m_updater;
     bool m_isBasicView;
     QProcess *dashboardProcess;
+    QProcess *mountProcess;
     QStackedWidget *m_stackedWidget;
     QDialog *m_parent;
 };

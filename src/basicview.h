@@ -22,13 +22,13 @@ limitations under the License.
 #include <QObject>
 #include <QPushButton>
 #include <QLabel>
-
+#include <QString>
 class BasicView : public QObject
 {
     Q_OBJECT
 
 public:
-    explicit BasicView();
+    explicit BasicView(QIcon icon);
     QWidget *basicView;
     void update(Cluster cluster);
     void disableButtons();
@@ -43,6 +43,7 @@ signals:
     void ssh();
     void dashboard();
     void advanced();
+    void mount(QString, QString);
 
 private:
     QLabel *topStatus;
@@ -52,9 +53,12 @@ private:
     QPushButton *deleteButton;
     QPushButton *refreshButton;
     QPushButton *dockerEnvButton;
+    QPushButton *mountButton;
     QPushButton *sshButton;
     QPushButton *dashboardButton;
     QPushButton *advancedButton;
+    QIcon m_icon;
+    void askMount();
 };
 
 #endif // BASICVIEW_H
