@@ -24,7 +24,6 @@ limitations under the License.
 #include <QToolTip>
 #include <QVBoxLayout>
 #include <QLabel>
-
 #include <QDialog>
 #include <QFormLayout>
 #include <QDialogButtonBox>
@@ -47,7 +46,7 @@ BasicView::BasicView(QIcon icon)
     deleteButton = new QPushButton(Constants::deleteIcon);
     refreshButton = new QPushButton(tr("Refresh GUI"));
     dockerEnvButton = new QPushButton("docker-env");
-    mountButton = new QPushButton("mount");
+    mountButton = new QPushButton(tr("mount"));
     sshButton = new QPushButton("SSH");
     dashboardButton = new QPushButton(tr("Dashboard"));
     advancedButton = new QPushButton(tr("Multi-cluster View"));
@@ -151,6 +150,7 @@ void BasicView::update(Cluster cluster)
     topStatus->setText(cluster.status());
     stopButton->setEnabled(isRunning || isPaused);
     pauseButton->setEnabled(isRunning || isPaused);
+    mountButton->setEnabled(isRunning || isPaused);
     deleteButton->setEnabled(exists);
     dashboardButton->setEnabled(isRunning);
 #if __linux__ || __APPLE__
@@ -173,14 +173,12 @@ void BasicView::disableButtons()
     deleteButton->setEnabled(false);
     pauseButton->setEnabled(false);
     dockerEnvButton->setEnabled(false);
+    mountButton->setEnabled(false);
     sshButton->setEnabled(false);
     dashboardButton->setEnabled(false);
     advancedButton->setEnabled(false);
     refreshButton->setEnabled(false);
 }
-
-static QString mountSrc = "";
-static QString mountDest = "";
 
 void BasicView::askMount()
 {
@@ -191,8 +189,8 @@ void BasicView::askMount()
 
     QFormLayout form(&dialog);
     QDialogButtonBox buttonBox(Qt::Horizontal, &dialog);
-    QLineEdit srcField(mountSrc, &dialog);
-    QLineEdit destField(mountDest, &dialog);
+    QLineEdit srcField(&dialog);
+    QLineEdit destField(&dialog);
     form.addRow(new QLabel(tr("src")), &srcField);
     form.addRow(new QLabel(tr("dest")), &destField);
     buttonBox.addButton(QString(tr("Start mount")), QDialogButtonBox::AcceptRole);
@@ -202,9 +200,7 @@ void BasicView::askMount()
     form.addRow(&buttonBox);
 
     int code = dialog.exec();
-    mountSrc = srcField.text();
-    mountDest = destField.text();
     if (code == QDialog::Accepted) {
-        emit mount(mountSrc, mountDest);
+        emit mount(srcField.text(), destField.text());
     }
 }

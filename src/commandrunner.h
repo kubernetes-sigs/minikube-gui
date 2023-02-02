@@ -41,6 +41,8 @@ public:
     void pauseMinikube(QStringList args);
     void unpauseMinikube(QStringList args);
     void deleteMinikube(QStringList args);
+    void mountMinikube(QStringList args, QProcess *process);
+    void dashboardMinikube(QStringList args, QProcess *process);
     void stopCommand();
     void requestClusters();
     bool isRunning();
@@ -60,6 +62,7 @@ private slots:
 
 private:
     void executeMinikubeCommand(QStringList args);
+    void executeMinikubeCommand(QStringList args, QProcess *process);
     void minikubePath();
 #if __APPLE__
     void setMinikubePath();

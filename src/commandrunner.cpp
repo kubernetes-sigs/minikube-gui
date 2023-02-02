@@ -70,6 +70,14 @@ void CommandRunner::executeMinikubeCommand(QStringList args)
     emit CommandRunner::startingExecution();
 }
 
+void CommandRunner::executeMinikubeCommand(QStringList args, QProcess *process)
+{
+    QStringList userArgs = { "--user", "minikube-gui" };
+    args << userArgs;
+    process->setProcessEnvironment(m_env);
+    process->start(m_minikubePath, args);
+}
+
 void CommandRunner::startMinikube(QStringList args)
 {
     m_command = "start";
@@ -107,6 +115,20 @@ void CommandRunner::deleteMinikube(QStringList args)
     QStringList baseArgs = { "delete" };
     baseArgs << args;
     executeMinikubeCommand(baseArgs);
+}
+
+void CommandRunner::mountMinikube(QStringList args, QProcess *process)
+{
+    QStringList baseArgs = { "mount" };
+    baseArgs << args;
+    executeMinikubeCommand(baseArgs, process);
+}
+
+void CommandRunner::dashboardMinikube(QStringList args, QProcess *process)
+{
+    QStringList baseArgs = { "dashboard" };
+    baseArgs << args;
+    executeMinikubeCommand(baseArgs, process);
 }
 
 void CommandRunner::stopCommand()
