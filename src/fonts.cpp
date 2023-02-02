@@ -46,7 +46,6 @@ void Fonts::setToolTipStyle()
     palette.setColor(QPalette::ToolTipText, Qt::black);
     palette.setColor(QPalette::ToolTipBase, Qt::lightGray);
     QToolTip::setPalette(palette);
-
 }
 
 void Fonts::setFontAwesome(QWidget *wid)

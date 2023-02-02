@@ -25,8 +25,14 @@ limitations under the License.
 #include <QVBoxLayout>
 #include <QLabel>
 
-BasicView::BasicView()
+#include <QDialog>
+#include <QFormLayout>
+#include <QDialogButtonBox>
+#include <QLineEdit>
+
+BasicView::BasicView(QIcon icon)
 {
+    m_icon = icon;
     basicView = new QWidget();
 
     topStatus = new QLabel("Loading ...");
@@ -41,6 +47,7 @@ BasicView::BasicView()
     deleteButton = new QPushButton(Constants::deleteIcon);
     refreshButton = new QPushButton(tr("Refresh GUI"));
     dockerEnvButton = new QPushButton("docker-env");
+    mountButton = new QPushButton("mount");
     sshButton = new QPushButton("SSH");
     dashboardButton = new QPushButton(tr("Dashboard"));
     advancedButton = new QPushButton(tr("Multi-cluster View"));
@@ -68,6 +75,7 @@ BasicView::BasicView()
     QVBoxLayout *buttonLayoutRow2 = new QVBoxLayout;
     buttonLayoutRow2->addWidget(refreshButton);
     buttonLayoutRow2->addWidget(dockerEnvButton);
+    buttonLayoutRow2->addWidget(mountButton);
     buttonLayoutRow2->addWidget(sshButton);
     buttonLayoutRow2->addWidget(dashboardButton);
     buttonLayoutRow2->addWidget(advancedButton);
@@ -86,6 +94,7 @@ BasicView::BasicView()
     connect(deleteButton, &QAbstractButton::clicked, this, &BasicView::delete_);
     connect(refreshButton, &QAbstractButton::clicked, this, &BasicView::refresh);
     connect(dockerEnvButton, &QAbstractButton::clicked, this, &BasicView::dockerEnv);
+    connect(mountButton, &QAbstractButton::clicked, this, &BasicView::askMount);
     connect(sshButton, &QAbstractButton::clicked, this, &BasicView::ssh);
     connect(dashboardButton, &QAbstractButton::clicked, this, &BasicView::dashboard);
     connect(advancedButton, &QAbstractButton::clicked, this, &BasicView::advanced);
@@ -101,7 +110,7 @@ static QString getPauseLabel(bool isPaused)
 
 static QString getStartLabel(bool exists, bool isRunning, bool isPaused)
 {
-    if  (!exists)  {
+    if (!exists) {
         return Constants::createIcon;
     }
 
@@ -168,4 +177,34 @@ void BasicView::disableButtons()
     dashboardButton->setEnabled(false);
     advancedButton->setEnabled(false);
     refreshButton->setEnabled(false);
+}
+
+static QString mountSrc = "";
+static QString mountDest = "";
+
+void BasicView::askMount()
+{
+    QDialog dialog;
+    dialog.setWindowTitle(tr("Mount"));
+    dialog.setWindowIcon(m_icon);
+    dialog.setModal(true);
+
+    QFormLayout form(&dialog);
+    QDialogButtonBox buttonBox(Qt::Horizontal, &dialog);
+    QLineEdit srcField(mountSrc, &dialog);
+    QLineEdit destField(mountDest, &dialog);
+    form.addRow(new QLabel(tr("src")), &srcField);
+    form.addRow(new QLabel(tr("dest")), &destField);
+    buttonBox.addButton(QString(tr("Start mount")), QDialogButtonBox::AcceptRole);
+    connect(&buttonBox, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
+    buttonBox.addButton(QString(tr("Cancel")), QDialogButtonBox::RejectRole);
+    connect(&buttonBox, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
+    form.addRow(&buttonBox);
+
+    int code = dialog.exec();
+    mountSrc = srcField.text();
+    mountDest = destField.text();
+    if (code == QDialog::Accepted) {
+        emit mount(mountSrc, mountDest);
+    }
 }

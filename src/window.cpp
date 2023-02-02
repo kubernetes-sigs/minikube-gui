@@ -68,7 +68,7 @@ Window::Window()
     stackedWidget = new QStackedWidget;
     logger = new Logger();
     commandRunner = new CommandRunner(this, logger);
-    basicView = new BasicView();
+    basicView = new BasicView(*trayIconIcon);
     advancedView = new AdvancedView(*trayIconIcon);
     errorMessage = new ErrorMessage(this, *trayIconIcon);
     progressWindow = new ProgressWindow(this, *trayIconIcon);

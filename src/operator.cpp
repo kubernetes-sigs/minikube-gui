@@ -48,6 +48,7 @@ Operator::Operator(AdvancedView *advancedView, BasicView *basicView, CommandRunn
     connect(m_basicView, &BasicView::delete_, this, &Operator::deleteMinikube);
     connect(m_basicView, &BasicView::refresh, this, &Operator::updateClusters);
     connect(m_basicView, &BasicView::dockerEnv, this, &Operator::dockerEnv);
+    connect(m_basicView, &BasicView::mount, this, &Operator::mount);
     connect(m_basicView, &BasicView::ssh, this, &Operator::sshConsole);
     connect(m_basicView, &BasicView::dashboard, this, &Operator::dashboardBrowser);
     connect(m_basicView, &BasicView::advanced, this, &Operator::toAdvancedView);
@@ -412,6 +413,33 @@ void Operator::dockerEnv()
 
     m_commandRunner->executeCommand(QStandardPaths::findExecutable(terminal), { "-e", command });
 #endif
+}
+
+void Operator::mount(QString src, QString dest)
+{
+    //   TODO: mountClean();
+    mountClose();
+    QProcessEnvironment m_env;
+    m_env = QProcessEnvironment::systemEnvironment();
+    QString path = m_env.value("PATH") + ":" + Paths::minikubePaths().join(":");
+    m_env.insert("PATH", path);
+
+    QString program = minikubePath();
+    QProcess *process = new QProcess(this);
+    process->setProcessEnvironment(m_env);
+    QStringList arguments = { "mount", "-p", selectedClusterName(), src + ":" + dest };
+    process->start(program, arguments);
+
+    mountProcess = process;
+    mountProcess->waitForStarted();
+}
+
+void Operator::mountClose()
+{
+    if (mountProcess) {
+        mountProcess->terminate();
+        mountProcess->waitForFinished();
+    }
 }
 
 void Operator::dashboardBrowser()
