@@ -24,6 +24,7 @@ limitations under the License.
 #include <QPushButton>
 #include <QStandardPaths>
 
+
 Operator::Operator(AdvancedView *advancedView, BasicView *basicView, CommandRunner *commandRunner,
                    ErrorMessage *errorMessage, ProgressWindow *progressWindow, Tray *tray,
                    HyperKit *hyperKit, Updater *updater, QStackedWidget *stackedWidget,
@@ -425,6 +426,9 @@ void Operator::mount(QString src, QString dest)
 
     mountProcess = process;
     mountProcess->waitForStarted();
+    Mount m (src,dest,mountProcess);
+    m_mountList << m;
+
 }
 
 void Operator::mountClose()
