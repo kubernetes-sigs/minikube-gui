@@ -18,6 +18,7 @@ limitations under the License.
 #define BASICVIEW_H
 
 #include "cluster.h"
+#include "mount.h"
 
 #include <QObject>
 #include <QPushButton>
@@ -31,6 +32,7 @@ public:
     explicit BasicView(QIcon icon);
     QWidget *basicView;
     void update(Cluster cluster);
+    void updateMounts(MountList ms);
     void disableButtons();
     void setFont(QFont font, QWidget *wid);
 signals:
@@ -44,6 +46,7 @@ signals:
     void dashboard();
     void advanced();
     void mount(QString, QString);
+    void closeMount();
 
 private:
     QLabel *topStatus;
@@ -58,6 +61,7 @@ private:
     QPushButton *dashboardButton;
     QPushButton *advancedButton;
     QIcon m_icon;
+    MountList m_mountList;
     void askMount();
 };
 
