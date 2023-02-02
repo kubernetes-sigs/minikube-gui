@@ -8,6 +8,7 @@ HEADERS       = src/window.h \
                 src/fonts.h \
                 src/hyperkit.h \
                 src/logger.h \
+                src/mount.h \
                 src/operator.h \
                 src/paths.h \
                 src/progresswindow.h \
@@ -23,6 +24,7 @@ SOURCES       = src/main.cpp \
                 src/fonts.cpp \
                 src/hyperkit.cpp \
                 src/logger.cpp \
+                src/mount.cpp \
                 src/operator.cpp \
                 src/paths.cpp \
                 src/progresswindow.cpp \
