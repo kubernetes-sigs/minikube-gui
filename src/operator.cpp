@@ -417,18 +417,11 @@ void Operator::dockerEnv()
 
 void Operator::mount(QString src, QString dest)
 {
-    //   TODO: mountClean();
     mountClose();
-    QProcessEnvironment m_env;
-    m_env = QProcessEnvironment::systemEnvironment();
-    QString path = m_env.value("PATH") + ":" + Paths::minikubePaths().join(":");
-    m_env.insert("PATH", path);
 
-    QString program = minikubePath();
     QProcess *process = new QProcess(this);
-    process->setProcessEnvironment(m_env);
-    QStringList arguments = { "mount", "-p", selectedClusterName(), src + ":" + dest };
-    process->start(program, arguments);
+    QStringList arguments = { "-p", selectedClusterName(), src + ":" + dest };
+    m_commandRunner->mountMinikube(arguments, process);
 
     mountProcess = process;
     mountProcess->waitForStarted();
@@ -446,10 +439,9 @@ void Operator::dashboardBrowser()
 {
     dashboardClose();
 
-    QString program = minikubePath();
     QProcess *process = new QProcess(this);
-    QStringList arguments = { "dashboard", "-p", selectedClusterName() };
-    process->start(program, arguments);
+    QStringList arguments = { "-p", selectedClusterName() };
+    m_commandRunner->dashboardMinikube(arguments, process);
 
     dashboardProcess = process;
     dashboardProcess->waitForStarted();
