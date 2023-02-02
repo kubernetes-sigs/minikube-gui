@@ -26,7 +26,7 @@ limitations under the License.
 #include "progresswindow.h"
 #include "tray.h"
 #include "updater.h"
-
+#include "mount.h"
 #include <QStackedWidget>
 
 class Operator : public QObject
@@ -88,6 +88,7 @@ private:
     QProcess *mountProcess;
     QStackedWidget *m_stackedWidget;
     QDialog *m_parent;
+    MountList m_mountList;
 };
 
 #endif // OPERATOR_H

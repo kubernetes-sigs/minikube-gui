@@ -139,6 +139,7 @@ static QString getStartToolTip(bool exists, bool isRunning, bool isPaused)
     return "Start the cluster";
 }
 
+// updates clusters (TODO: change name)
 void BasicView::update(Cluster cluster)
 {
     startButton->setEnabled(true);
@@ -166,6 +167,11 @@ void BasicView::update(Cluster cluster)
     startButton->setToolTip(getStartToolTip(exists, isRunning, isPaused));
 }
 
+void BasicView::updateMounts(MountList ms)
+{
+    m_mountList = ms;
+}
+
 void BasicView::disableButtons()
 {
     startButton->setEnabled(false);
@@ -182,25 +188,50 @@ void BasicView::disableButtons()
 
 void BasicView::askMount()
 {
+
     QDialog dialog;
-    dialog.setWindowTitle(tr("Mount"));
     dialog.setWindowIcon(m_icon);
     dialog.setModal(true);
 
-    QFormLayout form(&dialog);
-    QDialogButtonBox buttonBox(Qt::Horizontal, &dialog);
-    QLineEdit srcField(&dialog);
-    QLineEdit destField(&dialog);
-    form.addRow(new QLabel(tr("src")), &srcField);
-    form.addRow(new QLabel(tr("dest")), &destField);
-    buttonBox.addButton(QString(tr("Start mount")), QDialogButtonBox::AcceptRole);
-    connect(&buttonBox, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
-    buttonBox.addButton(QString(tr("Cancel")), QDialogButtonBox::RejectRole);
-    connect(&buttonBox, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
-    form.addRow(&buttonBox);
+    // New Mount
+    if (m_mountList.length() < 1) {
+        dialog.setWindowTitle(tr("Create A new mount"));
+        QFormLayout form(&dialog);
+        QDialogButtonBox buttonBox(Qt::Horizontal, &dialog);
+        QLineEdit srcField(&dialog);
+        QLineEdit destField(&dialog);
+        form.addRow(new QLabel(tr("src")), &srcField);
+        form.addRow(new QLabel(tr("dest")), &destField);
+        buttonBox.addButton(QString(tr("Start mount")), QDialogButtonBox::AcceptRole);
+        connect(&buttonBox, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
+        buttonBox.addButton(QString(tr("Cancel")), QDialogButtonBox::RejectRole);
+        connect(&buttonBox, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
+        form.addRow(&buttonBox);
 
-    int code = dialog.exec();
-    if (code == QDialog::Accepted) {
-        emit mount(srcField.text(), destField.text());
+        int code = dialog.exec();
+        if (code == QDialog::Accepted) {
+            emit mount(srcField.text(), destField.text());
+        }
+
+    } else {
+        QProcess *m_proc = m_mountList[0].proc();
+        QString allLogs = m_mountList[0].logs();
+        QString newLog = m_proc->readAllStandardOutput();
+        allLogs = allLogs + newLog;
+        m_mountList[0].setLogs(allLogs);
+        dialog.setWindowTitle(tr("Already mounted"));
+        QFormLayout form(&dialog);
+        QDialogButtonBox buttonBox(Qt::Horizontal, &dialog);
+        form.addRow(new QLabel(allLogs));
+        buttonBox.addButton(QString(tr("Ok ! ")), QDialogButtonBox::RejectRole);
+        buttonBox.addButton(QString(tr("Stop Mount! ")), QDialogButtonBox::AcceptRole);
+        connect(&buttonBox, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
+        connect(&buttonBox, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
+        form.addRow(&buttonBox);
+        int code = dialog.exec();
+        if (code == QDialog::Accepted) {
+            m_mountList.removeAt(0);
+            m_proc->terminate();
+        }
     }
 }

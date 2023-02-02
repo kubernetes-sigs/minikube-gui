@@ -49,6 +49,7 @@ Operator::Operator(AdvancedView *advancedView, BasicView *basicView, CommandRunn
     connect(m_basicView, &BasicView::refresh, this, &Operator::updateClusters);
     connect(m_basicView, &BasicView::dockerEnv, this, &Operator::dockerEnv);
     connect(m_basicView, &BasicView::mount, this, &Operator::mount);
+    connect(m_basicView, &BasicView::closeMount, this, &Operator::mountClose);
     connect(m_basicView, &BasicView::ssh, this, &Operator::sshConsole);
     connect(m_basicView, &BasicView::dashboard, this, &Operator::dashboardBrowser);
     connect(m_basicView, &BasicView::advanced, this, &Operator::toAdvancedView);
@@ -418,13 +419,15 @@ void Operator::dockerEnv()
 void Operator::mount(QString src, QString dest)
 {
     mountClose();
-
     QProcess *process = new QProcess(this);
     QStringList arguments = { "-p", selectedClusterName(), src + ":" + dest };
     m_commandRunner->mountMinikube(arguments, process);
 
     mountProcess = process;
     mountProcess->waitForStarted();
+    Mount m(src, dest, mountProcess);
+    m_mountList << m;
+    m_basicView->updateMounts(m_mountList);
 }
 
 void Operator::mountClose()
@@ -432,6 +435,7 @@ void Operator::mountClose()
     if (mountProcess) {
         mountProcess->terminate();
         mountProcess->waitForFinished();
+        m_mountList.removeAt(0);
     }
 }
 
