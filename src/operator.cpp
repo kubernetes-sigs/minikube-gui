@@ -447,7 +447,7 @@ void Operator::tunnel()
     m_commandRunner->tunnelMinikube(arguments, process);
 
     tunnelProcess = process;
-    tunellProcess->waitForStarted();
+    tunnelProcess->waitForStarted();
 }
 
 void Operator::dashboardBrowser()
