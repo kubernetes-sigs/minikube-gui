@@ -47,7 +47,7 @@ signals:
     void advanced();
     void mount(QString, QString);
     void closeMount();
-
+    void tunnel();
 private:
     QLabel *topStatus;
     QPushButton *startButton;
@@ -57,12 +57,14 @@ private:
     QPushButton *refreshButton;
     QPushButton *dockerEnvButton;
     QPushButton *mountButton;
+    QPushButton *tunnelButton;
     QPushButton *sshButton;
     QPushButton *dashboardButton;
     QPushButton *advancedButton;
     QIcon m_icon;
     MountList m_mountList;
     void askMount();
+
 };
 
 #endif // BASICVIEW_H

@@ -50,6 +50,7 @@ Operator::Operator(AdvancedView *advancedView, BasicView *basicView, CommandRunn
     connect(m_basicView, &BasicView::dockerEnv, this, &Operator::dockerEnv);
     connect(m_basicView, &BasicView::mount, this, &Operator::mount);
     connect(m_basicView, &BasicView::closeMount, this, &Operator::mountClose);
+    connect(m_basicView, &BasicView::tunnel, this, &Operator::tunnel);
     connect(m_basicView, &BasicView::ssh, this, &Operator::sshConsole);
     connect(m_basicView, &BasicView::dashboard, this, &Operator::dashboardBrowser);
     connect(m_basicView, &BasicView::advanced, this, &Operator::toAdvancedView);
@@ -437,6 +438,16 @@ void Operator::mountClose()
         mountProcess->waitForFinished();
         m_mountList.removeAt(0);
     }
+}
+
+void Operator::tunnel()
+{
+    QProcess *process = new QProcess(this);
+    QStringList arguments = { "-p", selectedClusterName() };
+    m_commandRunner->tunnelMinikube(arguments, process);
+
+    tunnelProcess = process;
+    tunellProcess->waitForStarted();
 }
 
 void Operator::dashboardBrowser()
