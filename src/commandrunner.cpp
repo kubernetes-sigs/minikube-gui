@@ -124,6 +124,53 @@ void CommandRunner::mountMinikube(QStringList args, QProcess *process)
     executeMinikubeCommand(baseArgs, process);
 }
 
+void CommandRunner::tunnelMinikube(QStringList args, QProcess *process)
+{
+    QStringList baseArgs = { "tunnel" };
+    baseArgs << args;
+    baseArgs.prepend(m_minikubePath);
+    QString command = baseArgs.join(" ");
+#ifndef QT_NO_TERMWIDGET
+    QMainWindow *mainWindow = new QMainWindow();
+    int startnow = 0; // set shell program first
+
+    QTermWidget *console = new QTermWidget(startnow);
+
+    QFont font = QApplication::font();
+    font.setFamily("Monospace");
+    font.setPointSize(10);
+
+    console->setTerminalFont(font);
+    console->setColorScheme("Tango");
+    console->setShellProgram("eval");
+    console->setArgs({ commandArgs });
+    console->startShellProgram();
+
+    QObject::connect(console, SIGNAL(finished()), mainWindow, SLOT(close()));
+
+    mainWindow->setWindowTitle(nameLabel->text());
+    mainWindow->resize(800, 400);
+    mainWindow->setCentralWidget(console);
+    mainWindow->show();
+#elif __APPLE__
+    QStringList arguments = { "-e", "tell app \"Terminal\"",
+                              "-e", "do script \"" + command + "\"",
+                              "-e", "activate",
+                              "-e", "end tell" };
+    executeCommand("/usr/bin/osascript", arguments);
+#else
+    QString terminal = qEnvironmentVariable("TERMINAL");
+    if (terminal.isEmpty()) {
+        terminal = "x-terminal-emulator";
+        if (QStandardPaths::findExecutable(terminal).isEmpty()) {
+            terminal = "xterm";
+        }
+    }
+
+    executeCommand(QStandardPaths::findExecutable(terminal), { "-e", command });
+#endif
+}
+
 void CommandRunner::dashboardMinikube(QStringList args, QProcess *process)
 {
     QStringList baseArgs = { "dashboard" };

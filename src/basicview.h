@@ -48,6 +48,7 @@ signals:
     void mount(QString, QString);
     void closeMount();
     void tunnel();
+
 private:
     QLabel *topStatus;
     QPushButton *startButton;
@@ -64,7 +65,6 @@ private:
     QIcon m_icon;
     MountList m_mountList;
     void askMount();
-
 };
 
 #endif // BASICVIEW_H

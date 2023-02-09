@@ -23,6 +23,7 @@ limitations under the License.
 #include <QJsonObject>
 #include <QPushButton>
 #include <QStandardPaths>
+#include <QDebug>
 
 Operator::Operator(AdvancedView *advancedView, BasicView *basicView, CommandRunner *commandRunner,
                    ErrorMessage *errorMessage, ProgressWindow *progressWindow, Tray *tray,
@@ -442,12 +443,19 @@ void Operator::mountClose()
 
 void Operator::tunnel()
 {
+    if (tunnelProcess) {
+        return;
+    }
+
     QProcess *process = new QProcess(this);
     QStringList arguments = { "-p", selectedClusterName() };
     m_commandRunner->tunnelMinikube(arguments, process);
 
     tunnelProcess = process;
-    tunnelProcess->waitForStarted();
+    tunnelProcess->waitForFinished(-1);
+    qDebug() << tunnelProcess->processId();
+    qDebug() << tunnelProcess->readAllStandardOutput();
+    tunnelProcess = NULL;
 }
 
 void Operator::dashboardBrowser()

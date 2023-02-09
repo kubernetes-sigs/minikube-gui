@@ -96,7 +96,7 @@ BasicView::BasicView(QIcon icon)
     connect(refreshButton, &QAbstractButton::clicked, this, &BasicView::refresh);
     connect(dockerEnvButton, &QAbstractButton::clicked, this, &BasicView::dockerEnv);
     connect(mountButton, &QAbstractButton::clicked, this, &BasicView::askMount);
-    connect(tunnelButton, &QAbstractButton::clicked, this, &BasicView::askTunnel);
+    connect(tunnelButton, &QAbstractButton::clicked, this, &BasicView::tunnel);
     connect(sshButton, &QAbstractButton::clicked, this, &BasicView::ssh);
     connect(dashboardButton, &QAbstractButton::clicked, this, &BasicView::dashboard);
     connect(advancedButton, &QAbstractButton::clicked, this, &BasicView::advanced);
