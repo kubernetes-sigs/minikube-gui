@@ -97,6 +97,7 @@ BasicView::BasicView(QIcon icon)
     connect(deleteButton, &QAbstractButton::clicked, this, &BasicView::delete_);
     connect(refreshButton, &QAbstractButton::clicked, this, &BasicView::refresh);
     connect(dockerEnvButton, &QAbstractButton::clicked, this, &BasicView::dockerEnv);
+    connect(serviceButton, &QPushButton::clicked, this, &BasicView::service);
     connect(mountButton, &QAbstractButton::clicked, this, &BasicView::askMount);
     connect(tunnelButton, &QAbstractButton::clicked, this, &BasicView::tunnel);
     connect(sshButton, &QAbstractButton::clicked, this, &BasicView::ssh);
@@ -166,6 +167,7 @@ void BasicView::update(Cluster cluster)
     dockerEnvButton->setEnabled(false);
     sshButton->setEnabled(false);
 #endif
+    serviceButton->setEnabled(true);
     pauseButton->setText(getPauseLabel(isPaused));
     pauseButton->setToolTip(getPauseToolTip(isPaused));
     startButton->setText(getStartLabel(exists, isRunning, isPaused));
@@ -184,11 +186,12 @@ void BasicView::disableButtons()
     deleteButton->setEnabled(false);
     pauseButton->setEnabled(false);
     dockerEnvButton->setEnabled(false);
+    serviceButton->setEnabled(false);
     mountButton->setEnabled(false);
     sshButton->setEnabled(false);
     dashboardButton->setEnabled(false);
     advancedButton->setEnabled(false);
-    refreshButton->setEnabled(false);
+    refreshButton->setEnabled(false);    
 }
 
 void BasicView::askMount()

@@ -42,6 +42,7 @@ signals:
     void delete_();
     void refresh();
     void dockerEnv();
+    void service();
     void ssh();
     void dashboard();
     void advanced();
