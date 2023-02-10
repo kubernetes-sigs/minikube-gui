@@ -46,6 +46,7 @@ BasicView::BasicView(QIcon icon)
     deleteButton = new QPushButton(Constants::deleteIcon);
     refreshButton = new QPushButton(tr("Refresh GUI"));
     dockerEnvButton = new QPushButton("docker-env");
+    serviceButton = new QPushButton("service");
     mountButton = new QPushButton(tr("mount"));
     tunnelButton = new QPushButton(tr("tunnel"));
     sshButton = new QPushButton("SSH");
@@ -75,6 +76,7 @@ BasicView::BasicView(QIcon icon)
     QVBoxLayout *buttonLayoutRow2 = new QVBoxLayout;
     buttonLayoutRow2->addWidget(refreshButton);
     buttonLayoutRow2->addWidget(dockerEnvButton);
+    buttonLayoutRow2->addWidget(serviceButton);
     buttonLayoutRow2->addWidget(mountButton);
     buttonLayoutRow2->addWidget(tunnelButton);
     buttonLayoutRow2->addWidget(sshButton);

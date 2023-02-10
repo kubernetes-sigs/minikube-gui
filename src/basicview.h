@@ -57,6 +57,7 @@ private:
     QPushButton *deleteButton;
     QPushButton *refreshButton;
     QPushButton *dockerEnvButton;
+    QPushButton *serviceButton;
     QPushButton *mountButton;
     QPushButton *tunnelButton;
     QPushButton *sshButton;
