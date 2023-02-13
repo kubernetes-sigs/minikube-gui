@@ -17,11 +17,8 @@ limitations under the License.
 #include "serviceview.h"
 
 #include <QDialogButtonBox>
-#include <QDir>
 #include <QFormLayout>
 #include <QLabel>
-#include <QTextEdit>
-#include <QTextOption>
 
 ServiceView::ServiceView(QDialog *parent, QIcon icon)
 {
