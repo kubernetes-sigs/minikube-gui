@@ -44,14 +44,14 @@ BasicView::BasicView(QIcon icon)
     stopButton = new QPushButton(Constants::stopIcon);
     pauseButton = new QPushButton(Constants::pauseIcon);
     deleteButton = new QPushButton(Constants::deleteIcon);
-    refreshButton = new QPushButton(tr("Refresh GUI"));
+    refreshButton = new QPushButton(tr("refresh gui"));
     dockerEnvButton = new QPushButton("docker-env");
     serviceButton = new QPushButton("service");
     mountButton = new QPushButton(tr("mount"));
     tunnelButton = new QPushButton(tr("tunnel"));
     sshButton = new QPushButton("SSH");
-    dashboardButton = new QPushButton(tr("Dashboard"));
-    advancedButton = new QPushButton(tr("Multi-cluster View"));
+    dashboardButton = new QPushButton(tr("dashboard"));
+    advancedButton = new QPushButton(tr("cluster list"));
 
     Fonts::setFontAwesome(startButton);
     Fonts::setFontAwesome(stopButton);

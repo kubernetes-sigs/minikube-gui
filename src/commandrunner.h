@@ -46,6 +46,7 @@ public:
     void dashboardMinikube(QStringList args, QProcess *process);
     void stopCommand();
     void requestClusters();
+    void requestServiceList();
     bool isRunning();
 
 signals:
@@ -54,6 +55,7 @@ signals:
     void output(QString text);
     void error(QStringList args, QString text);
     void updatedClusters(ClusterList clusterList);
+    void updatedServices(QString);
     void startCommandStarting();
 
 private slots:

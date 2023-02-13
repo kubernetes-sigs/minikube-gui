@@ -19,6 +19,8 @@ limitations under the License.
 
 #include "advancedview.h"
 #include "basicview.h"
+#include "serviceView.h"
+#include "serviceView.h"
 #include "cluster.h"
 #include "commandrunner.h"
 #include "errormessage.h"
@@ -34,9 +36,10 @@ class Operator : public QObject
     Q_OBJECT
 
 public:
-    Operator(AdvancedView *advancedView, BasicView *basicView, CommandRunner *commandRunner,
-             ErrorMessage *errorMessage, ProgressWindow *progressWindow, Tray *tray,
-             HyperKit *hyperKit, Updater *updater, QStackedWidget *stackedWidget, QDialog *parent);
+    Operator(AdvancedView *advancedView, BasicView *basicView, ServiceView *serviceView,
+             CommandRunner *commandRunner, ErrorMessage *errorMessage,
+             ProgressWindow *progressWindow, Tray *tray, HyperKit *hyperKit, Updater *updater,
+             QStackedWidget *stackedWidget, QDialog *parent);
 
 public slots:
     void startMinikube();
@@ -55,6 +58,7 @@ private slots:
     void createCluster(QStringList args);
     void updateButtons();
     void clustersReceived(ClusterList clusterList);
+    void servicesReceived(QString);
     void startCommandStarting();
 
 private:
@@ -64,6 +68,7 @@ private:
     Cluster selectedCluster();
     void sshConsole();
     void dockerEnv();
+    void updateServices();
     void mount(QString, QString);
     void tunnelClean();
     void tunnel();
@@ -78,6 +83,7 @@ private:
 
     AdvancedView *m_advancedView;
     BasicView *m_basicView;
+    ServiceView *m_serviceView;
     CommandRunner *m_commandRunner;
     ErrorMessage *m_errorMessage;
     ProgressWindow *m_progressWindow;

@@ -22,7 +22,8 @@ limitations under the License.
 class Constants
 {
 public:
-    const static int basicViewHeight = 300;
+//    golden ration
+    const static int basicViewHeight = 405;
     const static int basicViewWidth = 250;
     static const QString startIcon;
     static const QString stopIcon;
