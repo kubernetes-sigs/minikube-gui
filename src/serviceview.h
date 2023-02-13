@@ -19,8 +19,7 @@ limitations under the License.
 #define SERVICEVIEW_H
 
 #include <QObject>
-#include <QPushButton>
-#include <QLabel>
+#include <QIcon>
 #include <QString>
 #include <QDialog>
 
