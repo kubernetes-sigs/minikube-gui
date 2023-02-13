@@ -159,11 +159,12 @@ void BasicView::update(Cluster cluster)
     stopButton->setEnabled(isRunning || isPaused);
     pauseButton->setEnabled(isRunning || isPaused);
     mountButton->setEnabled(isRunning || isPaused);
+    tunnelButton->setEnabled(isRunning || isPaused);
     deleteButton->setEnabled(exists);
     dashboardButton->setEnabled(isRunning);
 #if __linux__ || __APPLE__
-    dockerEnvButton->setEnabled(isRunning);
-    sshButton->setEnabled(exists);
+    dockerEnvButton->setEnabled(isRunning || isPaused);
+    sshButton->setEnabled(isRunning || isPaused);
 #else
     dockerEnvButton->setEnabled(false);
     sshButton->setEnabled(false);
@@ -187,6 +188,7 @@ void BasicView::disableButtons()
     pauseButton->setEnabled(false);
     dockerEnvButton->setEnabled(false);
     serviceButton->setEnabled(false);
+    tunnelButton->setEnabled(false);
     mountButton->setEnabled(false);
     sshButton->setEnabled(false);
     dashboardButton->setEnabled(false);
