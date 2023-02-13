@@ -155,6 +155,7 @@ void BasicView::update(Cluster cluster)
     bool isRunning = cluster.status() == "Running";
     bool isPaused = cluster.status() == "Paused";
     topStatus->setText(cluster.status());
+    serviceButton->setEnabled(isRunning || isPaused);
     stopButton->setEnabled(isRunning || isPaused);
     pauseButton->setEnabled(isRunning || isPaused);
     mountButton->setEnabled(isRunning || isPaused);
@@ -167,7 +168,6 @@ void BasicView::update(Cluster cluster)
     dockerEnvButton->setEnabled(false);
     sshButton->setEnabled(false);
 #endif
-    serviceButton->setEnabled(true);
     pauseButton->setText(getPauseLabel(isPaused));
     pauseButton->setToolTip(getPauseToolTip(isPaused));
     startButton->setText(getStartLabel(exists, isRunning, isPaused));
