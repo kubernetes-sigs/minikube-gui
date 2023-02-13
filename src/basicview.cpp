@@ -47,6 +47,7 @@ BasicView::BasicView(QIcon icon)
     refreshButton = new QPushButton(tr("Refresh GUI"));
     dockerEnvButton = new QPushButton("docker-env");
     mountButton = new QPushButton(tr("mount"));
+    tunnelButton = new QPushButton(tr("tunnel"));
     sshButton = new QPushButton("SSH");
     dashboardButton = new QPushButton(tr("Dashboard"));
     advancedButton = new QPushButton(tr("Multi-cluster View"));
@@ -75,6 +76,7 @@ BasicView::BasicView(QIcon icon)
     buttonLayoutRow2->addWidget(refreshButton);
     buttonLayoutRow2->addWidget(dockerEnvButton);
     buttonLayoutRow2->addWidget(mountButton);
+    buttonLayoutRow2->addWidget(tunnelButton);
     buttonLayoutRow2->addWidget(sshButton);
     buttonLayoutRow2->addWidget(dashboardButton);
     buttonLayoutRow2->addWidget(advancedButton);
@@ -94,6 +96,7 @@ BasicView::BasicView(QIcon icon)
     connect(refreshButton, &QAbstractButton::clicked, this, &BasicView::refresh);
     connect(dockerEnvButton, &QAbstractButton::clicked, this, &BasicView::dockerEnv);
     connect(mountButton, &QAbstractButton::clicked, this, &BasicView::askMount);
+    connect(tunnelButton, &QAbstractButton::clicked, this, &BasicView::tunnel);
     connect(sshButton, &QAbstractButton::clicked, this, &BasicView::ssh);
     connect(dashboardButton, &QAbstractButton::clicked, this, &BasicView::dashboard);
     connect(advancedButton, &QAbstractButton::clicked, this, &BasicView::advanced);

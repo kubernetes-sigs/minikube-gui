@@ -65,6 +65,8 @@ private:
     void sshConsole();
     void dockerEnv();
     void mount(QString, QString);
+    void tunnelClean();
+    void tunnel();
     void dashboardBrowser();
     void dashboardClose();
     void mountClose();
@@ -86,6 +88,7 @@ private:
     bool m_isBasicView;
     QProcess *dashboardProcess;
     QProcess *mountProcess;
+    QProcess *tunnelProcess;
     QStackedWidget *m_stackedWidget;
     QDialog *m_parent;
     MountList m_mountList;

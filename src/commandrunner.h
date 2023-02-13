@@ -42,6 +42,7 @@ public:
     void unpauseMinikube(QStringList args);
     void deleteMinikube(QStringList args);
     void mountMinikube(QStringList args, QProcess *process);
+    void tunnelMinikube(QStringList args, QProcess *process);
     void dashboardMinikube(QStringList args, QProcess *process);
     void stopCommand();
     void requestClusters();
