@@ -19,8 +19,7 @@ limitations under the License.
 
 #include "advancedview.h"
 #include "basicview.h"
-#include "serviceView.h"
-#include "serviceView.h"
+#include "serviceview.h"
 #include "cluster.h"
 #include "commandrunner.h"
 #include "errormessage.h"

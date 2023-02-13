@@ -191,7 +191,7 @@ void Operator::updateClusters()
 
 void Operator::updateServices()
 {
-    m_commandRunner->requestServiceList();
+    m_commandRunner->requestServiceList(selectedClusterName());
 }
 
 void Operator::clustersReceived(ClusterList clusterList)

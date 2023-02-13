@@ -14,14 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#include "serviceView.h"
-
-#include <QDialogButtonBox>
-#include <QDir>
-#include <QFormLayout>
-#include <QLabel>
-#include <QTextEdit>
-#include <QTextOption>
+#include "serviceview.h"
 
 #include <QDialogButtonBox>
 #include <QDir>

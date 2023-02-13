@@ -48,7 +48,7 @@ QT_END_NAMESPACE
 
 #include "advancedview.h"
 #include "basicview.h"
-#include "serviceView.h"
+#include "serviceview.h"
 #include "errormessage.h"
 #include "hyperkit.h"
 #include "logger.h"

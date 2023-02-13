@@ -18,7 +18,7 @@ limitations under the License.
 #include "paths.h"
 #include "fonts.h"
 #include "constants.h"
-#include "serviceView.h"
+#include "serviceview.h"
 
 #ifndef QT_NO_SYSTEMTRAYICON
 

@@ -270,10 +270,10 @@ void CommandRunner::requestClusters()
     executeMinikubeCommand(args);
 }
 
-void CommandRunner::requestServiceList()
+void CommandRunner::requestServiceList(QString pName)
 {
     m_command = "service";
-    QStringList args = { "service", "list" };
+    QStringList args = {"-p", pName, "service", "list" };
     executeMinikubeCommand(args);
 }
 

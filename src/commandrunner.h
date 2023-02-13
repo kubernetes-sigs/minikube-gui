@@ -46,7 +46,7 @@ public:
     void dashboardMinikube(QStringList args, QProcess *process);
     void stopCommand();
     void requestClusters();
-    void requestServiceList();
+    void requestServiceList(QString profName);
     bool isRunning();
 
 signals:
