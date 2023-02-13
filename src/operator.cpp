@@ -25,13 +25,14 @@ limitations under the License.
 #include <QStandardPaths>
 #include <QDebug>
 
-Operator::Operator(AdvancedView *advancedView, BasicView *basicView, CommandRunner *commandRunner,
-                   ErrorMessage *errorMessage, ProgressWindow *progressWindow, Tray *tray,
-                   HyperKit *hyperKit, Updater *updater, QStackedWidget *stackedWidget,
-                   QDialog *parent)
+Operator::Operator(AdvancedView *advancedView, BasicView *basicView, ServiceView *serviceView,
+                   CommandRunner *commandRunner, ErrorMessage *errorMessage,
+                   ProgressWindow *progressWindow, Tray *tray, HyperKit *hyperKit, Updater *updater,
+                   QStackedWidget *stackedWidget, QDialog *parent)
 {
     m_advancedView = advancedView;
     m_basicView = basicView;
+    m_serviceView = serviceView;
     m_commandRunner = commandRunner;
     m_errorMessage = errorMessage;
     m_progressWindow = progressWindow;
@@ -49,6 +50,7 @@ Operator::Operator(AdvancedView *advancedView, BasicView *basicView, CommandRunn
     connect(m_basicView, &BasicView::delete_, this, &Operator::deleteMinikube);
     connect(m_basicView, &BasicView::refresh, this, &Operator::updateClusters);
     connect(m_basicView, &BasicView::dockerEnv, this, &Operator::dockerEnv);
+    connect(m_basicView, &BasicView::service, this, &Operator::updateServices);
     connect(m_basicView, &BasicView::mount, this, &Operator::mount);
     connect(m_basicView, &BasicView::closeMount, this, &Operator::mountClose);
     connect(m_basicView, &BasicView::tunnel, this, &Operator::tunnel);
@@ -74,6 +76,7 @@ Operator::Operator(AdvancedView *advancedView, BasicView *basicView, CommandRunn
     connect(m_commandRunner, &CommandRunner::output, this, &Operator::commandOutput);
     connect(m_commandRunner, &CommandRunner::error, this, &Operator::commandError);
     connect(m_commandRunner, &CommandRunner::updatedClusters, this, &Operator::clustersReceived);
+    connect(m_commandRunner, &CommandRunner::updatedServices, this, &Operator::servicesReceived);
     connect(m_commandRunner, &CommandRunner::startCommandStarting, this,
             &Operator::startCommandStarting);
 
@@ -186,6 +189,11 @@ void Operator::updateClusters()
     m_commandRunner->requestClusters();
 }
 
+void Operator::updateServices()
+{
+    m_commandRunner->requestServiceList(selectedClusterName());
+}
+
 void Operator::clustersReceived(ClusterList clusterList)
 {
     m_clusterList = clusterList;
@@ -194,6 +202,11 @@ void Operator::clustersReceived(ClusterList clusterList)
     m_advancedView->hideLoading();
     m_parent->unsetCursor();
     m_updater->checkForUpdates();
+}
+
+void Operator::servicesReceived(QString svcTable)
+{
+    m_serviceView->displayTable(svcTable);
 }
 
 void Operator::updateButtons()

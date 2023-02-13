@@ -48,6 +48,7 @@ QT_END_NAMESPACE
 
 #include "advancedview.h"
 #include "basicview.h"
+#include "serviceview.h"
 #include "errormessage.h"
 #include "hyperkit.h"
 #include "logger.h"
@@ -79,6 +80,7 @@ private:
     void notifyUpdate(QString latest, QString link);
 
     BasicView *basicView;
+    ServiceView *serviceView;
     AdvancedView *advancedView;
     Operator *op;
     CommandRunner *commandRunner;

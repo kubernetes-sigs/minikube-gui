@@ -270,6 +270,13 @@ void CommandRunner::requestClusters()
     executeMinikubeCommand(args);
 }
 
+void CommandRunner::requestServiceList(QString pName)
+{
+    m_command = "service";
+    QStringList args = { "-p", pName, "service", "list" };
+    executeMinikubeCommand(args);
+}
+
 void CommandRunner::executionCompleted()
 {
     m_isRunning = false;
@@ -287,6 +294,9 @@ void CommandRunner::executionCompleted()
     if (cmd == "cluster") {
         ClusterList clusterList = jsonToClusterList(output);
         emit updatedClusters(clusterList);
+    }
+    if (cmd == "service") {
+        emit updatedServices(output);
     }
 }
 

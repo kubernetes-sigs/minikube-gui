@@ -44,13 +44,14 @@ BasicView::BasicView(QIcon icon)
     stopButton = new QPushButton(Constants::stopIcon);
     pauseButton = new QPushButton(Constants::pauseIcon);
     deleteButton = new QPushButton(Constants::deleteIcon);
-    refreshButton = new QPushButton(tr("Refresh GUI"));
+    refreshButton = new QPushButton(tr("refresh gui"));
     dockerEnvButton = new QPushButton("docker-env");
+    serviceButton = new QPushButton("service");
     mountButton = new QPushButton(tr("mount"));
     tunnelButton = new QPushButton(tr("tunnel"));
     sshButton = new QPushButton("SSH");
-    dashboardButton = new QPushButton(tr("Dashboard"));
-    advancedButton = new QPushButton(tr("Multi-cluster View"));
+    dashboardButton = new QPushButton(tr("dashboard"));
+    advancedButton = new QPushButton(tr("cluster list"));
 
     Fonts::setFontAwesome(startButton);
     Fonts::setFontAwesome(stopButton);
@@ -75,6 +76,7 @@ BasicView::BasicView(QIcon icon)
     QVBoxLayout *buttonLayoutRow2 = new QVBoxLayout;
     buttonLayoutRow2->addWidget(refreshButton);
     buttonLayoutRow2->addWidget(dockerEnvButton);
+    buttonLayoutRow2->addWidget(serviceButton);
     buttonLayoutRow2->addWidget(mountButton);
     buttonLayoutRow2->addWidget(tunnelButton);
     buttonLayoutRow2->addWidget(sshButton);
@@ -95,6 +97,7 @@ BasicView::BasicView(QIcon icon)
     connect(deleteButton, &QAbstractButton::clicked, this, &BasicView::delete_);
     connect(refreshButton, &QAbstractButton::clicked, this, &BasicView::refresh);
     connect(dockerEnvButton, &QAbstractButton::clicked, this, &BasicView::dockerEnv);
+    connect(serviceButton, &QPushButton::clicked, this, &BasicView::service);
     connect(mountButton, &QAbstractButton::clicked, this, &BasicView::askMount);
     connect(tunnelButton, &QAbstractButton::clicked, this, &BasicView::tunnel);
     connect(sshButton, &QAbstractButton::clicked, this, &BasicView::ssh);
@@ -152,17 +155,21 @@ void BasicView::update(Cluster cluster)
     bool isRunning = cluster.status() == "Running";
     bool isPaused = cluster.status() == "Paused";
     topStatus->setText(cluster.status());
+    serviceButton->setEnabled(isRunning || isPaused);
     stopButton->setEnabled(isRunning || isPaused);
     pauseButton->setEnabled(isRunning || isPaused);
-    mountButton->setEnabled(isRunning || isPaused);
     deleteButton->setEnabled(exists);
     dashboardButton->setEnabled(isRunning);
 #if __linux__ || __APPLE__
-    dockerEnvButton->setEnabled(isRunning);
-    sshButton->setEnabled(exists);
+    dockerEnvButton->setEnabled(isRunning || isPaused);
+    sshButton->setEnabled(isRunning || isPaused);
+    mountButton->setEnabled(isRunning || isPaused);
+    tunnelButton->setEnabled(isRunning || isPaused);
 #else
     dockerEnvButton->setEnabled(false);
     sshButton->setEnabled(false);
+    mountButton->setEnabled(false);
+    tunnelButton->setEnabled(false);
 #endif
     pauseButton->setText(getPauseLabel(isPaused));
     pauseButton->setToolTip(getPauseToolTip(isPaused));
@@ -182,6 +189,8 @@ void BasicView::disableButtons()
     deleteButton->setEnabled(false);
     pauseButton->setEnabled(false);
     dockerEnvButton->setEnabled(false);
+    serviceButton->setEnabled(false);
+    tunnelButton->setEnabled(false);
     mountButton->setEnabled(false);
     sshButton->setEnabled(false);
     dashboardButton->setEnabled(false);

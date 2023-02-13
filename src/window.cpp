@@ -18,6 +18,7 @@ limitations under the License.
 #include "paths.h"
 #include "fonts.h"
 #include "constants.h"
+#include "serviceview.h"
 
 #ifndef QT_NO_SYSTEMTRAYICON
 
@@ -69,6 +70,7 @@ Window::Window()
     logger = new Logger();
     commandRunner = new CommandRunner(this, logger);
     basicView = new BasicView(*trayIconIcon);
+    serviceView = new ServiceView(this, *trayIconIcon);
     advancedView = new AdvancedView(*trayIconIcon);
     errorMessage = new ErrorMessage(this, *trayIconIcon);
     progressWindow = new ProgressWindow(this, *trayIconIcon);
@@ -76,8 +78,8 @@ Window::Window()
     hyperKit = new HyperKit(*trayIconIcon);
     updater = new Updater(version, *trayIconIcon);
 
-    op = new Operator(advancedView, basicView, commandRunner, errorMessage, progressWindow, tray,
-                      hyperKit, updater, stackedWidget, this);
+    op = new Operator(advancedView, basicView, serviceView, commandRunner, errorMessage,
+                      progressWindow, tray, hyperKit, updater, stackedWidget, this);
 
     stackedWidget->addWidget(basicView->basicView);
     stackedWidget->addWidget(advancedView->advancedView);

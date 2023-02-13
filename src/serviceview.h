@@ -5,7 +5,7 @@ Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
-http://www.apache.org/licenses/LICENSE-2.0
+ http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,24 +14,27 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#ifndef CONSTANTS_H
-#define CONSTANTS_H
+#ifndef SERVICEVIEW_H
+#define SERVICEVIEW_H
 
+#include <QObject>
+#include <QIcon>
 #include <QString>
+#include <QDialog>
 
-class Constants
+class ServiceView : public QObject
 {
+    Q_OBJECT
+
 public:
-    //    golden ration
-    const static int basicViewHeight = 405;
-    const static int basicViewWidth = 250;
-    static const QString startIcon;
-    static const QString stopIcon;
-    static const QString pauseIcon;
-    static const QString unPauseIcon;
-    static const QString deleteIcon;
-    static const QString reloadIcon;
-    static const QString createIcon;
+    explicit ServiceView(QDialog *parent, QIcon icon);
+
+    void displayTable(QString);
+
+private:
+    QDialog *m_dialog;
+    QIcon m_icon;
+    QDialog *m_parent;
 };
 
-#endif // CONSTANTS_H
+#endif // SERVICEVIEW_H
