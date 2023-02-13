@@ -12,7 +12,7 @@ HEADERS       = src/window.h \
                 src/operator.h \
                 src/paths.h \
                 src/progresswindow.h \
-                src/serviceView.h \
+                src/serviceview.h \
                 src/tray.h \
                 src/updater.h
 SOURCES       = src/main.cpp \
@@ -29,7 +29,7 @@ SOURCES       = src/main.cpp \
                 src/operator.cpp \
                 src/paths.cpp \
                 src/progresswindow.cpp \
-                src/serviceView.cpp \
+                src/serviceview.cpp \
                 src/tray.cpp \
                 src/updater.cpp \
                 src/window.cpp
