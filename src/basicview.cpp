@@ -191,7 +191,7 @@ void BasicView::disableButtons()
     sshButton->setEnabled(false);
     dashboardButton->setEnabled(false);
     advancedButton->setEnabled(false);
-    refreshButton->setEnabled(false);    
+    refreshButton->setEnabled(false);
 }
 
 void BasicView::askMount()
