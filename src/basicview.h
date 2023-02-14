@@ -49,6 +49,7 @@ signals:
     void mount(QString, QString);
     void closeMount();
     void tunnel();
+    void addons();
 
 private:
     QLabel *topStatus;
@@ -63,6 +64,7 @@ private:
     QPushButton *tunnelButton;
     QPushButton *sshButton;
     QPushButton *dashboardButton;
+    QPushButton *addonsButton;
     QPushButton *advancedButton;
     QIcon m_icon;
     MountList m_mountList;
