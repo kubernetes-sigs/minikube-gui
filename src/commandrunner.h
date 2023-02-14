@@ -18,6 +18,7 @@ limitations under the License.
 #define COMMANDRUNNER_H
 
 #include "cluster.h"
+#include "addon.h"
 #include "logger.h"
 
 #include <QDialog>
@@ -47,6 +48,7 @@ public:
     void stopCommand();
     void requestClusters();
     void requestServiceList(QString profName);
+    void requestAddons(QString profName);
     bool isRunning();
 
 signals:
@@ -56,6 +58,7 @@ signals:
     void error(QStringList args, QString text);
     void updatedClusters(ClusterList clusterList);
     void updatedServices(QString);
+    void updatedAddons(AddonList);
     void startCommandStarting();
 
 private slots:

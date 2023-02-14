@@ -71,6 +71,7 @@ Window::Window()
     commandRunner = new CommandRunner(this, logger);
     basicView = new BasicView(*trayIconIcon);
     serviceView = new ServiceView(this, *trayIconIcon);
+    addonsView = new AddonsView(*trayIconIcon);
     advancedView = new AdvancedView(*trayIconIcon);
     errorMessage = new ErrorMessage(this, *trayIconIcon);
     progressWindow = new ProgressWindow(this, *trayIconIcon);
@@ -78,7 +79,7 @@ Window::Window()
     hyperKit = new HyperKit(*trayIconIcon);
     updater = new Updater(version, *trayIconIcon);
 
-    op = new Operator(advancedView, basicView, serviceView, commandRunner, errorMessage,
+    op = new Operator(advancedView, basicView, serviceView, addonsView, commandRunner, errorMessage,
                       progressWindow, tray, hyperKit, updater, stackedWidget, this);
 
     stackedWidget->addWidget(basicView->basicView);

@@ -56,6 +56,7 @@ QT_END_NAMESPACE
 #include "progresswindow.h"
 #include "tray.h"
 #include "updater.h"
+#include "addonsview.h"
 
 class Window : public QDialog
 {
@@ -81,6 +82,7 @@ private:
 
     BasicView *basicView;
     ServiceView *serviceView;
+    AddonsView *addonsView;
     AdvancedView *advancedView;
     Operator *op;
     CommandRunner *commandRunner;

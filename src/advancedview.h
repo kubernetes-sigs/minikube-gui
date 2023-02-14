@@ -71,6 +71,7 @@ private:
     QPushButton *createButton;
     QLabel *loading;
     ClusterModel *m_clusterModel;
+
     QIcon m_icon;
 };
 

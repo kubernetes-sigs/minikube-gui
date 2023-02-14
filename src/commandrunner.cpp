@@ -16,7 +16,7 @@ limitations under the License.
 
 #include "commandrunner.h"
 #include "paths.h"
-
+#include "addon.h"
 #include <QDebug>
 #include <QDir>
 #include <QJsonArray>
@@ -263,6 +263,39 @@ static ClusterList jsonToClusterList(QString text)
     return clusters;
 }
 
+// TODO: refactor this to a more reusable place
+static AddonList jsonToAddonList(QString text)
+{
+    AddonList addons;
+    QStringList lines;
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
+    lines = text.split("\n", Qt::SkipEmptyParts);
+#else
+    lines = text.split("\n", QString::SkipEmptyParts);
+#endif
+    for (int i = 0; i < lines.size(); i++) {
+        QString line = lines.at(i);
+        QJsonParseError error;
+        QJsonDocument json = QJsonDocument::fromJson(line.toUtf8(), &error);
+        if (json.isNull()) {
+            qDebug() << error.errorString();
+            continue;
+        }
+        if (!json.isObject()) {
+            continue;
+        }
+        QJsonObject js = json.object();
+        foreach (const QString &key, js.keys()) {
+            QJsonObject x = js.value(key).toObject(); // this will be { "Profile": "minikube",
+                                                      // "Status": "disabled"}
+            qDebug() << "Key = " << key << ", Value = " << js.value(key).toString();
+            Addon addon(key, x["Status"].toString());
+            addons << addon;
+        }
+    }
+    return addons;
+}
+
 void CommandRunner::requestClusters()
 {
     m_command = "cluster";
@@ -274,6 +307,13 @@ void CommandRunner::requestServiceList(QString pName)
 {
     m_command = "service";
     QStringList args = { "-p", pName, "service", "list" };
+    executeMinikubeCommand(args);
+}
+
+void CommandRunner::requestAddons(QString pName)
+{
+    m_command = "addons";
+    QStringList args = { "addons", "-p", pName, "list", "-o", "json" };
     executeMinikubeCommand(args);
 }
 
@@ -297,6 +337,10 @@ void CommandRunner::executionCompleted()
     }
     if (cmd == "service") {
         emit updatedServices(output);
+    }
+    if (cmd == "addons") {
+        AddonList addonList = jsonToAddonList(output);
+        emit updatedAddons(addonList);
     }
 }
 
