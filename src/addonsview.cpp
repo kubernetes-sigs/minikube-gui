@@ -21,6 +21,7 @@ limitations under the License.
 #include <QVBoxLayout>
 #include <QHeaderView>
 #include <QDialog>
+#include <qDebug>
 
 AddonsView::AddonsView(QIcon icon)
 {
@@ -37,9 +38,9 @@ AddonsView::AddonsView(QIcon icon)
     addonListView->setModel(m_addonModel);
     addonListView->setSelectionMode(QAbstractItemView::SingleSelection);
     addonListView->setSelectionBehavior(QAbstractItemView::SelectRows);
-    addonListView->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
-    addonListView->horizontalHeader()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
-    addonListView->horizontalHeader()->setSectionResizeMode(2, QHeaderView::ResizeToContents);
+//    addonListView->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
+//    addonListView->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
+//    addonListView->horizontalHeader()->setSectionResizeMode(2, QHeaderView::Stretch);
 
     refreshButton = new QPushButton(tr("Refresh"));
     QVBoxLayout *bottomLayout = new QVBoxLayout;
@@ -54,6 +55,8 @@ AddonsView::AddonsView(QIcon icon)
 
 void AddonsView::updateAddonsTable(AddonList addonList)
 {
+    qDebug() << "inside updateAddonsTable";
+    qDebug() << addonList.size();
     m_addonModel->setAddonList(addonList);
 }
 

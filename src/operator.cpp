@@ -221,6 +221,7 @@ void Operator::servicesReceived(QString svcTable)
 void Operator::addonsReceived(AddonList as)
 {
 
+    qDebug() << as.size();
     m_addonsView->updateAddonsTable(as);
 }
 

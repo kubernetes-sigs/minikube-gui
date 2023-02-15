@@ -3,9 +3,11 @@
 #include <QString>
 
 #include <QStringList>
+#include <qDebug>
 
 void AddonModel::setAddonList(const AddonList &addons)
 {
+    qDebug() << "inside AddonModel::setAddonList";
     beginResetModel();
     addonList = addons;
     endResetModel();

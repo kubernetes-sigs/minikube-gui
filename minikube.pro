@@ -1,4 +1,6 @@
 HEADERS       = src/window.h \
+                src/addon.h \
+                src/addonsview.h \
                 src/advancedview.h \
                 src/basicview.h \
                 src/cluster.h \
@@ -16,6 +18,8 @@ HEADERS       = src/window.h \
                 src/tray.h \
                 src/updater.h
 SOURCES       = src/main.cpp \
+                src/addon.cpp \
+                src/addonsview.cpp \
                 src/advancedview.cpp \
                 src/basicview.cpp \
                 src/cluster.cpp \
