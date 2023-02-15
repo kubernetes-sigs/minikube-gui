@@ -32,7 +32,6 @@ class AddonsView : public QObject
 
 public:
     explicit AddonsView(QIcon icon);
-    //    QWidget *addonsView;
     QTableView *addonListView;
     void update(Addon addon);
     void updateAddonsTable(AddonList addonList);

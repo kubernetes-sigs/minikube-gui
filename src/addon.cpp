@@ -3,7 +3,7 @@
 #include <QString>
 
 #include <QStringList>
-#include <qDebug>
+#include <QDebug>
 
 void AddonModel::setAddonList(const AddonList &addons)
 {

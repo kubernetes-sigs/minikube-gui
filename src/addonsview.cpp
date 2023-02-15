@@ -15,13 +15,12 @@ limitations under the License.
 */
 
 #include "addonsview.h"
-#include "constants.h"
 
 #include <QTableView>
 #include <QVBoxLayout>
 #include <QHeaderView>
 #include <QDialog>
-#include <qDebug>
+#include <QDebug>
 
 AddonsView::AddonsView(QIcon icon)
 {
@@ -32,15 +31,16 @@ AddonsView::AddonsView(QIcon icon)
     m_dialog->setFixedWidth(600);
     m_dialog->setModal(true);
 
-    //    addonsView = new QWidget();
+    AddonList addons;
+    m_addonModel = new AddonModel(addons);
 
     addonListView = new QTableView();
     addonListView->setModel(m_addonModel);
     addonListView->setSelectionMode(QAbstractItemView::SingleSelection);
     addonListView->setSelectionBehavior(QAbstractItemView::SelectRows);
-//    addonListView->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
-//    addonListView->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
-//    addonListView->horizontalHeader()->setSectionResizeMode(2, QHeaderView::Stretch);
+    addonListView->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
+    addonListView->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
+    addonListView->horizontalHeader()->setSectionResizeMode(2, QHeaderView::Stretch);
 
     refreshButton = new QPushButton(tr("Refresh"));
     QVBoxLayout *bottomLayout = new QVBoxLayout;
