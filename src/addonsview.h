@@ -14,21 +14,35 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#ifndef FONTS_H
-#define FONTS_H
+#ifndef ADDONSVIEW_H
+#define ADDONSVIEW_H
 
-#include <QWidget>
+#include "addon.h"
 
-class Fonts
+#include <QPushButton>
+#include <QTableView>
+
+class AddonsView : public QObject
 {
+    Q_OBJECT
+
 public:
-    static void initFonts();
-    static void setFontAwesome(QWidget *wid);
+    explicit AddonsView(QIcon icon);
+    QTableView *addonListView;
+    void update(Addon addon);
+    void updateAddonsTable(AddonList addonList);
+    void display();
+signals:
+    void refresh();
+    void addonClicked(QString addonName, QString action);
 
 private:
-    static void loadFontAwesome();
-    static void setToolTipStyle();
-    static QFont fontAwesome;
+    QIcon m_icon;
+    AddonModel *m_addonModel;
+    QPushButton *refreshButton;
+    QDialog *m_dialog;
+    QDialog *m_parent;
+    QList<QPushButton> *buttonList;
 };
 
-#endif // FONTS_H
+#endif // ADDONSVIEW_H

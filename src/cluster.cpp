@@ -16,8 +16,6 @@ limitations under the License.
 
 #include "cluster.h"
 
-#include <QStringList>
-
 void ClusterModel::setClusters(const ClusterList &clusters)
 {
     beginResetModel();

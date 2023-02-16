@@ -16,11 +16,9 @@ limitations under the License.
 
 #include "commandrunner.h"
 #include "paths.h"
+#include "addon.h"
 
-#include <QDebug>
-#include <QDir>
 #include <QJsonArray>
-#include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonParseError>
 #include <QStandardPaths>
@@ -90,6 +88,7 @@ void CommandRunner::startMinikube(QStringList args)
 
 void CommandRunner::stopMinikube(QStringList args)
 {
+    m_command = "stop";
     QStringList baseArgs = { "stop" };
     baseArgs << args;
     executeMinikubeCommand(baseArgs);
@@ -97,6 +96,7 @@ void CommandRunner::stopMinikube(QStringList args)
 
 void CommandRunner::pauseMinikube(QStringList args)
 {
+    m_command = "pause";
     QStringList baseArgs = { "pause" };
     baseArgs << args;
     executeMinikubeCommand(baseArgs);
@@ -104,6 +104,7 @@ void CommandRunner::pauseMinikube(QStringList args)
 
 void CommandRunner::unpauseMinikube(QStringList args)
 {
+    m_command = "unpause";
     QStringList baseArgs = { "unpause" };
     baseArgs << args;
     executeMinikubeCommand(baseArgs);
@@ -124,7 +125,7 @@ void CommandRunner::mountMinikube(QStringList args, QProcess *process)
     executeMinikubeCommand(baseArgs, process);
 }
 
-void CommandRunner::tunnelMinikube(QStringList args, QProcess *process)
+void CommandRunner::tunnelMinikube(QStringList args)
 {
     QStringList baseArgs = { "tunnel" };
     baseArgs << args;
@@ -169,6 +170,14 @@ void CommandRunner::tunnelMinikube(QStringList args, QProcess *process)
 
     executeCommand(QStandardPaths::findExecutable(terminal), { "-e", command });
 #endif
+}
+
+void CommandRunner::addonsMinikube(QStringList args)
+{
+    m_command = "addonsEnableDisable";
+    QStringList baseArgs = { "addons" };
+    baseArgs << args;
+    executeMinikubeCommand(baseArgs);
 }
 
 void CommandRunner::dashboardMinikube(QStringList args, QProcess *process)
@@ -263,6 +272,39 @@ static ClusterList jsonToClusterList(QString text)
     return clusters;
 }
 
+// TODO: refactor this to a more reusable place
+static AddonList jsonToAddonList(QString text)
+{
+    AddonList addons;
+    QStringList lines;
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
+    lines = text.split("\n", Qt::SkipEmptyParts);
+#else
+    lines = text.split("\n", QString::SkipEmptyParts);
+#endif
+    for (int i = 0; i < lines.size(); i++) {
+        QString line = lines.at(i);
+        QJsonParseError error;
+        QJsonDocument json = QJsonDocument::fromJson(line.toUtf8(), &error);
+        if (json.isNull()) {
+            qDebug() << error.errorString();
+            continue;
+        }
+        if (!json.isObject()) {
+            continue;
+        }
+        QJsonObject js = json.object();
+        foreach (const QString &key, js.keys()) {
+            QJsonObject x = js.value(key).toObject(); // this will be { "Profile": "minikube",
+                                                      // "Status": "disabled"}
+            qDebug() << "Key = " << key << ", Value = " << js.value(key).toString();
+            Addon addon(key, x["Status"].toString());
+            addons << addon;
+        }
+    }
+    return addons;
+}
+
 void CommandRunner::requestClusters()
 {
     m_command = "cluster";
@@ -277,6 +319,13 @@ void CommandRunner::requestServiceList(QString pName)
     executeMinikubeCommand(args);
 }
 
+void CommandRunner::requestAddons(QString pName)
+{
+    m_command = "addons";
+    QStringList args = { "addons", "-p", pName, "list", "-o", "json" };
+    executeMinikubeCommand(args);
+}
+
 void CommandRunner::executionCompleted()
 {
     m_isRunning = false;
@@ -285,7 +334,7 @@ void CommandRunner::executionCompleted()
     QString output = m_output;
     int exitCode = m_process->exitCode();
     delete m_process;
-    if (cmd != "cluster") {
+    if (cmd == "start" || cmd == "stop" || cmd == "pause" || cmd == "unpause" || cmd == "delete") {
         emit executionEnded();
     }
     if (cmd == "start" && exitCode != 0) {
@@ -297,6 +346,13 @@ void CommandRunner::executionCompleted()
     }
     if (cmd == "service") {
         emit updatedServices(output);
+    }
+    if (cmd == "addons") {
+        AddonList addonList = jsonToAddonList(output);
+        emit updatedAddons(addonList);
+    }
+    if (cmd == "addonsEnableDisable") {
+        emit addonsComplete();
     }
 }
 

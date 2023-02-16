@@ -17,15 +17,6 @@ limitations under the License.
 #ifndef WINDOW_H
 #define WINDOW_H
 
-#include <QFormLayout>
-#include <QProcessEnvironment>
-#include <QProgressBar>
-#include <QStackedWidget>
-#include <QSystemTrayIcon>
-#include <QVersionNumber>
-#include <QtNetwork/QNetworkAccessManager>
-#include <QtNetwork/QNetworkReply>
-
 #ifndef QT_NO_SYSTEMTRAYICON
 
 #include <QDialog>
@@ -56,6 +47,7 @@ QT_END_NAMESPACE
 #include "progresswindow.h"
 #include "tray.h"
 #include "updater.h"
+#include "addonsview.h"
 
 class Window : public QDialog
 {
@@ -81,6 +73,7 @@ private:
 
     BasicView *basicView;
     ServiceView *serviceView;
+    AddonsView *addonsView;
     AdvancedView *advancedView;
     Operator *op;
     CommandRunner *commandRunner;

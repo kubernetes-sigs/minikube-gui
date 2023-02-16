@@ -20,6 +20,7 @@ limitations under the License.
 #include "advancedview.h"
 #include "basicview.h"
 #include "serviceview.h"
+#include "addonsview.h"
 #include "cluster.h"
 #include "commandrunner.h"
 #include "errormessage.h"
@@ -36,7 +37,7 @@ class Operator : public QObject
 
 public:
     Operator(AdvancedView *advancedView, BasicView *basicView, ServiceView *serviceView,
-             CommandRunner *commandRunner, ErrorMessage *errorMessage,
+             AddonsView *addonsView, CommandRunner *commandRunner, ErrorMessage *errorMessage,
              ProgressWindow *progressWindow, Tray *tray, HyperKit *hyperKit, Updater *updater,
              QStackedWidget *stackedWidget, QDialog *parent);
 
@@ -58,7 +59,9 @@ private slots:
     void updateButtons();
     void clustersReceived(ClusterList clusterList);
     void servicesReceived(QString);
+    void addonsReceived(AddonList as);
     void startCommandStarting();
+    void addonsComplete();
 
 private:
     QStringList getCurrentClusterFlags();
@@ -71,6 +74,7 @@ private:
     void mount(QString, QString);
     void tunnelClean();
     void tunnel();
+    void addonsEnableDisable(QString addonName, QString action);
     void dashboardBrowser();
     void dashboardClose();
     void mountClose();
@@ -79,10 +83,13 @@ private:
     void restoreWindow();
     void hideWindow();
     void disableButtons();
+    void updateAddons();
+    void displayAddons();
 
     AdvancedView *m_advancedView;
     BasicView *m_basicView;
     ServiceView *m_serviceView;
+    AddonsView *m_addonsView;
     CommandRunner *m_commandRunner;
     ErrorMessage *m_errorMessage;
     ProgressWindow *m_progressWindow;

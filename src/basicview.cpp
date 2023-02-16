@@ -18,12 +18,6 @@ limitations under the License.
 #include "fonts.h"
 #include "constants.h"
 
-#include <QDebug>
-#include <QFont>
-#include <QFontDatabase>
-#include <QToolTip>
-#include <QVBoxLayout>
-#include <QLabel>
 #include <QDialog>
 #include <QFormLayout>
 #include <QDialogButtonBox>
@@ -51,6 +45,7 @@ BasicView::BasicView(QIcon icon)
     tunnelButton = new QPushButton(tr("tunnel"));
     sshButton = new QPushButton("SSH");
     dashboardButton = new QPushButton(tr("dashboard"));
+    addonsButton = new QPushButton(tr("addons"));
     advancedButton = new QPushButton(tr("cluster list"));
 
     Fonts::setFontAwesome(startButton);
@@ -81,6 +76,7 @@ BasicView::BasicView(QIcon icon)
     buttonLayoutRow2->addWidget(tunnelButton);
     buttonLayoutRow2->addWidget(sshButton);
     buttonLayoutRow2->addWidget(dashboardButton);
+    buttonLayoutRow2->addWidget(addonsButton);
     buttonLayoutRow2->addWidget(advancedButton);
 
     QVBoxLayout *BasicLayout = new QVBoxLayout;
@@ -102,6 +98,7 @@ BasicView::BasicView(QIcon icon)
     connect(tunnelButton, &QAbstractButton::clicked, this, &BasicView::tunnel);
     connect(sshButton, &QAbstractButton::clicked, this, &BasicView::ssh);
     connect(dashboardButton, &QAbstractButton::clicked, this, &BasicView::dashboard);
+    connect(addonsButton, &QAbstractButton::clicked, this, &BasicView::addons);
     connect(advancedButton, &QAbstractButton::clicked, this, &BasicView::advanced);
 }
 
@@ -160,6 +157,7 @@ void BasicView::update(Cluster cluster)
     pauseButton->setEnabled(isRunning || isPaused);
     deleteButton->setEnabled(exists);
     dashboardButton->setEnabled(isRunning);
+    addonsButton->setEnabled(isRunning);
 #if __linux__ || __APPLE__
     dockerEnvButton->setEnabled(isRunning || isPaused);
     sshButton->setEnabled(isRunning || isPaused);
@@ -194,6 +192,7 @@ void BasicView::disableButtons()
     mountButton->setEnabled(false);
     sshButton->setEnabled(false);
     dashboardButton->setEnabled(false);
+    addonsButton->setEnabled(false);
     advancedButton->setEnabled(false);
     refreshButton->setEnabled(false);
 }

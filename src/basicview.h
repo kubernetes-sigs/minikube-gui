@@ -20,10 +20,9 @@ limitations under the License.
 #include "cluster.h"
 #include "mount.h"
 
-#include <QObject>
 #include <QPushButton>
 #include <QLabel>
-#include <QString>
+
 class BasicView : public QObject
 {
     Q_OBJECT
@@ -49,6 +48,7 @@ signals:
     void mount(QString, QString);
     void closeMount();
     void tunnel();
+    void addons();
 
 private:
     QLabel *topStatus;
@@ -63,6 +63,7 @@ private:
     QPushButton *tunnelButton;
     QPushButton *sshButton;
     QPushButton *dashboardButton;
+    QPushButton *addonsButton;
     QPushButton *advancedButton;
     QIcon m_icon;
     MountList m_mountList;

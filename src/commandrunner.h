@@ -18,15 +18,11 @@ limitations under the License.
 #define COMMANDRUNNER_H
 
 #include "cluster.h"
+#include "addon.h"
 #include "logger.h"
 
 #include <QDialog>
-#include <QIcon>
-#include <QObject>
-#include <QProcess>
 #include <QProcessEnvironment>
-#include <QString>
-#include <QStringList>
 
 class CommandRunner : public QObject
 {
@@ -42,11 +38,13 @@ public:
     void unpauseMinikube(QStringList args);
     void deleteMinikube(QStringList args);
     void mountMinikube(QStringList args, QProcess *process);
-    void tunnelMinikube(QStringList args, QProcess *process);
+    void tunnelMinikube(QStringList args);
+    void addonsMinikube(QStringList args);
     void dashboardMinikube(QStringList args, QProcess *process);
     void stopCommand();
     void requestClusters();
     void requestServiceList(QString profName);
+    void requestAddons(QString profName);
     bool isRunning();
 
 signals:
@@ -56,7 +54,9 @@ signals:
     void error(QStringList args, QString text);
     void updatedClusters(ClusterList clusterList);
     void updatedServices(QString);
+    void updatedAddons(AddonList);
     void startCommandStarting();
+    void addonsComplete();
 
 private slots:
     void executionCompleted();

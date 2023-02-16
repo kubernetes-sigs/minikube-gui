@@ -22,35 +22,10 @@ limitations under the License.
 
 #ifndef QT_NO_SYSTEMTRAYICON
 
-#include <QAction>
-#include <QCheckBox>
 #include <QCloseEvent>
-#include <QComboBox>
-#include <QCoreApplication>
-#include <QDebug>
 #include <QDialogButtonBox>
-#include <QDir>
-#include <QFontDialog>
-#include <QFormLayout>
-#include <QGroupBox>
-#include <QHeaderView>
-#include <QJsonArray>
-#include <QJsonDocument>
-#include <QJsonObject>
-#include <QLabel>
-#include <QLineEdit>
-#include <QMenu>
 #include <QMessageBox>
-#include <QNetworkAccessManager>
-#include <QProcess>
-#include <QProcessEnvironment>
-#include <QPushButton>
-#include <QSpinBox>
-#include <QStackedWidget>
 #include <QStandardPaths>
-#include <QTableView>
-#include <QTextEdit>
-#include <QVBoxLayout>
 
 #ifndef QT_NO_TERMWIDGET
 #include "qtermwidget.h"
@@ -71,6 +46,7 @@ Window::Window()
     commandRunner = new CommandRunner(this, logger);
     basicView = new BasicView(*trayIconIcon);
     serviceView = new ServiceView(this, *trayIconIcon);
+    addonsView = new AddonsView(*trayIconIcon);
     advancedView = new AdvancedView(*trayIconIcon);
     errorMessage = new ErrorMessage(this, *trayIconIcon);
     progressWindow = new ProgressWindow(this, *trayIconIcon);
@@ -78,7 +54,7 @@ Window::Window()
     hyperKit = new HyperKit(*trayIconIcon);
     updater = new Updater(version, *trayIconIcon);
 
-    op = new Operator(advancedView, basicView, serviceView, commandRunner, errorMessage,
+    op = new Operator(advancedView, basicView, serviceView, addonsView, commandRunner, errorMessage,
                       progressWindow, tray, hyperKit, updater, stackedWidget, this);
 
     stackedWidget->addWidget(basicView->basicView);
