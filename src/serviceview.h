@@ -17,9 +17,7 @@ limitations under the License.
 #ifndef SERVICEVIEW_H
 #define SERVICEVIEW_H
 
-#include <QObject>
 #include <QIcon>
-#include <QString>
 #include <QDialog>
 
 class ServiceView : public QObject

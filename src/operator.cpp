@@ -80,6 +80,7 @@ Operator::Operator(AdvancedView *advancedView, BasicView *basicView, ServiceView
     connect(m_commandRunner, &CommandRunner::updatedClusters, this, &Operator::clustersReceived);
     connect(m_commandRunner, &CommandRunner::updatedServices, this, &Operator::servicesReceived);
     connect(m_commandRunner, &CommandRunner::updatedAddons, this, &Operator::addonsReceived);
+    connect(m_commandRunner, &CommandRunner::addonsComplete, this, &Operator::addonsComplete);
     connect(m_commandRunner, &CommandRunner::startCommandStarting, this,
             &Operator::startCommandStarting);
 
@@ -92,6 +93,9 @@ Operator::Operator(AdvancedView *advancedView, BasicView *basicView, ServiceView
     connect(m_tray, &Tray::pauseOrUnpause, this, &Operator::pauseOrUnpauseMinikube);
 
     connect(m_hyperKit, &HyperKit::rerun, this, &Operator::createCluster);
+
+    connect(m_addonsView, &AddonsView::refresh, this, &Operator::updateAddons);
+    connect(m_addonsView, &AddonsView::addonClicked, this, &Operator::addonsEnableDisable);
 
     updateClusters();
 }
@@ -197,9 +201,14 @@ void Operator::updateServices()
     m_commandRunner->requestServiceList(selectedClusterName());
 }
 
-void Operator::displayAddons()
+void Operator::updateAddons()
 {
     m_commandRunner->requestAddons(selectedClusterName());
+}
+
+void Operator::displayAddons()
+{
+    updateAddons();
     m_addonsView->display();
 }
 
@@ -220,8 +229,6 @@ void Operator::servicesReceived(QString svcTable)
 
 void Operator::addonsReceived(AddonList as)
 {
-
-    qDebug() << as.size();
     m_addonsView->updateAddonsTable(as);
 }
 
@@ -478,13 +485,24 @@ void Operator::tunnel()
 
     QProcess *process = new QProcess(this);
     QStringList arguments = { "-p", selectedClusterName() };
-    m_commandRunner->tunnelMinikube(arguments, process);
+    m_commandRunner->tunnelMinikube(arguments);
 
     tunnelProcess = process;
     tunnelProcess->waitForFinished(-1);
     qDebug() << tunnelProcess->processId();
     qDebug() << tunnelProcess->readAllStandardOutput();
     tunnelProcess = NULL;
+}
+
+void Operator::addonsEnableDisable(QString addonName, QString action)
+{
+    QStringList arguments = { action, addonName, "-p", selectedClusterName() };
+    m_commandRunner->addonsMinikube(arguments);
+}
+
+void Operator::addonsComplete()
+{
+    m_commandRunner->requestAddons(selectedClusterName());
 }
 
 void Operator::dashboardBrowser()

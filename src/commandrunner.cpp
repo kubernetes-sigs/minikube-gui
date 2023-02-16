@@ -17,10 +17,8 @@ limitations under the License.
 #include "commandrunner.h"
 #include "paths.h"
 #include "addon.h"
-#include <QDebug>
-#include <QDir>
+
 #include <QJsonArray>
-#include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonParseError>
 #include <QStandardPaths>
@@ -90,6 +88,7 @@ void CommandRunner::startMinikube(QStringList args)
 
 void CommandRunner::stopMinikube(QStringList args)
 {
+    m_command = "stop";
     QStringList baseArgs = { "stop" };
     baseArgs << args;
     executeMinikubeCommand(baseArgs);
@@ -97,6 +96,7 @@ void CommandRunner::stopMinikube(QStringList args)
 
 void CommandRunner::pauseMinikube(QStringList args)
 {
+    m_command = "pause";
     QStringList baseArgs = { "pause" };
     baseArgs << args;
     executeMinikubeCommand(baseArgs);
@@ -104,6 +104,7 @@ void CommandRunner::pauseMinikube(QStringList args)
 
 void CommandRunner::unpauseMinikube(QStringList args)
 {
+    m_command = "unpause";
     QStringList baseArgs = { "unpause" };
     baseArgs << args;
     executeMinikubeCommand(baseArgs);
@@ -124,7 +125,7 @@ void CommandRunner::mountMinikube(QStringList args, QProcess *process)
     executeMinikubeCommand(baseArgs, process);
 }
 
-void CommandRunner::tunnelMinikube(QStringList args, QProcess *process)
+void CommandRunner::tunnelMinikube(QStringList args)
 {
     QStringList baseArgs = { "tunnel" };
     baseArgs << args;
@@ -169,6 +170,14 @@ void CommandRunner::tunnelMinikube(QStringList args, QProcess *process)
 
     executeCommand(QStandardPaths::findExecutable(terminal), { "-e", command });
 #endif
+}
+
+void CommandRunner::addonsMinikube(QStringList args)
+{
+    m_command = "addonsEnableDisable";
+    QStringList baseArgs = { "addons" };
+    baseArgs << args;
+    executeMinikubeCommand(baseArgs);
 }
 
 void CommandRunner::dashboardMinikube(QStringList args, QProcess *process)
@@ -325,7 +334,7 @@ void CommandRunner::executionCompleted()
     QString output = m_output;
     int exitCode = m_process->exitCode();
     delete m_process;
-    if (cmd != "cluster") {
+    if (cmd == "start" || cmd == "stop" || cmd == "pause" || cmd == "unpause" || cmd == "delete") {
         emit executionEnded();
     }
     if (cmd == "start" && exitCode != 0) {
@@ -341,6 +350,9 @@ void CommandRunner::executionCompleted()
     if (cmd == "addons") {
         AddonList addonList = jsonToAddonList(output);
         emit updatedAddons(addonList);
+    }
+    if (cmd == "addonsEnableDisable") {
+        emit addonsComplete();
     }
 }
 

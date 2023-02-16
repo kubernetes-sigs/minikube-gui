@@ -29,7 +29,6 @@ SOURCES       = src/main.cpp \
                 src/fonts.cpp \
                 src/hyperkit.cpp \
                 src/logger.cpp \
-                src/mount.cpp \
                 src/operator.cpp \
                 src/paths.cpp \
                 src/progresswindow.cpp \

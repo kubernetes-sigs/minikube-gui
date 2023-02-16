@@ -21,7 +21,6 @@ limitations under the License.
 #include <QFormLayout>
 #include <QIcon>
 #include <QLabel>
-#include <QObject>
 
 class ErrorMessage : public QObject
 {

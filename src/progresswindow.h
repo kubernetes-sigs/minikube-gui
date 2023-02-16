@@ -20,10 +20,7 @@ limitations under the License.
 #include <QDialog>
 #include <QIcon>
 #include <QLabel>
-#include <QObject>
-#include <QProcess>
 #include <QProgressBar>
-#include <QString>
 
 class ProgressWindow : public QObject
 {

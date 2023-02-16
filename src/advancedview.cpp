@@ -20,11 +20,8 @@ limitations under the License.
 #include <QDialog>
 #include <QDialogButtonBox>
 #include <QFormLayout>
-#include <QHBoxLayout>
 #include <QHeaderView>
-#include <QLabel>
 #include <QLineEdit>
-#include <QTableView>
 
 AdvancedView::AdvancedView(QIcon icon)
 {

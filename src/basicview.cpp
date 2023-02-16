@@ -18,12 +18,6 @@ limitations under the License.
 #include "fonts.h"
 #include "constants.h"
 
-#include <QDebug>
-#include <QFont>
-#include <QFontDatabase>
-#include <QToolTip>
-#include <QVBoxLayout>
-#include <QLabel>
 #include <QDialog>
 #include <QFormLayout>
 #include <QDialogButtonBox>

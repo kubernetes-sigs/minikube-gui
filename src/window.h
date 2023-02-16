@@ -17,15 +17,6 @@ limitations under the License.
 #ifndef WINDOW_H
 #define WINDOW_H
 
-#include <QFormLayout>
-#include <QProcessEnvironment>
-#include <QProgressBar>
-#include <QStackedWidget>
-#include <QSystemTrayIcon>
-#include <QVersionNumber>
-#include <QtNetwork/QNetworkAccessManager>
-#include <QtNetwork/QNetworkReply>
-
 #ifndef QT_NO_SYSTEMTRAYICON
 
 #include <QDialog>

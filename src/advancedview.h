@@ -20,7 +20,6 @@ limitations under the License.
 #include "cluster.h"
 
 #include <QLabel>
-#include <QObject>
 #include <QPushButton>
 #include <QTableView>
 

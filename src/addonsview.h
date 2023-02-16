@@ -19,11 +19,7 @@ limitations under the License.
 
 #include "addon.h"
 
-#include <QObject>
 #include <QPushButton>
-#include <QLabel>
-#include <QString>
-#include <QString>
 #include <QTableView>
 
 class AddonsView : public QObject
@@ -38,6 +34,7 @@ public:
     void display();
 signals:
     void refresh();
+    void addonClicked(QString addonName, QString action);
 
 private:
     QIcon m_icon;
@@ -45,6 +42,7 @@ private:
     QPushButton *refreshButton;
     QDialog *m_dialog;
     QDialog *m_parent;
+    QList<QPushButton> *buttonList;
 };
 
 #endif // ADDONSVIEW_H

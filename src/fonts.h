@@ -17,7 +17,6 @@ limitations under the License.
 #ifndef FONTS_H
 #define FONTS_H
 
-#include <QFont>
 #include <QWidget>
 
 class Fonts

@@ -18,9 +18,6 @@ limitations under the License.
 #define ADDON_H
 
 #include <QAbstractListModel>
-#include <QList>
-#include <QMap>
-#include <QString>
 
 class Addon
 {

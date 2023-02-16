@@ -16,11 +16,9 @@ limitations under the License.
 
 #include "addonsview.h"
 
-#include <QTableView>
 #include <QVBoxLayout>
 #include <QHeaderView>
 #include <QDialog>
-#include <QDebug>
 
 AddonsView::AddonsView(QIcon icon)
 {
@@ -36,8 +34,7 @@ AddonsView::AddonsView(QIcon icon)
 
     addonListView = new QTableView();
     addonListView->setModel(m_addonModel);
-    addonListView->setSelectionMode(QAbstractItemView::SingleSelection);
-    addonListView->setSelectionBehavior(QAbstractItemView::SelectRows);
+    addonListView->setSelectionMode(QAbstractItemView::NoSelection);
     addonListView->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
     addonListView->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
     addonListView->horizontalHeader()->setSectionResizeMode(2, QHeaderView::Stretch);
@@ -55,9 +52,17 @@ AddonsView::AddonsView(QIcon icon)
 
 void AddonsView::updateAddonsTable(AddonList addonList)
 {
-    qDebug() << "inside updateAddonsTable";
-    qDebug() << addonList.size();
     m_addonModel->setAddonList(addonList);
+    buttonList = new QList<QPushButton>();
+    for (int i = 0; i < addonList.size(); i++) {
+        Addon addon = addonList[i];
+        QString addonName = addon.name();
+        QString action = addon.status() == "enabled" ? "disable" : "enable";
+        QPushButton *button = new QPushButton();
+        connect(button, &QPushButton::clicked,
+                [this, addonName, action] { emit addonClicked(addonName, action); });
+        addonListView->setIndexWidget(addonListView->model()->index(i, 2), button);
+    }
 }
 
 void AddonsView::display()

@@ -61,6 +61,7 @@ private slots:
     void servicesReceived(QString);
     void addonsReceived(AddonList as);
     void startCommandStarting();
+    void addonsComplete();
 
 private:
     QStringList getCurrentClusterFlags();
@@ -73,6 +74,7 @@ private:
     void mount(QString, QString);
     void tunnelClean();
     void tunnel();
+    void addonsEnableDisable(QString addonName, QString action);
     void dashboardBrowser();
     void dashboardClose();
     void mountClose();
@@ -81,6 +83,7 @@ private:
     void restoreWindow();
     void hideWindow();
     void disableButtons();
+    void updateAddons();
     void displayAddons();
 
     AdvancedView *m_advancedView;

@@ -20,10 +20,9 @@ limitations under the License.
 #include "cluster.h"
 #include "mount.h"
 
-#include <QObject>
 #include <QPushButton>
 #include <QLabel>
-#include <QString>
+
 class BasicView : public QObject
 {
     Q_OBJECT

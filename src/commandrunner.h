@@ -22,12 +22,7 @@ limitations under the License.
 #include "logger.h"
 
 #include <QDialog>
-#include <QIcon>
-#include <QObject>
-#include <QProcess>
 #include <QProcessEnvironment>
-#include <QString>
-#include <QStringList>
 
 class CommandRunner : public QObject
 {
@@ -43,7 +38,8 @@ public:
     void unpauseMinikube(QStringList args);
     void deleteMinikube(QStringList args);
     void mountMinikube(QStringList args, QProcess *process);
-    void tunnelMinikube(QStringList args, QProcess *process);
+    void tunnelMinikube(QStringList args);
+    void addonsMinikube(QStringList args);
     void dashboardMinikube(QStringList args, QProcess *process);
     void stopCommand();
     void requestClusters();
@@ -60,6 +56,7 @@ signals:
     void updatedServices(QString);
     void updatedAddons(AddonList);
     void startCommandStarting();
+    void addonsComplete();
 
 private slots:
     void executionCompleted();
