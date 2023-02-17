@@ -1,0 +1,23 @@
+name: Build Linux
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c
+      - uses: jurplel/install-qt-action@43ec12788e42f375acfcb2cec059edfb9572fbaa
+        with:
+          cache: true
+      - name: build
+        run: |
+          qmake
+          make
+      - uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce
+        with:
+          name: minikube-gui-linux
+          path: ./minikube
