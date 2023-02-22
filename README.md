@@ -1,5 +1,26 @@
 # minikube-gui
 
+A graphical interface for minikube.
+This project is still in early stages, but you could try it on following these instructions:
+Mind that minikube-gui is not signed yet, and you will get a warning.
+
+
+### macOS
+- Download the [latest release](https://github.com/kubernetes-sigs/minikube-gui/releases/latest/download/minikube-gui-macos.dmg). 
+- Open and drag it to your Application folder.
+
+
+### Windows
+
+- Download [latest release for windows](https://github.com/kubernetes-sigs/minikube-gui/releases/latest/download/minikube-gui-windows.zip)
+- Unzip and run minikube-gui.exe
+
+### Linux 
+
+- Latest [release for Linux](https://github.com/kubernetes-sigs/minikube-gui/releases/latest/download/minikube-gui-linux.tar.gz)
+- Untar and run minikube-gui
+
+
 
 ## Community, discussion, contribution, and support
 
