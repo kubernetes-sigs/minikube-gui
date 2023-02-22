@@ -33,7 +33,7 @@ limitations under the License.
 #include <QMainWindow>
 #endif
 
-const QVersionNumber version = QVersionNumber::fromString("0.0.1");
+const QVersionNumber version = QVersionNumber::fromString("0.0.2");
 
 Window::Window()
 {
