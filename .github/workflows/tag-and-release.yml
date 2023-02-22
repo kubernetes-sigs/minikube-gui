@@ -1,0 +1,107 @@
+name: Tag & Release
+on:
+  workflow_dispatch:
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c
+      - name: Get Version
+        run: |
+          export VERSION=$(sed -n -e 's/.*QVersionNumber::fromString(\"\(.*\)\");/\1/p' src/window.cpp)
+          git tag "v$VERSION"
+          git push origin "v$VERSION"
+  build-linux-release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c
+      - uses: jurplel/install-qt-action@37e649dae477dba3481cbec4788e5b3ca9d6e170
+        with:
+          cache: true
+      - name: build
+        run: |
+          qmake
+          make
+          tar -czvf minikube-gui-linux.tar.gz ./minikube
+      - uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce
+        with:
+          name: minikube-gui-linux-release
+          path: ./minikube-gui-linux.tar.gz
+  build-macos-release:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c
+      - uses: jurplel/install-qt-action@37e649dae477dba3481cbec4788e5b3ca9d6e170
+        with:
+          cache: true
+      - name: build
+        run: |
+          qmake
+          make
+      - name: package
+        run: |
+          macdeployqt ./minikube.app -qmldir=. -verbose=1 -dmg
+          mv ./minikube.dmg ./minikube-gui-macos.dmg
+      - uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce
+        with:
+          name: minikube-gui-macos-release
+          path: ./minikube-gui-macos.dmg
+  build-windows-release:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c
+      - uses: jurplel/install-qt-action@37e649dae477dba3481cbec4788e5b3ca9d6e170
+        with:
+          cache: true
+      - name: build
+        shell: cmd
+        run: |
+          call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x64
+          qmake
+          nmake
+          echo winSdkDir=%WindowsSdkDir% >> %GITHUB_ENV%
+          echo winSdkVer=%WindowsSdkVersion% >> %GITHUB_ENV%
+          echo vcToolsInstallDir=%VCToolsInstallDir% >> %GITHUB_ENV%
+          echo vcToolsRedistDir=%VCToolsRedistDir% >> %GITHUB_ENV%
+      - name: package
+        shell: pwsh
+        run: |
+          & scripts\windows-publish.ps1 minikube-gui-windows minikube.exe
+          Compress-Archive -Path minikube-gui-windows minikube-gui-windows.zip
+      - uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce
+        with:
+          name: minikube-gui-windows-release
+          path: ./minikube-gui-windows.zip
+  release:
+    needs:
+      [
+        tag,
+        build-linux-release,
+        build-macos-release,
+        build-windows-release,
+      ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c
+      - name: Get Version
+        run: |
+          export VERSION=$(sed -n -e 's/.*QVersionNumber::fromString(\"\(.*\)\");/\1/p' src/window.cpp)
+          echo "version=$VERSION" >> $GITHUB_ENV
+          echo "$VERSION"
+      - uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a
+        with:
+          name: minikube-gui-linux-release
+      - uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a
+        with:
+          name: minikube-gui-macos-release
+      - uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a
+        with:
+          name: minikube-gui-windows-release
+      - uses: softprops/action-gh-release@de2c0eb89ae2a093876385947365aca7b0e5f844
+        with:
+          name: 'v${{ env.version }}'
+          tag_name: 'refs/tags/v${{ env.version }}'
+          files: |
+            minikube-gui-linux.tar.gz
+            minikube-gui-macos.dmg
+            minikube-gui-windows.zip
