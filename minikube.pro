@@ -38,6 +38,8 @@ SOURCES       = src/main.cpp \
                 src/window.cpp
 RESOURCES     = minikube.qrc
 ICON          = resources/images/minikube.icns
+TARGET        = minikube-gui
+DESTDIR       = bin
 
 QT += widgets network
 requires(qtConfig(combobox))

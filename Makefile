@@ -12,7 +12,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-VERSION = 0.0.2
+.PHONY: build-linux
+build-linux:
+	qmake
+	make
+	tar -czvf minikube-gui-linux.tar.gz -C ./bin ./minikube-gui
+
+.PHONY: build-macos
+build-macos:
+	qmake
+	make
+	(cd ./bin && macdeployqt ./minikube-gui.app -qmldir=. -verbose=1 -dmg)
+	mv ./bin/minikube-gui.dmg ./minikube-gui-macos.dmg
+
+.PHONY: build-windows
+build-windows:
+	scripts\build-windows.cmd
 
 .PHONY: bump-version
 bump-version:

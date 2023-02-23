@@ -16,18 +16,8 @@ jobs:
       - name: build
         shell: cmd
         run: |
-          call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x64
-          qmake
-          nmake
-          echo winSdkDir=%WindowsSdkDir% >> %GITHUB_ENV%
-          echo winSdkVer=%WindowsSdkVersion% >> %GITHUB_ENV%
-          echo vcToolsInstallDir=%VCToolsInstallDir% >> %GITHUB_ENV%
-          echo vcToolsRedistDir=%VCToolsRedistDir% >> %GITHUB_ENV%
-      - name: package
-        shell: pwsh
-        run: |
-          & scripts\windows-publish.ps1 minikube-gui-windows minikube.exe
+          make build-windows
       - uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce
         with:
           name: minikube-gui-windows
-          path: ./minikube-gui-windows
+          path: ./minikube-gui-windows.zip
