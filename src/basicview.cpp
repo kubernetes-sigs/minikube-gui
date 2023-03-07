@@ -22,6 +22,7 @@ limitations under the License.
 #include <QFormLayout>
 #include <QDialogButtonBox>
 #include <QLineEdit>
+#include <QCoreApplication>
 
 BasicView::BasicView(QIcon icon)
 {
@@ -48,12 +49,18 @@ BasicView::BasicView(QIcon icon)
     addonsButton = new QPushButton(tr("addons"));
     advancedButton = new QPushButton(tr("cluster list"));
     settingsButton = new QPushButton(Constants::settingsIcon);
+    aboutButton = new QPushButton(Constants::aboutIcon);
+    exitButton = new QPushButton(Constants::exitIcon);
 
+
+    // all the buttons that have icon needs to be set here
     Fonts::setFontAwesome(startButton);
     Fonts::setFontAwesome(stopButton);
     Fonts::setFontAwesome(pauseButton);
     Fonts::setFontAwesome(deleteButton);
     Fonts::setFontAwesome(settingsButton);
+    Fonts::setFontAwesome(aboutButton);
+    Fonts::setFontAwesome(exitButton);
 
     dockerEnvButton->setToolTip(
             tr("Opens a terminal where the docker-cli points to docker engine inside "
@@ -82,9 +89,10 @@ BasicView::BasicView(QIcon icon)
     buttonLayoutRow2->addWidget(advancedButton);
 
 
-    QVBoxLayout *bottomBar = new QVBoxLayout;
-    topStatus->setAlignment(Qt::AlignCenter);
-    buttonLayoutRow2->addWidget(settingsButton);
+    QHBoxLayout *bottomBar = new QHBoxLayout;
+    bottomBar->addWidget(settingsButton);
+    bottomBar->addWidget(aboutButton);
+    bottomBar->addWidget(exitButton);
 
     //  add all layouts to the basic view
     QVBoxLayout *BasicLayout = new QVBoxLayout;
@@ -110,6 +118,7 @@ BasicView::BasicView(QIcon icon)
     connect(addonsButton, &QAbstractButton::clicked, this, &BasicView::addons);
     connect(advancedButton, &QAbstractButton::clicked, this, &BasicView::advanced);
     connect(settingsButton, &QAbstractButton::clicked, this, &BasicView::askSettings);
+    connect(exitButton, &QAbstractButton::clicked, qApp, &QCoreApplication::quit);
 }
 
 static QString getPauseLabel(bool isPaused)

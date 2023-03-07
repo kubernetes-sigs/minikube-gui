@@ -67,6 +67,8 @@ private:
     QPushButton *addonsButton;
     QPushButton *advancedButton;
     QPushButton *settingsButton;
+    QPushButton *aboutButton;
+    QPushButton *exitButton;
     QIcon m_icon;
     MountList m_mountList;
     void askMount();
