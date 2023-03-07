@@ -23,7 +23,9 @@ ProgressWindow::ProgressWindow(QWidget *parent, QIcon icon)
 {
     m_icon = icon;
     m_parent = parent;
+    m_dialog = new QDialog(m_parent);
     m_text = new QLabel();
+    m_progressBar = new QProgressBar();
 }
 
 void ProgressWindow::setBarMaximum(int max)
@@ -43,7 +45,6 @@ void ProgressWindow::setText(QString text)
 
 void ProgressWindow::show()
 {
-    m_dialog = new QDialog(m_parent);
     m_dialog->setWindowIcon(m_icon);
     m_dialog->resize(300, 150);
     m_dialog->setWindowFlags(Qt::FramelessWindowHint);
@@ -53,8 +54,6 @@ void ProgressWindow::show()
 
     m_text->setWordWrap(true);
     form.addWidget(m_text);
-
-    m_progressBar = new QProgressBar();
     form.addWidget(m_progressBar);
 
     m_cancelButton = new QPushButton();
