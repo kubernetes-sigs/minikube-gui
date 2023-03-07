@@ -52,7 +52,7 @@ signals:
     void addons();
 
 private:
-    QLabel *topStatus;
+    QPushButton *topStatusButton;
     QPushButton *startButton;
     QPushButton *stopButton;
     QPushButton *pauseButton;

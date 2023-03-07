@@ -29,17 +29,18 @@ BasicView::BasicView(QIcon icon)
     m_icon = icon;
     basicView = new QWidget();
 
-    topStatus = new QLabel("Loading ...");
-    QVBoxLayout *topBar = new QVBoxLayout;
-    topStatus->setAlignment(Qt::AlignCenter);
+    topStatusButton = new QPushButton("Loading ...");
+    topStatusButton->setMouseTracking(true);
+    topStatusButton->setStyleSheet("QPushButton { background-color: transparent; border: none; }");
 
-    topBar->addWidget(topStatus);
+    QVBoxLayout *topBar = new QVBoxLayout;
+    topBar->addWidget(topStatusButton);
 
     startButton = new QPushButton(Constants::startIcon);
     stopButton = new QPushButton(Constants::stopIcon);
     pauseButton = new QPushButton(Constants::pauseIcon);
     deleteButton = new QPushButton(Constants::deleteIcon);
-    refreshButton = new QPushButton(tr("refresh gui"));
+
     dockerEnvButton = new QPushButton("docker-env");
     serviceButton = new QPushButton("service");
     mountButton = new QPushButton(tr("mount"));
@@ -48,25 +49,31 @@ BasicView::BasicView(QIcon icon)
     dashboardButton = new QPushButton(tr("dashboard"));
     addonsButton = new QPushButton(tr("addons"));
     advancedButton = new QPushButton(tr("cluster list"));
+
+    refreshButton = new QPushButton(Constants::refreshIcon);
     settingsButton = new QPushButton(Constants::settingsIcon);
     aboutButton = new QPushButton(Constants::aboutIcon);
     exitButton = new QPushButton(Constants::exitIcon);
-
 
     // all the buttons that have icon needs to be set here
     Fonts::setFontAwesome(startButton);
     Fonts::setFontAwesome(stopButton);
     Fonts::setFontAwesome(pauseButton);
     Fonts::setFontAwesome(deleteButton);
+    Fonts::setFontAwesome(refreshButton);
     Fonts::setFontAwesome(settingsButton);
     Fonts::setFontAwesome(aboutButton);
     Fonts::setFontAwesome(exitButton);
 
+    topStatusButton->setToolTip(tr("cluster status, click to refresh"));
     dockerEnvButton->setToolTip(
             tr("Opens a terminal where the docker-cli points to docker engine inside "
                "minikube\n(Useful for building docker images directly inside minikube)"));
     deleteButton->setToolTip(tr("Delete the default cluster"));
     stopButton->setToolTip(tr("Stop the default cluster"));
+    settingsButton->setToolTip(tr("minikube-gui settings"));
+    aboutButton->setToolTip(tr("about"));
+    exitButton->setToolTip(tr("exit"));
 
     disableButtons();
 
@@ -78,7 +85,6 @@ BasicView::BasicView(QIcon icon)
     buttonLayoutRow1->addWidget(deleteButton);
 
     QVBoxLayout *buttonLayoutRow2 = new QVBoxLayout;
-    buttonLayoutRow2->addWidget(refreshButton);
     buttonLayoutRow2->addWidget(dockerEnvButton);
     buttonLayoutRow2->addWidget(serviceButton);
     buttonLayoutRow2->addWidget(mountButton);
@@ -87,7 +93,6 @@ BasicView::BasicView(QIcon icon)
     buttonLayoutRow2->addWidget(dashboardButton);
     buttonLayoutRow2->addWidget(addonsButton);
     buttonLayoutRow2->addWidget(advancedButton);
-
 
     QHBoxLayout *bottomBar = new QHBoxLayout;
     bottomBar->addWidget(settingsButton);
@@ -104,11 +109,13 @@ BasicView::BasicView(QIcon icon)
 
     basicView->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
 
+    connect(topStatusButton, &QPushButton::clicked, this, &BasicView::refresh);
+    connect(startButton, &QPushButton::clicked, this, &BasicView::start);
     connect(startButton, &QPushButton::clicked, this, &BasicView::start);
     connect(stopButton, &QAbstractButton::clicked, this, &BasicView::stop);
     connect(pauseButton, &QAbstractButton::clicked, this, &BasicView::pause);
     connect(deleteButton, &QAbstractButton::clicked, this, &BasicView::delete_);
-    connect(refreshButton, &QAbstractButton::clicked, this, &BasicView::refresh);
+
     connect(dockerEnvButton, &QAbstractButton::clicked, this, &BasicView::dockerEnv);
     connect(serviceButton, &QPushButton::clicked, this, &BasicView::service);
     connect(mountButton, &QAbstractButton::clicked, this, &BasicView::askMount);
@@ -170,7 +177,7 @@ void BasicView::update(Cluster cluster)
     bool exists = !cluster.isEmpty();
     bool isRunning = cluster.status() == "Running";
     bool isPaused = cluster.status() == "Paused";
-    topStatus->setText(cluster.status());
+    topStatusButton->setText(cluster.status());
     serviceButton->setEnabled(isRunning || isPaused);
     stopButton->setEnabled(isRunning || isPaused);
     pauseButton->setEnabled(isRunning || isPaused);
