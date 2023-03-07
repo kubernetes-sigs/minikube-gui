@@ -293,6 +293,6 @@ void BasicView::askSettings()
 
     int code = dialog.exec();
     if (code == QDialog::Accepted) {
-        emit sendSettngs(binaryPath.text());
+        emit sendSettings(binaryPath.text());
     }
 }
