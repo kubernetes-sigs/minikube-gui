@@ -47,12 +47,13 @@ BasicView::BasicView(QIcon icon)
     dashboardButton = new QPushButton(tr("dashboard"));
     addonsButton = new QPushButton(tr("addons"));
     advancedButton = new QPushButton(tr("cluster list"));
-    settingsButton = new QPushButton("gui settings");
+    settingsButton = new QPushButton(Constants::settingsIcon);
 
     Fonts::setFontAwesome(startButton);
     Fonts::setFontAwesome(stopButton);
     Fonts::setFontAwesome(pauseButton);
     Fonts::setFontAwesome(deleteButton);
+    Fonts::setFontAwesome(settingsButton);
 
     dockerEnvButton->setToolTip(
             tr("Opens a terminal where the docker-cli points to docker engine inside "
@@ -79,12 +80,18 @@ BasicView::BasicView(QIcon icon)
     buttonLayoutRow2->addWidget(dashboardButton);
     buttonLayoutRow2->addWidget(addonsButton);
     buttonLayoutRow2->addWidget(advancedButton);
+
+
+    QVBoxLayout *bottomBar = new QVBoxLayout;
+    topStatus->setAlignment(Qt::AlignCenter);
     buttonLayoutRow2->addWidget(settingsButton);
 
+    //  add all layouts to the basic view
     QVBoxLayout *BasicLayout = new QVBoxLayout;
     BasicLayout->addLayout(topBar);
     BasicLayout->addLayout(buttonLayoutRow1);
     BasicLayout->addLayout(buttonLayoutRow2);
+    BasicLayout->addLayout(bottomBar);
     basicView->setLayout(BasicLayout);
 
     basicView->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
@@ -272,7 +279,4 @@ void BasicView::askSettings()
     if (code == QDialog::Accepted) {
         emit sendSettngs(binaryPath.text());
     }
-
-
 }
-

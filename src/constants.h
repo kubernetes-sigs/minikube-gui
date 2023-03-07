@@ -32,6 +32,7 @@ public:
     static const QString deleteIcon;
     static const QString reloadIcon;
     static const QString createIcon;
+    static const QString settingsIcon;
 };
 
 #endif // CONSTANTS_H
