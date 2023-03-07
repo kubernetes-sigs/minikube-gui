@@ -47,6 +47,7 @@ BasicView::BasicView(QIcon icon)
     dashboardButton = new QPushButton(tr("dashboard"));
     addonsButton = new QPushButton(tr("addons"));
     advancedButton = new QPushButton(tr("cluster list"));
+    settingsButton = new QPushButton("gui settings");
 
     Fonts::setFontAwesome(startButton);
     Fonts::setFontAwesome(stopButton);
@@ -78,6 +79,7 @@ BasicView::BasicView(QIcon icon)
     buttonLayoutRow2->addWidget(dashboardButton);
     buttonLayoutRow2->addWidget(addonsButton);
     buttonLayoutRow2->addWidget(advancedButton);
+    buttonLayoutRow2->addWidget(settingsButton);
 
     QVBoxLayout *BasicLayout = new QVBoxLayout;
     BasicLayout->addLayout(topBar);
@@ -100,6 +102,7 @@ BasicView::BasicView(QIcon icon)
     connect(dashboardButton, &QAbstractButton::clicked, this, &BasicView::dashboard);
     connect(addonsButton, &QAbstractButton::clicked, this, &BasicView::addons);
     connect(advancedButton, &QAbstractButton::clicked, this, &BasicView::advanced);
+    connect(settingsButton, &QAbstractButton::clicked, this, &BasicView::askSettings);
 }
 
 static QString getPauseLabel(bool isPaused)
@@ -246,3 +249,30 @@ void BasicView::askMount()
         }
     }
 }
+
+void BasicView::askSettings()
+{
+
+    QDialog dialog;
+    dialog.setWindowIcon(m_icon);
+    dialog.setModal(true);
+
+    dialog.setWindowTitle(tr("GUI Settings"));
+    QFormLayout form(&dialog);
+    QDialogButtonBox buttonBox(Qt::Horizontal, &dialog);
+    QLineEdit binaryPath(&dialog);
+    form.addRow(new QLabel(tr("path to minikube binary")), &binaryPath);
+    buttonBox.addButton(QString(tr("save")), QDialogButtonBox::AcceptRole);
+    connect(&buttonBox, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
+    buttonBox.addButton(QString(tr("Cancel")), QDialogButtonBox::RejectRole);
+    connect(&buttonBox, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
+    form.addRow(&buttonBox);
+
+    int code = dialog.exec();
+    if (code == QDialog::Accepted) {
+        emit sendSettngs(binaryPath.text());
+    }
+
+
+}
+

@@ -46,6 +46,7 @@ signals:
     void dashboard();
     void advanced();
     void mount(QString, QString);
+    void sendSettngs(QString);
     void closeMount();
     void tunnel();
     void addons();
@@ -65,9 +66,11 @@ private:
     QPushButton *dashboardButton;
     QPushButton *addonsButton;
     QPushButton *advancedButton;
+    QPushButton *settingsButton;
     QIcon m_icon;
     MountList m_mountList;
     void askMount();
+    void askSettings();
 };
 
 #endif // BASICVIEW_H
