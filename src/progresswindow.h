@@ -46,6 +46,7 @@ private:
     QProgressBar *m_progressBar;
     QPushButton *m_cancelButton;
     QIcon m_icon;
+    QWidget *m_parent;
 };
 
 #endif // PROGRESSWINDOW_H
