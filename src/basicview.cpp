@@ -163,7 +163,7 @@ static QString getStartToolTip(bool exists, bool isRunning, bool isPaused)
     }
 
     if (isRunning || isPaused) {
-        return "Restart (reconfigure) an already running cluster";
+        return "Restart and reconfigure the running cluster";
     }
     return "Start the cluster";
 }
