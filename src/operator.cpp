@@ -225,11 +225,15 @@ void Operator::clustersReceived(ClusterList clusterList)
 void Operator::servicesReceived(QString svcTable)
 {
     m_serviceView->displayTable(svcTable);
+    updateButtons();
+    m_parent->unsetCursor();
 }
 
 void Operator::addonsReceived(AddonList as)
 {
     m_addonsView->updateAddonsTable(as);
+    updateButtons();
+    m_parent->unsetCursor();
 }
 
 void Operator::updateButtons()
