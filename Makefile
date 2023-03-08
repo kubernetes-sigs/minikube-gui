@@ -24,6 +24,7 @@ build-macos:
 	make
 	(cd ./bin && macdeployqt ./minikube-gui.app -qmldir=. -verbose=1 -dmg)
 	mv ./bin/minikube-gui.dmg ./minikube-gui-macos.dmg
+	tar -czf minikube-gui-macos.tar.gz ./bin
 
 .PHONY: build-windows
 build-windows:
