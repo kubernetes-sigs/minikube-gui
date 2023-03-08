@@ -82,6 +82,9 @@ jobs:
           name: minikube-gui-macos-release
       - uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a
         with:
+          name: minikube-gui-macos-tar-release
+      - uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a
+        with:
           name: minikube-gui-windows-release
       - uses: softprops/action-gh-release@de2c0eb89ae2a093876385947365aca7b0e5f844
         with:
@@ -90,4 +93,5 @@ jobs:
           files: |
             minikube-gui-linux.tar.gz
             minikube-gui-macos.dmg
+            minikube-gui-macos.tar.gz
             minikube-gui-windows.zip
