@@ -24,6 +24,7 @@ limitations under the License.
 #include <QPushButton>
 #include <QStandardPaths>
 #include <QDebug>
+#include <QSettings>
 
 Operator::Operator(AdvancedView *advancedView, BasicView *basicView, ServiceView *serviceView,
                    AddonsView *addonsView, CommandRunner *commandRunner, ErrorMessage *errorMessage,
@@ -455,22 +456,20 @@ void Operator::dockerEnv()
 #endif
 }
 
-void Operator::updateSettings(QString src)
+void Operator::updateSettings(QString binPath, bool warnOnClose)
 {
 
     QDir dir = QDir(QDir::homePath() + "/.minikube-gui");
     if (!dir.exists()) {
         dir.mkpath(".");
     }
-    QString filePath = dir.filePath("config.json");
-    QFile file(filePath);
-    if (!file.open(QIODevice::WriteOnly)) {
-        return;
-    }
-    QTextStream stream(&file);
-    stream << "{ minikube-binary-path : "+src +"}"<< "\n";
-}
+    // Create a QSettings object with an INI file format and a specific filename
+    QSettings settings(dir.filePath("config.ini"), QSettings::IniFormat);
 
+    // Write a value to the settings file
+    settings.setValue("minikube-binary-path", binPath);
+    settings.setValue("warn-background-on-close", warnOnClose);
+}
 
 void Operator::mount(QString src, QString dest)
 {

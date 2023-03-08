@@ -72,7 +72,7 @@ private:
     void dockerEnv();
     void updateServices();
     void mount(QString, QString);
-    void updateSettings(QString);
+    void updateSettings(QString, bool);
     void tunnelClean();
     void tunnel();
     void addonsEnableDisable(QString addonName, QString action);

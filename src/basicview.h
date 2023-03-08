@@ -46,7 +46,7 @@ signals:
     void dashboard();
     void advanced();
     void mount(QString, QString);
-    void sendSettings(QString);
+    void sendSettings(QString, bool);
     void closeMount();
     void tunnel();
     void addons();

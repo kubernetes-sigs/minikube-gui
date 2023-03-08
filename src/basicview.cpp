@@ -23,6 +23,7 @@ limitations under the License.
 #include <QDialogButtonBox>
 #include <QLineEdit>
 #include <QCoreApplication>
+#include <QCheckBox>
 
 BasicView::BasicView(QIcon icon)
 {
@@ -284,15 +285,20 @@ void BasicView::askSettings()
     QFormLayout form(&dialog);
     QDialogButtonBox buttonBox(Qt::Horizontal, &dialog);
     QLineEdit binaryPath(&dialog);
+    QCheckBox warnCloseCheck(&dialog);
+
     form.addRow(new QLabel(tr("path to minikube binary")), &binaryPath);
+    form.addRow(new QLabel(tr("skip warn runs in background on close")), &warnCloseCheck);
+
     buttonBox.addButton(QString(tr("save")), QDialogButtonBox::AcceptRole);
-    connect(&buttonBox, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
     buttonBox.addButton(QString(tr("Cancel")), QDialogButtonBox::RejectRole);
-    connect(&buttonBox, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
     form.addRow(&buttonBox);
+
+    connect(&buttonBox, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
+    connect(&buttonBox, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
 
     int code = dialog.exec();
     if (code == QDialog::Accepted) {
-        emit sendSettings(binaryPath.text());
+        emit sendSettings(binaryPath.text(), false);
     }
 }
