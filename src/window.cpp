@@ -52,7 +52,7 @@ Window::Window()
     progressWindow = new ProgressWindow(this, *trayIconIcon);
     tray = new Tray(*trayIconIcon);
     hyperKit = new HyperKit(*trayIconIcon);
-    updater = new Updater(version, *trayIconIcon);
+    updater = new Updater(this, version, *trayIconIcon);
 
     op = new Operator(advancedView, basicView, serviceView, addonsView, commandRunner, errorMessage,
                       progressWindow, tray, hyperKit, updater, stackedWidget, this);

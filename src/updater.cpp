@@ -28,11 +28,13 @@ limitations under the License.
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QStandardPaths>
+#include <QProcess>
 
-Updater::Updater(QVersionNumber version, QIcon icon)
+Updater::Updater(QWidget *parent, QVersionNumber version, QIcon icon)
 {
     m_version = version;
     m_icon = icon;
+    m_parent = parent;
 }
 
 static bool checkedForUpdateRecently()
@@ -92,7 +94,68 @@ void Updater::checkForUpdates()
     key = "windows";
 #endif
     QString link = links[key].toString();
+#if __APPLE__
+    askToUpdate(latestReleaseVersion, link);
+#else
     notifyUpdate(latestReleaseVersion, link);
+#endif
+}
+
+void Updater::askToUpdate(QString latest, QString link)
+{
+    QDialog dialog;
+    dialog.setWindowTitle(tr("minikube GUI Update Available"));
+    dialog.setWindowIcon(m_icon);
+    dialog.setModal(true);
+    QFormLayout form(&dialog);
+    QLabel *msgLabel = new QLabel();
+    msgLabel->setText("Version " + latest
+                      + " of minikube GUI is now available!\n\nWould you like to update?");
+    form.addWidget(msgLabel);
+    QDialogButtonBox buttonBox(Qt::Horizontal, &dialog);
+    buttonBox.addButton(QString(tr("Yes")), QDialogButtonBox::AcceptRole);
+    connect(&buttonBox, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
+    buttonBox.addButton(QString(tr("No")), QDialogButtonBox::RejectRole);
+    connect(&buttonBox, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
+    form.addRow(&buttonBox);
+    int code = dialog.exec();
+    if (code == QDialog::Accepted) {
+        downloadUpdate(link);
+    }
+}
+
+void Updater::downloadUpdate(QString link)
+{
+    QDialog dialog(m_parent);
+    dialog.setWindowTitle(tr("Downloading update"));
+    dialog.setWindowIcon(m_icon);
+    dialog.setModal(true);
+    QFormLayout form(&dialog);
+    QLabel *msgLabel = new QLabel("Downloading update, please wait...");
+    form.addWidget(msgLabel);
+    dialog.open();
+    QProcess *process = new QProcess(this);
+    QString cmd = QString("cd $TMPDIR && curl -LO %1 && tar -xf minikube-gui-macos.tar.gz && rm "
+                          "minikube-gui-macos.tar.gz")
+                          .arg(link);
+    process->start("bash", { "-c", cmd });
+    process->waitForFinished(-1);
+    QDialogButtonBox buttonBox(Qt::Horizontal, &dialog);
+    buttonBox.addButton(QString(tr("Restart")), QDialogButtonBox::AcceptRole);
+    connect(&buttonBox, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
+    form.addRow(&buttonBox);
+    msgLabel->setText(
+            "Download complete!\n\nAfter clicking 'Restart' do the following:\n\n1. You will see: "
+            "\"minikube-gui cannot be opened...\" click 'Cancel'\n2. Your Appliciations folder "
+            "will be opened, right click on minikube-gui and click 'Open'");
+    dialog.exec();
+    process->start("bash",
+                   { "-c",
+                     "cd $TMPDIR && rm -rf /Applications/minikube-gui.app/ && mv "
+                     "minikube-gui-macos/minikube-gui.app/ /Applications/ && rm -rf "
+                     "minikube-gui-macos && open -R /Applications/minikube-gui.app/ && open "
+                     "/Applications/minikube-gui.app/" });
+    exit(0);
 }
 
 void Updater::notifyUpdate(QString latest, QString link)
