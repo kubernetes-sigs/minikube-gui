@@ -24,6 +24,7 @@ limitations under the License.
 #include <QPushButton>
 #include <QStandardPaths>
 #include <QDebug>
+#include <QSettings>
 
 Operator::Operator(AdvancedView *advancedView, BasicView *basicView, ServiceView *serviceView,
                    AddonsView *addonsView, CommandRunner *commandRunner, ErrorMessage *errorMessage,
@@ -55,6 +56,7 @@ Operator::Operator(AdvancedView *advancedView, BasicView *basicView, ServiceView
     connect(m_basicView, &BasicView::addons, this, &Operator::displayAddons);
     connect(m_basicView, &BasicView::mount, this, &Operator::mount);
     connect(m_basicView, &BasicView::closeMount, this, &Operator::mountClose);
+    connect(m_basicView, &BasicView::sendSettings, this, &Operator::updateSettings);
     connect(m_basicView, &BasicView::tunnel, this, &Operator::tunnel);
     connect(m_basicView, &BasicView::ssh, this, &Operator::sshConsole);
     connect(m_basicView, &BasicView::dashboard, this, &Operator::dashboardBrowser);
@@ -456,6 +458,21 @@ void Operator::dockerEnv()
 
     m_commandRunner->executeCommand(QStandardPaths::findExecutable(terminal), { "-e", command });
 #endif
+}
+
+void Operator::updateSettings(QString binPath, bool warnOnClose)
+{
+
+    QDir dir = QDir(QDir::homePath() + "/.minikube-gui");
+    if (!dir.exists()) {
+        dir.mkpath(".");
+    }
+    // Create a QSettings object with an INI file format and a specific filename
+    QSettings settings(dir.filePath("config.ini"), QSettings::IniFormat);
+
+    // Write a value to the settings file
+    settings.setValue("minikube-binary-path", binPath);
+    settings.setValue("warn-background-on-close", warnOnClose);
 }
 
 void Operator::mount(QString src, QString dest)
