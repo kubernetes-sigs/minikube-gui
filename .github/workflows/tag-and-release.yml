@@ -39,6 +39,10 @@ jobs:
         with:
           name: minikube-gui-macos-release
           path: ./minikube-gui-macos.dmg
+      - uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce
+        with:
+          name: minikube-gui-macos-tar-release
+          path: ./minikube-gui-macos.tar.gz
   build-windows-release:
     runs-on: windows-latest
     steps:
@@ -78,6 +82,9 @@ jobs:
           name: minikube-gui-macos-release
       - uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a
         with:
+          name: minikube-gui-macos-tar-release
+      - uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a
+        with:
           name: minikube-gui-windows-release
       - uses: softprops/action-gh-release@de2c0eb89ae2a093876385947365aca7b0e5f844
         with:
@@ -86,4 +93,5 @@ jobs:
           files: |
             minikube-gui-linux.tar.gz
             minikube-gui-macos.dmg
+            minikube-gui-macos.tar.gz
             minikube-gui-windows.zip

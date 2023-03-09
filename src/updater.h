@@ -25,14 +25,17 @@ class Updater : public QObject
     Q_OBJECT
 
 public:
-    explicit Updater(QVersionNumber version, QIcon icon);
+    explicit Updater(QWidget *parent, QVersionNumber version, QIcon icon);
     void checkForUpdates();
 
 private:
+    void askToUpdate(QString latest, QString link);
+    void downloadUpdate(QString link);
     void notifyUpdate(QString latest, QString link);
     QString getRequest(QString url);
     QVersionNumber m_version;
     QIcon m_icon;
+    QWidget *m_parent;
 };
 
 #endif // UPDATER_H
