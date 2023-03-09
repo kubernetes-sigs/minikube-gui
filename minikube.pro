@@ -15,6 +15,8 @@ HEADERS       = src/window.h \
                 src/paths.h \
                 src/progresswindow.h \
                 src/serviceview.h \
+                src/setting.h \
+                src/settings.h \
                 src/tray.h \
                 src/updater.h
 SOURCES       = src/main.cpp \
@@ -33,6 +35,8 @@ SOURCES       = src/main.cpp \
                 src/paths.cpp \
                 src/progresswindow.cpp \
                 src/serviceview.cpp \
+                src/setting.cpp \
+                src/settings.cpp \
                 src/tray.cpp \
                 src/updater.cpp \
                 src/window.cpp

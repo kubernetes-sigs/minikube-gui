@@ -24,12 +24,11 @@ limitations under the License.
 #include <QPushButton>
 #include <QStandardPaths>
 #include <QDebug>
-#include <QSettings>
 
 Operator::Operator(AdvancedView *advancedView, BasicView *basicView, ServiceView *serviceView,
                    AddonsView *addonsView, CommandRunner *commandRunner, ErrorMessage *errorMessage,
                    ProgressWindow *progressWindow, Tray *tray, HyperKit *hyperKit, Updater *updater,
-                   QStackedWidget *stackedWidget, QDialog *parent)
+                   Settings *settings, QStackedWidget *stackedWidget, QDialog *parent)
 {
     m_advancedView = advancedView;
     m_basicView = basicView;
@@ -41,6 +40,7 @@ Operator::Operator(AdvancedView *advancedView, BasicView *basicView, ServiceView
     m_tray = tray;
     m_hyperKit = hyperKit;
     m_updater = updater;
+    m_settings = settings;
     m_stackedWidget = stackedWidget;
     m_parent = parent;
     m_isBasicView = true;
@@ -56,7 +56,7 @@ Operator::Operator(AdvancedView *advancedView, BasicView *basicView, ServiceView
     connect(m_basicView, &BasicView::addons, this, &Operator::displayAddons);
     connect(m_basicView, &BasicView::mount, this, &Operator::mount);
     connect(m_basicView, &BasicView::closeMount, this, &Operator::mountClose);
-    connect(m_basicView, &BasicView::sendSettings, this, &Operator::updateSettings);
+    connect(m_basicView, &BasicView::saveSettings, this, &Operator::updateSettings);
     connect(m_basicView, &BasicView::tunnel, this, &Operator::tunnel);
     connect(m_basicView, &BasicView::ssh, this, &Operator::sshConsole);
     connect(m_basicView, &BasicView::dashboard, this, &Operator::dashboardBrowser);
@@ -100,6 +100,7 @@ Operator::Operator(AdvancedView *advancedView, BasicView *basicView, ServiceView
     connect(m_addonsView, &AddonsView::addonClicked, this, &Operator::addonsEnableDisable);
 
     updateClusters();
+    getSettings();
 }
 
 QStringList Operator::getCurrentClusterFlags()
@@ -460,19 +461,15 @@ void Operator::dockerEnv()
 #endif
 }
 
-void Operator::updateSettings(QString binPath, bool warnOnClose)
+void Operator::updateSettings(Setting s)
+{
+    m_settings->updateSettings(s);
+}
+
+void Operator::getSettings()
 {
 
-    QDir dir = QDir(QDir::homePath() + "/.minikube-gui");
-    if (!dir.exists()) {
-        dir.mkpath(".");
-    }
-    // Create a QSettings object with an INI file format and a specific filename
-    QSettings settings(dir.filePath("config.ini"), QSettings::IniFormat);
-
-    // Write a value to the settings file
-    settings.setValue("minikube-binary-path", binPath);
-    settings.setValue("warn-background-on-close", warnOnClose);
+    m_basicView->receivedSettings(m_settings->getSettings());
 }
 
 void Operator::mount(QString src, QString dest)

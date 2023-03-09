@@ -82,6 +82,7 @@ private:
     Tray *tray;
     HyperKit *hyperKit;
     Updater *updater;
+    Settings *settings;
     QVBoxLayout *layout;
     Logger *logger;
 };
