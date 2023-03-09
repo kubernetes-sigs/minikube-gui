@@ -226,7 +226,6 @@ void BasicView::disableButtons()
 
 void BasicView::askMount()
 {
-
     QDialog dialog;
     dialog.setWindowIcon(m_icon);
     dialog.setModal(true);
@@ -276,7 +275,6 @@ void BasicView::askMount()
 
 void BasicView::askSettings()
 {
-
     QDialog dialog;
     dialog.setWindowIcon(m_icon);
     dialog.setModal(true);
@@ -286,11 +284,13 @@ void BasicView::askSettings()
     QDialogButtonBox buttonBox(Qt::Horizontal, &dialog);
     QLineEdit binaryPath(&dialog);
     QCheckBox warnCloseCheck(&dialog);
+    binaryPath.setText(m_setting.minikubeBinaryPath());
+    warnCloseCheck.setChecked(m_setting.skipWarningOnClose());
 
-    form.addRow(new QLabel(tr("path to minikube binary")), &binaryPath);
-    form.addRow(new QLabel(tr("skip warn runs in background on close")), &warnCloseCheck);
+    form.addRow(new QLabel(tr("Path to minikube binary")), &binaryPath);
+    form.addRow(new QLabel(tr("Skip warn runs in background on close")), &warnCloseCheck);
 
-    buttonBox.addButton(QString(tr("save")), QDialogButtonBox::AcceptRole);
+    buttonBox.addButton(QString(tr("Save")), QDialogButtonBox::AcceptRole);
     buttonBox.addButton(QString(tr("Cancel")), QDialogButtonBox::RejectRole);
     form.addRow(&buttonBox);
 
@@ -298,7 +298,17 @@ void BasicView::askSettings()
     connect(&buttonBox, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
 
     int code = dialog.exec();
-    if (code == QDialog::Accepted) {
-        emit sendSettings(binaryPath.text(), false);
+    if (code != QDialog::Accepted) {
+        return;
     }
+    Setting *s = new Setting();
+    s->setMinikubeBinaryPath(binaryPath.text());
+    s->setSkipWarningOnClose(warnCloseCheck.isChecked());
+    m_setting = *s;
+    emit saveSettings(*s);
+}
+
+void BasicView::receivedSettings(Setting s)
+{
+    m_setting = s;
 }

@@ -53,9 +53,10 @@ Window::Window()
     tray = new Tray(*trayIconIcon);
     hyperKit = new HyperKit(*trayIconIcon);
     updater = new Updater(this, version, *trayIconIcon);
+    settings = new Settings();
 
     op = new Operator(advancedView, basicView, serviceView, addonsView, commandRunner, errorMessage,
-                      progressWindow, tray, hyperKit, updater, stackedWidget, this);
+                      progressWindow, tray, hyperKit, updater, settings, stackedWidget, this);
 
     stackedWidget->addWidget(basicView->basicView);
     stackedWidget->addWidget(advancedView->advancedView);
@@ -80,7 +81,8 @@ void Window::closeEvent(QCloseEvent *event)
         return;
     }
 #endif
-    if (tray->isVisible()) {
+    bool skipWarning = settings->getSettings().skipWarningOnClose();
+    if (tray->isVisible() && !skipWarning) {
         QMessageBox::information(this, "minikube",
                                  tr("minikube will minimize to the "
                                     "system tray. To terminate the program, "

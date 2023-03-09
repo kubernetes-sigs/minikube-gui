@@ -19,9 +19,11 @@ limitations under the License.
 
 #include "cluster.h"
 #include "mount.h"
+#include "setting.h"
 
 #include <QPushButton>
 #include <QLabel>
+#include <QSettings>
 
 class BasicView : public QObject
 {
@@ -34,6 +36,7 @@ public:
     void updateMounts(MountList ms);
     void disableButtons();
     void setFont(QFont font, QWidget *wid);
+    void receivedSettings(Setting s);
 signals:
     void start();
     void stop();
@@ -46,7 +49,7 @@ signals:
     void dashboard();
     void advanced();
     void mount(QString, QString);
-    void sendSettings(QString, bool);
+    void saveSettings(Setting s);
     void closeMount();
     void tunnel();
     void addons();
@@ -71,6 +74,7 @@ private:
     QPushButton *exitButton;
     QIcon m_icon;
     MountList m_mountList;
+    Setting m_setting;
     void askMount();
     void askSettings();
 };

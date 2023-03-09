@@ -28,7 +28,6 @@ ServiceView::ServiceView(QDialog *parent, QIcon icon)
 
 void ServiceView::displayTable(QString svcCmdOutput)
 {
-
     m_dialog = new QDialog(m_parent);
     m_dialog->setWindowTitle(tr("Service List"));
     m_dialog->setWindowIcon(m_icon);

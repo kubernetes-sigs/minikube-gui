@@ -29,7 +29,10 @@ limitations under the License.
 #include "tray.h"
 #include "updater.h"
 #include "mount.h"
+#include "settings.h"
+
 #include <QStackedWidget>
+#include <QSettings>
 
 class Operator : public QObject
 {
@@ -39,7 +42,7 @@ public:
     Operator(AdvancedView *advancedView, BasicView *basicView, ServiceView *serviceView,
              AddonsView *addonsView, CommandRunner *commandRunner, ErrorMessage *errorMessage,
              ProgressWindow *progressWindow, Tray *tray, HyperKit *hyperKit, Updater *updater,
-             QStackedWidget *stackedWidget, QDialog *parent);
+             Settings *settings, QStackedWidget *stackedWidget, QDialog *parent);
 
 public slots:
     void startMinikube();
@@ -72,7 +75,8 @@ private:
     void dockerEnv();
     void updateServices();
     void mount(QString, QString);
-    void updateSettings(QString, bool);
+    void updateSettings(Setting s);
+    void getSettings();
     void tunnelClean();
     void tunnel();
     void addonsEnableDisable(QString addonName, QString action);
@@ -98,6 +102,7 @@ private:
     Tray *m_tray;
     HyperKit *m_hyperKit;
     Updater *m_updater;
+    Settings *m_settings;
     bool m_isBasicView;
     QProcess *dashboardProcess;
     QProcess *mountProcess;

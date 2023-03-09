@@ -32,7 +32,6 @@ ErrorMessage::ErrorMessage(QDialog *parent, QIcon icon)
 void ErrorMessage::error(QString errorCode, QString advice, QString message, QString url,
                          QString issues)
 {
-
     m_dialog = new QDialog(m_parent);
     m_dialog->setWindowTitle(tr("minikube start failed"));
     m_dialog->setWindowIcon(m_icon);
