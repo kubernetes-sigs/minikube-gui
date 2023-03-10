@@ -45,8 +45,7 @@ Setting Settings::getSettings()
 {
     QSettings *s = new QSettings(m_configPath, QSettings::IniFormat);
     Setting *setting = new Setting();
-    setting->setMinikubeBinaryPath(
-            s->value("minikube-binary-path", Paths::minikubePath()).toString());
+    setting->setMinikubeBinaryPath(s->value("minikube-binary-path").toString());
     setting->setSkipWarningOnClose(s->value("skip-warning-on-close").toBool());
     return *setting;
 }
