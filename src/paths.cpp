@@ -17,8 +17,20 @@ limitations under the License.
 #include "paths.h"
 
 #include <QDir>
+#include <QStandardPaths>
 
-QStringList Paths::minikubePaths()
+QStringList Paths::unixLocations()
 {
-    return { "/usr/local/bin", "/opt/homebrew/bin", QDir::homePath() + "/google-cloud-sdk/bin" };
+    return { "/usr/local/bin", "/opt/homebrew/bin" };
+}
+
+QString Paths::minikubePath()
+{
+    QString path = QStandardPaths::findExecutable("minikube");
+    if (!path.isEmpty()) {
+        return path;
+    }
+    return QStandardPaths::findExecutable(
+            "minikube",
+            { "/usr/local/bin", "/opt/homebrew/bin", QDir::homePath() + "/google-cloud-sdk/bin" });
 }

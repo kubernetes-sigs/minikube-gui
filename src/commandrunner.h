@@ -20,6 +20,7 @@ limitations under the License.
 #include "cluster.h"
 #include "addon.h"
 #include "logger.h"
+#include "settings.h"
 
 #include <QDialog>
 #include <QProcessEnvironment>
@@ -29,7 +30,7 @@ class CommandRunner : public QObject
     Q_OBJECT
 
 public:
-    CommandRunner(QDialog *parent, Logger *logger);
+    CommandRunner(QDialog *parent, Logger *logger, Settings *settings);
 
     void executeCommand(QString program, QStringList args);
     void startMinikube(QStringList args);
@@ -57,6 +58,7 @@ signals:
     void updatedAddons(AddonList);
     void startCommandStarting();
     void addonsComplete();
+    void minikubeNotFound();
 
 private slots:
     void executionCompleted();
@@ -66,7 +68,8 @@ private slots:
 private:
     void executeMinikubeCommand(QStringList args);
     void executeMinikubeCommand(QStringList args, QProcess *process);
-    void minikubePath();
+    QString minikubePath();
+    void errorHappened(QProcess::ProcessError);
 #if __APPLE__
     void setMinikubePath();
 #endif
@@ -74,10 +77,10 @@ private:
     QProcess *m_process;
     QProcessEnvironment m_env;
     QString m_output;
-    QString m_minikubePath;
     QString m_command;
     QDialog *m_parent;
     Logger *m_logger;
+    Settings *m_settings;
     QStringList m_args;
     bool m_isRunning;
 };

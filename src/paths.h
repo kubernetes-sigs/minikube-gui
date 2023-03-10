@@ -22,7 +22,8 @@ limitations under the License.
 class Paths
 {
 public:
-    static QStringList minikubePaths();
+    static QStringList unixLocations();
+    static QString minikubePath();
 };
 
 #endif // PATHS_H

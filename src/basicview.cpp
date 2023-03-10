@@ -112,7 +112,6 @@ BasicView::BasicView(QIcon icon)
 
     connect(topStatusButton, &QPushButton::clicked, this, &BasicView::refresh);
     connect(startButton, &QPushButton::clicked, this, &BasicView::start);
-    connect(startButton, &QPushButton::clicked, this, &BasicView::start);
     connect(stopButton, &QAbstractButton::clicked, this, &BasicView::stop);
     connect(pauseButton, &QAbstractButton::clicked, this, &BasicView::pause);
     connect(deleteButton, &QAbstractButton::clicked, this, &BasicView::delete_);
@@ -311,4 +310,29 @@ void BasicView::askSettings()
 void BasicView::receivedSettings(Setting s)
 {
     m_setting = s;
+}
+
+void BasicView::minikubeNotFound()
+{
+    QDialog dialog;
+    dialog.setWindowTitle("minikube");
+    dialog.setWindowIcon(m_icon);
+    dialog.setModal(true);
+    QFormLayout form(&dialog);
+    QLabel *message = new QLabel();
+    message->setText("minikube was not found on the path.\nPlease follow the install instructions "
+                     "below to install minikube first.\nIf you do have minikube installed set the "
+                     "location in the settings.\n");
+    form.addWidget(message);
+    QLabel *link = new QLabel();
+    link->setOpenExternalLinks(true);
+    link->setText("<a "
+                  "href='https://minikube.sigs.k8s.io/docs/start/'>https://minikube.sigs.k8s.io/"
+                  "docs/start/</a>");
+    form.addWidget(link);
+    QDialogButtonBox buttonBox(Qt::Horizontal, &dialog);
+    buttonBox.addButton(QString(tr("OK")), QDialogButtonBox::AcceptRole);
+    connect(&buttonBox, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
+    form.addRow(&buttonBox);
+    dialog.exec();
 }

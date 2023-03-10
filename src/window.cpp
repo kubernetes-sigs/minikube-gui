@@ -38,12 +38,12 @@ const QVersionNumber version = QVersionNumber::fromString("0.0.2");
 Window::Window()
 {
     trayIconIcon = new QIcon(":/resources/images/minikube.png");
-    checkForMinikube();
     Fonts::initFonts();
 
     stackedWidget = new QStackedWidget;
     logger = new Logger();
-    commandRunner = new CommandRunner(this, logger);
+    settings = new Settings();
+    commandRunner = new CommandRunner(this, logger, settings);
     basicView = new BasicView(*trayIconIcon);
     serviceView = new ServiceView(this, *trayIconIcon);
     addonsView = new AddonsView(*trayIconIcon);
@@ -53,7 +53,6 @@ Window::Window()
     tray = new Tray(*trayIconIcon);
     hyperKit = new HyperKit(*trayIconIcon);
     updater = new Updater(this, version, *trayIconIcon);
-    settings = new Settings();
 
     op = new Operator(advancedView, basicView, serviceView, addonsView, commandRunner, errorMessage,
                       progressWindow, tray, hyperKit, updater, settings, stackedWidget, this);
@@ -91,45 +90,6 @@ void Window::closeEvent(QCloseEvent *event)
         hide();
         event->ignore();
     }
-}
-
-static QString minikubePath()
-{
-    QString minikubePath = QStandardPaths::findExecutable("minikube");
-    if (!minikubePath.isEmpty()) {
-        return minikubePath;
-    }
-    return QStandardPaths::findExecutable("minikube", Paths::minikubePaths());
-}
-
-void Window::checkForMinikube()
-{
-    QString program = minikubePath();
-    if (!program.isEmpty()) {
-        return;
-    }
-
-    QDialog dialog;
-    dialog.setWindowTitle("minikube");
-    dialog.setWindowIcon(*trayIconIcon);
-    dialog.setModal(true);
-    QFormLayout form(&dialog);
-    QLabel *message = new QLabel(this);
-    message->setText("minikube was not found on the path.\nPlease follow the install instructions "
-                     "below to install minikube first.\n");
-    form.addWidget(message);
-    QLabel *link = new QLabel(this);
-    link->setOpenExternalLinks(true);
-    link->setText("<a "
-                  "href='https://minikube.sigs.k8s.io/docs/start/'>https://minikube.sigs.k8s.io/"
-                  "docs/start/</a>");
-    form.addWidget(link);
-    QDialogButtonBox buttonBox(Qt::Horizontal, &dialog);
-    buttonBox.addButton(QString(tr("OK")), QDialogButtonBox::AcceptRole);
-    connect(&buttonBox, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
-    form.addRow(&buttonBox);
-    dialog.exec();
-    exit(EXIT_FAILURE);
 }
 
 #endif

@@ -37,6 +37,7 @@ public:
     void disableButtons();
     void setFont(QFont font, QWidget *wid);
     void receivedSettings(Setting s);
+    void minikubeNotFound();
 signals:
     void start();
     void stop();
