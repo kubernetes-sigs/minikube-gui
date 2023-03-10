@@ -30,6 +30,7 @@ public:
     Settings();
     Setting getSettings();
     void updateSettings(Setting setting);
+    QString minikubePath();
 signals:
 
 private:

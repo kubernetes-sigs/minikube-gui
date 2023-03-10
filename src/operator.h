@@ -65,6 +65,7 @@ private slots:
     void addonsReceived(AddonList as);
     void startCommandStarting();
     void addonsComplete();
+    void minikubeNotFound();
 
 private:
     QStringList getCurrentClusterFlags();

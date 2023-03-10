@@ -23,12 +23,12 @@ limitations under the License.
 #include <QJsonParseError>
 #include <QStandardPaths>
 
-CommandRunner::CommandRunner(QDialog *parent, Logger *logger)
+CommandRunner::CommandRunner(QDialog *parent, Logger *logger, Settings *settings)
 {
     m_env = QProcessEnvironment::systemEnvironment();
     m_parent = parent;
     m_logger = logger;
-    minikubePath();
+    m_settings = settings;
 #if __APPLE__
     setMinikubePath();
 #endif
@@ -61,10 +61,11 @@ void CommandRunner::executeMinikubeCommand(QStringList args)
     m_process = new QProcess(m_parent);
     connect(m_process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this,
             &CommandRunner::executionCompleted);
+    connect(m_process, &QProcess::errorOccurred, this, &CommandRunner::errorHappened);
     connect(m_process, &QProcess::readyReadStandardError, this, &CommandRunner::errorReady);
     connect(m_process, &QProcess::readyReadStandardOutput, this, &CommandRunner::outputReady);
     m_process->setProcessEnvironment(m_env);
-    m_process->start(m_minikubePath, args);
+    m_process->start(minikubePath(), args);
     emit CommandRunner::startingExecution();
 }
 
@@ -73,7 +74,7 @@ void CommandRunner::executeMinikubeCommand(QStringList args, QProcess *process)
     QStringList userArgs = { "--user", "minikube-gui" };
     args << userArgs;
     process->setProcessEnvironment(m_env);
-    process->start(m_minikubePath, args);
+    process->start(minikubePath(), args);
 }
 
 void CommandRunner::startMinikube(QStringList args)
@@ -129,7 +130,7 @@ void CommandRunner::tunnelMinikube(QStringList args)
 {
     QStringList baseArgs = { "tunnel" };
     baseArgs << args;
-    baseArgs.prepend(m_minikubePath);
+    baseArgs.prepend(minikubePath());
     QString command = baseArgs.join(" ");
 #ifndef QT_NO_TERMWIDGET
     QMainWindow *mainWindow = new QMainWindow();
@@ -356,6 +357,13 @@ void CommandRunner::executionCompleted()
     }
 }
 
+void CommandRunner::errorHappened(QProcess::ProcessError err)
+{
+    if (err == QProcess::FailedToStart) {
+        emit minikubeNotFound();
+    }
+}
+
 void CommandRunner::errorReady()
 {
     QString text = m_process->readAllStandardError();
@@ -374,18 +382,14 @@ void CommandRunner::outputReady()
 void CommandRunner::setMinikubePath()
 {
     m_env = QProcessEnvironment::systemEnvironment();
-    QString path = m_env.value("PATH") + ":" + Paths::minikubePaths().join(":");
+    QString path = m_env.value("PATH") + ":" + Paths::unixLocations().join(":");
     m_env.insert("PATH", path);
 }
 #endif
 
-void CommandRunner::minikubePath()
+QString CommandRunner::minikubePath()
 {
-    m_minikubePath = QStandardPaths::findExecutable("minikube");
-    if (!m_minikubePath.isEmpty()) {
-        return;
-    }
-    m_minikubePath = QStandardPaths::findExecutable("minikube", Paths::minikubePaths());
+    return m_settings->minikubePath();
 }
 
 bool CommandRunner::isRunning()

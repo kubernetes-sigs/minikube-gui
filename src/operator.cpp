@@ -85,6 +85,7 @@ Operator::Operator(AdvancedView *advancedView, BasicView *basicView, ServiceView
     connect(m_commandRunner, &CommandRunner::addonsComplete, this, &Operator::addonsComplete);
     connect(m_commandRunner, &CommandRunner::startCommandStarting, this,
             &Operator::startCommandStarting);
+    connect(m_commandRunner, &CommandRunner::minikubeNotFound, this, &Operator::minikubeNotFound);
 
     connect(m_progressWindow, &ProgressWindow::cancelled, this, &Operator::cancelCommand);
 
@@ -213,6 +214,15 @@ void Operator::displayAddons()
 {
     updateAddons();
     m_addonsView->display();
+}
+
+void Operator::minikubeNotFound()
+{
+    m_progressWindow->done();
+    updateButtons();
+    m_advancedView->hideLoading();
+    m_parent->unsetCursor();
+    m_basicView->minikubeNotFound();
 }
 
 void Operator::clustersReceived(ClusterList clusterList)
@@ -360,18 +370,9 @@ Cluster Operator::selectedCluster()
     return clusterHash[clusterName];
 }
 
-static QString minikubePath()
-{
-    QString minikubePath = QStandardPaths::findExecutable("minikube");
-    if (!minikubePath.isEmpty()) {
-        return minikubePath;
-    }
-    return QStandardPaths::findExecutable("minikube", Paths::minikubePaths());
-}
-
 void Operator::sshConsole()
 {
-    QString program = minikubePath();
+    QString program = m_settings->minikubePath();
     QString commandArgs = QString("ssh -p %1").arg(selectedClusterName());
     QString command = QString("%1 %2").arg(program, commandArgs);
 #ifndef QT_NO_TERMWIDGET
@@ -417,7 +418,7 @@ void Operator::sshConsole()
 
 void Operator::dockerEnv()
 {
-    QString program = minikubePath();
+    QString program = m_settings->minikubePath();
     QString commandArgs = QString("$(%1 -p %2 docker-env)").arg(program, selectedClusterName());
     QString command = QString("eval %1").arg(commandArgs);
 #ifndef QT_NO_TERMWIDGET

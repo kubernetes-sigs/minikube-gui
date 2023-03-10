@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 #include "settings.h"
+#include "paths.h"
 
 #include <QSettings>
 #include <QDir>
@@ -26,6 +27,11 @@ Settings::Settings()
         dir.mkpath(".");
     }
     m_configPath = dir.filePath("config.ini");
+    QSettings settings(m_configPath, QSettings::IniFormat);
+    if (settings.contains("minikube-binary-path")) {
+        return;
+    }
+    settings.setValue("minikube-binary-path", Paths::minikubePath());
 }
 
 void Settings::updateSettings(Setting s)
@@ -39,7 +45,13 @@ Setting Settings::getSettings()
 {
     QSettings *s = new QSettings(m_configPath, QSettings::IniFormat);
     Setting *setting = new Setting();
-    setting->setMinikubeBinaryPath(s->value("minikube-binary-path").toString());
+    setting->setMinikubeBinaryPath(
+            s->value("minikube-binary-path", Paths::minikubePath()).toString());
     setting->setSkipWarningOnClose(s->value("skip-warning-on-close").toBool());
     return *setting;
+}
+
+QString Settings::minikubePath()
+{
+    return getSettings().minikubeBinaryPath();
 }

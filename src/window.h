@@ -65,7 +65,6 @@ protected:
 private:
     QIcon *trayIconIcon;
 
-    void checkForMinikube();
     QStackedWidget *stackedWidget;
     void checkForUpdates();
     QString getRequest(QString url);
