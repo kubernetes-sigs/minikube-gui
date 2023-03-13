@@ -28,10 +28,6 @@ Settings::Settings()
     }
     m_configPath = dir.filePath("config.ini");
     QSettings settings(m_configPath, QSettings::IniFormat);
-    if (settings.contains("minikube-binary-path")) {
-        return;
-    }
-    settings.setValue("minikube-binary-path", Paths::minikubePath());
 }
 
 void Settings::updateSettings(Setting s)
@@ -52,5 +48,8 @@ Setting Settings::getSettings()
 
 QString Settings::minikubePath()
 {
-    return getSettings().minikubeBinaryPath();
+    if (getSettings().minikubeBinaryPath() != "") {
+        return getSettings().minikubeBinaryPath();
+    }
+    return Paths::minikubePath();
 }
