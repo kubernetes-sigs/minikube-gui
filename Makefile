@@ -32,7 +32,7 @@ build-windows:
 
 .PHONY: bump-releases-json
 bump-releases-json:
-	(cd scripts && go run update-releases-json.go)
+	(cd scripts && go run update-releases-json.go -version=$(VERSION))
 
 .PHONY: bump-version
 bump-version:
