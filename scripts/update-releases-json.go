@@ -22,6 +22,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strings"
 )
 
 const releasesFile = "../releases.json"
@@ -73,7 +74,7 @@ func updateReleases(version string) error {
 			Linux:   fmt.Sprintf("%s-linux.tar.gz", linkBase),
 			Windows: fmt.Sprintf("%s-windows.zip", linkBase),
 		},
-		Name: version,
+		Name: strings.TrimPrefix(version, "v"),
 	}
 
 	r.Releases = append([]release{newRelease}, r.Releases...)
