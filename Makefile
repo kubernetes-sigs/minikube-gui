@@ -30,6 +30,10 @@ build-macos:
 build-windows:
 	scripts\build-windows.cmd
 
+.PHONY: bump-releases-json
+bump-releases-json:
+	(cd scripts && go run update-releases-json.go)
+
 .PHONY: bump-version
 bump-version:
 	sed -i s/QVersionNumber::fromString\(.*\)/QVersionNumber::fromString\(\"$(VERSION)\"\)/ src/window.cpp

@@ -95,3 +95,26 @@ jobs:
             minikube-gui-macos.dmg
             minikube-gui-macos.tar.gz
             minikube-gui-windows.zip
+  bump-releases:
+    needs:
+      [
+        release,
+      ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c
+      - uses: actions/setup-go@6edd4406fa81c3da01a34fa6f6343087c207a568
+      - run: |
+          make bump-releases-json
+      - name: Create PR
+        uses: peter-evans/create-pull-request@2b011faafdcbc9ceb11414d64d0573f37c774b04
+        with:
+          token: ${{ secrets.MINIKUBE_BOT_PAT }}
+          commit-message: Bump releases.json
+          committer: minikube-bot <minikube-bot@google.com>
+          author: minikube-bot <minikube-bot@google.com>
+          branch: bump_releases_json
+          push-to-fork: minikube-bot/minikube-gui
+          base: main
+          delete-branch: true
+          title: 'Bump releases.json'
