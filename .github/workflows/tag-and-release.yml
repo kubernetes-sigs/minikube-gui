@@ -95,7 +95,7 @@ jobs:
             minikube-gui-macos.dmg
             minikube-gui-macos.tar.gz
             minikube-gui-windows.zip
-  bump-releases:
+  update-releases-json:
     needs:
       [
         release,
@@ -111,11 +111,11 @@ jobs:
         uses: peter-evans/create-pull-request@2b011faafdcbc9ceb11414d64d0573f37c774b04
         with:
           token: ${{ secrets.MINIKUBE_BOT_PAT }}
-          commit-message: Bump releases.json
+          commit-message: Update releases.json
           committer: minikube-bot <minikube-bot@google.com>
           author: minikube-bot <minikube-bot@google.com>
-          branch: bump_releases_json
+          branch: update_releases_json
           push-to-fork: minikube-bot/minikube-gui
           base: main
           delete-branch: true
-          title: 'Bump releases.json'
+          title: 'Update releases.json'
