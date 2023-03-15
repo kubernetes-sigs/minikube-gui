@@ -14,6 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+// This file updates the releases.json file with the OS specific download
+// links for the latest version.
+
 package main
 
 import (

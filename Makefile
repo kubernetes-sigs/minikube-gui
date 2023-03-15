@@ -13,13 +13,13 @@
 # limitations under the License.
 
 .PHONY: build-linux
-build-linux:
+build-linux: ## Build minikube-gui for Linux
 	qmake
 	make
 	tar -czvf minikube-gui-linux.tar.gz -C ./bin ./minikube-gui
 
 .PHONY: build-macos
-build-macos:
+build-macos: ## Build minikube-gui for macOS
 	qmake
 	make
 	(cd ./bin && macdeployqt ./minikube-gui.app -qmldir=. -verbose=1 -dmg)
@@ -27,13 +27,19 @@ build-macos:
 	tar -czf minikube-gui-macos.tar.gz ./bin
 
 .PHONY: build-windows
-build-windows:
+build-windows: ## Build minikube-gui for Windows
 	scripts\build-windows.cmd
 
-.PHONY: bump-releases-json
-bump-releases-json:
-	(cd scripts && go run update-releases-json.go -version=$(VERSION))
-
 .PHONY: bump-version
-bump-version:
+bump-version: ## Bumps the version of minikube-gui
 	sed -i s/QVersionNumber::fromString\(.*\)/QVersionNumber::fromString\(\"$(VERSION)\"\)/ src/window.cpp
+
+.PHONY: help
+help:
+	@printf "\033[1mAvailable targets for minikube-gui\033[21m\n"
+	@printf "\033[1m----------------------------------\033[21m\n"
+	@grep -h -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+
+.PHONY: update-releases-json
+update-releases-json: ## Updates the releases.json file with the latest release
+	(cd scripts && go run update-releases-json.go -version=$(VERSION))

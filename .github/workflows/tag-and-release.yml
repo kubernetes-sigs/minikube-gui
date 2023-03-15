@@ -106,7 +106,7 @@ jobs:
       - uses: actions/setup-go@6edd4406fa81c3da01a34fa6f6343087c207a568
       - run: |
           export VERSION=$(sed -n -e 's/.*QVersionNumber::fromString(\"\(.*\)\");/\1/p' src/window.cpp)
-          make bump-releases-json
+          make update-releases-json
       - name: Create PR
         uses: peter-evans/create-pull-request@2b011faafdcbc9ceb11414d64d0573f37c774b04
         with:
