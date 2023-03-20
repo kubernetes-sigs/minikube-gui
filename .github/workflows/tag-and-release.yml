@@ -108,7 +108,7 @@ jobs:
           export VERSION=$(sed -n -e 's/.*QVersionNumber::fromString(\"\(.*\)\");/\1/p' src/window.cpp)
           make update-releases-json
       - name: Create PR
-        uses: peter-evans/create-pull-request@2b011faafdcbc9ceb11414d64d0573f37c774b04
+        uses: peter-evans/create-pull-request@38e0b6e68b4c852a5500a94740f0e535e0d7ba54
         with:
           token: ${{ secrets.MINIKUBE_BOT_PAT }}
           commit-message: Update releases.json
