@@ -1,6 +1,14 @@
 [
     {
         "links": {
+            "darwin": "https://github.com/kubernetes-sigs/minikube-gui/releases/download/0.1.0/minikube-gui-mac.tar.gz",
+            "linux": "https://github.com/kubernetes-sigs/minikube-gui/releases/download/0.1.0/minikube-gui-linux.tar.gz",
+            "windows": "https://github.com/kubernetes-sigs/minikube-gui/releases/download/0.1.0/minikube-gui-windows.zip"
+        },
+        "name": "0.1.0"
+    },
+    {
+        "links": {
             "darwin": "https://github.com/kubernetes-sigs/minikube-gui/releases/download/v0.0.2/minikube-gui-mac.dmg",
             "linux": "https://github.com/kubernetes-sigs/minikube-gui/releases/download/v0.0.2/minikube-gui-linux.tar.gz",
             "windows": "https://github.com/kubernetes-sigs/minikube-gui/releases/download/v0.0.2/minikube-gui-windows.zip"
