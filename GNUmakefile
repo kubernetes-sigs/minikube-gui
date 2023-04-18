@@ -15,13 +15,13 @@
 .PHONY: build-linux
 build-linux: ## Build minikube-gui for Linux
 	qmake
-	make
+	make -f Makefile
 	tar -czvf minikube-gui-linux.tar.gz -C ./bin ./minikube-gui
 
 .PHONY: build-macos
 build-macos: ## Build minikube-gui for macOS
 	qmake
-	make
+	make -f Makefile
 	(cd ./bin && macdeployqt ./minikube-gui.app -qmldir=. -verbose=1 -dmg)
 	mv ./bin/minikube-gui.dmg ./minikube-gui-macos.dmg
 	tar -czf minikube-gui-macos.tar.gz ./bin
