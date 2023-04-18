@@ -22,6 +22,7 @@ limitations under the License.
 #include <QJsonObject>
 #include <QJsonParseError>
 #include <QStandardPaths>
+#include <QDebug>
 
 CommandRunner::CommandRunner(QDialog *parent, Logger *logger, Settings *settings)
 {
