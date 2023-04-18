@@ -22,6 +22,7 @@ limitations under the License.
 #include <QFormLayout>
 #include <QDialogButtonBox>
 #include <QLineEdit>
+#include <QApplication>
 #include <QCoreApplication>
 #include <QCheckBox>
 
@@ -125,6 +126,7 @@ BasicView::BasicView(QIcon icon)
     connect(addonsButton, &QAbstractButton::clicked, this, &BasicView::addons);
     connect(advancedButton, &QAbstractButton::clicked, this, &BasicView::advanced);
     connect(settingsButton, &QAbstractButton::clicked, this, &BasicView::askSettings);
+    connect(aboutButton, &QAbstractButton::clicked, qApp, &QApplication::aboutQt);
     connect(exitButton, &QAbstractButton::clicked, qApp, &QCoreApplication::quit);
 }
 
