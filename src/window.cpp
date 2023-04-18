@@ -81,7 +81,7 @@ void Window::closeEvent(QCloseEvent *event)
     }
 #endif
     bool skipWarning = settings->getSettings().skipWarningOnClose();
-    if (tray->isVisible() && !skipWarning) {
+    if (QSystemTrayIcon::isSystemTrayAvailable() && tray->isVisible() && !skipWarning) {
         QMessageBox::information(this, "minikube",
                                  tr("minikube will minimize to the "
                                     "system tray. To terminate the program, "
