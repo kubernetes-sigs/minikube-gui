@@ -10,6 +10,7 @@ HEADERS       = src/window.h \
                 src/fonts.h \
                 src/hyperkit.h \
                 src/logger.h \
+                src/minikubebutton.h \
                 src/mount.h \
                 src/operator.h \
                 src/paths.h \
@@ -31,6 +32,7 @@ SOURCES       = src/main.cpp \
                 src/fonts.cpp \
                 src/hyperkit.cpp \
                 src/logger.cpp \
+                src/minikubebutton.cpp \
                 src/operator.cpp \
                 src/paths.cpp \
                 src/progresswindow.cpp \

@@ -18,6 +18,7 @@ limitations under the License.
 #define ADVANCEDVIEW_H
 
 #include "cluster.h"
+#include "minikubebutton.h"
 
 #include <QLabel>
 #include <QPushButton>
@@ -58,16 +59,16 @@ private:
     void askName();
     void askCustom();
 
-    QPushButton *startButton;
-    QPushButton *stopButton;
-    QPushButton *pauseButton;
-    QPushButton *deleteButton;
-    QPushButton *refreshButton;
-    QPushButton *dockerEnvButton;
-    QPushButton *sshButton;
-    QPushButton *dashboardButton;
-    QPushButton *basicButton;
-    QPushButton *createButton;
+    MinikubeButton *startButton;
+    MinikubeButton *stopButton;
+    MinikubeButton *pauseButton;
+    MinikubeButton *deleteButton;
+    MinikubeButton *refreshButton;
+    MinikubeButton *dockerEnvButton;
+    MinikubeButton *sshButton;
+    MinikubeButton *dashboardButton;
+    MinikubeButton *basicButton;
+    MinikubeButton *createButton;
     QLabel *loading;
     ClusterModel *m_clusterModel;
 

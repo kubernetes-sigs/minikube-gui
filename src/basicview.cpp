@@ -38,24 +38,23 @@ BasicView::BasicView(QIcon icon)
     QVBoxLayout *topBar = new QVBoxLayout;
     topBar->addWidget(topStatusButton);
 
-    startButton = new QPushButton(Constants::startIcon);
-    stopButton = new QPushButton(Constants::stopIcon);
-    pauseButton = new QPushButton(Constants::pauseIcon);
-    deleteButton = new QPushButton(Constants::deleteIcon);
+    startButton = new MinikubeButton(Constants::startIcon);
+    stopButton = new MinikubeButton(Constants::stopIcon);
+    pauseButton = new MinikubeButton(Constants::pauseIcon);
+    deleteButton = new MinikubeButton(Constants::deleteIcon);
 
-    dockerEnvButton = new QPushButton("docker-env");
-    serviceButton = new QPushButton("service");
-    mountButton = new QPushButton(tr("mount"));
-    tunnelButton = new QPushButton(tr("tunnel"));
-    sshButton = new QPushButton("SSH");
-    dashboardButton = new QPushButton(tr("dashboard"));
-    addonsButton = new QPushButton(tr("addons"));
-    advancedButton = new QPushButton(tr("cluster list"));
-
-    refreshButton = new QPushButton(Constants::refreshIcon);
-    settingsButton = new QPushButton(Constants::settingsIcon);
-    aboutButton = new QPushButton(Constants::aboutIcon);
-    exitButton = new QPushButton(Constants::exitIcon);
+    dockerEnvButton = new MinikubeButton("docker-env");
+    serviceButton = new MinikubeButton("service");
+    mountButton = new MinikubeButton(tr("mount"));
+    tunnelButton = new MinikubeButton(tr("tunnel"));
+    sshButton = new MinikubeButton("SSH");
+    dashboardButton = new MinikubeButton(tr("dashboard"));
+    addonsButton = new MinikubeButton(tr("addons"));
+    advancedButton = new MinikubeButton(tr("cluster list"));
+    refreshButton = new MinikubeButton(Constants::refreshIcon);
+    settingsButton = new MinikubeButton(Constants::settingsIcon);
+    aboutButton = new MinikubeButton(Constants::aboutIcon);
+    exitButton = new MinikubeButton(Constants::exitIcon);
 
     // all the buttons that have icon needs to be set here
     Fonts::setFontAwesome(startButton);

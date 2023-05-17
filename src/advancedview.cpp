@@ -46,16 +46,16 @@ AdvancedView::AdvancedView(QIcon icon)
     clusterListView->horizontalHeader()->setSectionResizeMode(6, QHeaderView::ResizeToContents);
     setSelectedClusterName("default");
 
-    startButton = new QPushButton(tr("Start"));
-    stopButton = new QPushButton(tr("Stop"));
-    pauseButton = new QPushButton(tr("Pause"));
-    deleteButton = new QPushButton(tr("Delete"));
-    refreshButton = new QPushButton(tr("Refresh"));
-    createButton = new QPushButton(tr("Create"));
-    dockerEnvButton = new QPushButton("docker-env");
-    sshButton = new QPushButton("SSH");
-    dashboardButton = new QPushButton(tr("Dashboard"));
-    basicButton = new QPushButton(tr("Basic View"));
+    startButton = new MinikubeButton(tr("Start"));
+    stopButton = new MinikubeButton(tr("Stop"));
+    pauseButton = new MinikubeButton(tr("Pause"));
+    deleteButton = new MinikubeButton(tr("Delete"));
+    refreshButton = new MinikubeButton(tr("Refresh"));
+    createButton = new MinikubeButton(tr("Create"));
+    dockerEnvButton = new MinikubeButton("docker-env");
+    sshButton = new MinikubeButton("SSH");
+    dashboardButton = new MinikubeButton(tr("Dashboard"));
+    basicButton = new MinikubeButton(tr("Basic View"));
 
     disableButtons();
 
