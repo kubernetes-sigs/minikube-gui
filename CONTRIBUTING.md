@@ -49,6 +49,7 @@ Open in [Qt Creator](https://doc.qt.io/qtcreator/) via:
 ```shell
 qtcreator minikube.pro
 ```
+* Note: This project is currently configured to use Qt 5 and will not work with Qt 6. If using Qt Creator, please use the following link to learn how to add Qt 5 to Qt Creator: https://doc.qt.io/qtcreator/creator-project-qmake.html
 
 #### From Command Line
 
