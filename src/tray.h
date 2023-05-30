@@ -56,6 +56,7 @@ private:
     QSystemTrayIcon *trayIcon;
     QMenu *trayIconMenu;
     QIcon m_icon;
+    QIcon m_icon_disabled;
 };
 
 #endif // TRAY_H
