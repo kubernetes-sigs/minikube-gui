@@ -23,6 +23,7 @@ limitations under the License.
 AddonsView::AddonsView(QIcon icon)
 {
     m_icon = icon;
+    m_parent = 0;
     m_dialog = new QDialog(m_parent);
     m_dialog->setWindowTitle(tr("Addons List"));
     m_dialog->setWindowIcon(m_icon);
