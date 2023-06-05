@@ -2,5 +2,6 @@
     <qresource prefix="/">
         <file>resources/images/minikube.png</file>
         <file>resources/fonts/FontAwesome.otf</file>
+        <file>resources/images/minikube-disabled.png</file>
     </qresource>
 </RCC>

@@ -23,6 +23,7 @@ limitations under the License.
 Tray::Tray(QIcon icon)
 {
     m_icon = icon;
+    m_icon_disabled = QIcon(":/resources/images/minikube-disabled.png");
 
     trayIconMenu = new QMenu();
     trayIcon = new QSystemTrayIcon(this);
@@ -84,6 +85,11 @@ void Tray::updateStatus(Cluster cluster)
         status = "Stopped";
     }
     statusAction->setText("Status: " + status);
+    if (status == "Running") {
+        trayIcon->setIcon(m_icon);
+    } else {
+        trayIcon->setIcon(m_icon_disabled);
+    }
 }
 
 bool Tray::isVisible()
