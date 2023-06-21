@@ -73,7 +73,7 @@ func updateReleases(version string) error {
 	linkBase := fmt.Sprintf("https://github.com/kubernetes-sigs/minikube-gui/releases/download/v%s/minikube-gui", version)
 	newRelease := release{
 		Links: links{
-			Darwin:  fmt.Sprintf("%s-mac.tar.gz", linkBase),
+			Darwin:  fmt.Sprintf("%s-macos.tar.gz", linkBase),
 			Linux:   fmt.Sprintf("%s-linux.tar.gz", linkBase),
 			Windows: fmt.Sprintf("%s-windows.zip", linkBase),
 		},
