@@ -8,7 +8,10 @@ Mind that minikube-gui is not signed yet, and you will get a warning.
 ### macOS
 - Download the [latest release](https://github.com/kubernetes-sigs/minikube-gui/releases/latest/download/minikube-gui-macos.dmg). 
 - Open and drag it to your Application folder.
-
+- Exclude minikube-gui from signing warning by running :
+```
+ $ xattr -d com.apple.quarantine /Applications/minikube-gui.app
+```
 
 ### Windows
 
