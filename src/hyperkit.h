@@ -18,6 +18,7 @@ limitations under the License.
 #define HYPERKIT_H
 
 #include <QIcon>
+#include <QObject>
 
 class HyperKit : public QObject
 {
