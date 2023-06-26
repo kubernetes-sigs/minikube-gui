@@ -45,7 +45,7 @@ Window::Window()
     settings = new Settings();
     commandRunner = new CommandRunner(this, logger, settings);
     basicView = new BasicView(*trayIconIcon, version);
-    serviceView = new ServiceView(this, *trayIconIcon);
+    serviceView = new ServiceView(this, *trayIconIcon, commandRunner, settings);
     addonsView = new AddonsView(*trayIconIcon);
     advancedView = new AdvancedView(*trayIconIcon);
     errorMessage = new ErrorMessage(this, *trayIconIcon);
