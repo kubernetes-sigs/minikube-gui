@@ -17,6 +17,7 @@ limitations under the License.
 #include "tray.h"
 
 #include <QAction>
+#include <QApplication>
 #include <QCoreApplication>
 #include <QMenu>
 
@@ -86,8 +87,10 @@ void Tray::updateStatus(Cluster cluster)
     }
     statusAction->setText("Status: " + status);
     if (status == "Running") {
+        QApplication::setWindowIcon(m_icon);
         trayIcon->setIcon(m_icon);
     } else {
+        QApplication::setWindowIcon(m_icon_disabled);
         trayIcon->setIcon(m_icon_disabled);
     }
 }
