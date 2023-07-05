@@ -24,6 +24,7 @@ ProgressWindow::ProgressWindow(QWidget *parent, QIcon icon)
     m_icon = icon;
     m_parent = parent;
     m_dialog = new QDialog(m_parent);
+    m_dialog->setWindowFlags(Qt::FramelessWindowHint);
     m_text = new QLabel();
     m_progressBar = new QProgressBar();
 }
@@ -47,7 +48,6 @@ void ProgressWindow::show()
 {
     m_dialog->setWindowIcon(m_icon);
     m_dialog->resize(300, 150);
-    m_dialog->setWindowFlags(Qt::FramelessWindowHint);
     m_dialog->setModal(true);
 
     QVBoxLayout form(m_dialog);
