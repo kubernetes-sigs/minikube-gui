@@ -26,9 +26,10 @@ limitations under the License.
 #include <QCoreApplication>
 #include <QCheckBox>
 
-BasicView::BasicView(QIcon icon)
+BasicView::BasicView(QIcon icon,QVersionNumber version)
 {
     m_icon = icon;
+    m_version = version;
     basicView = new QWidget();
 
     topStatusButton = new QPushButton("Loading ...");
@@ -126,7 +127,7 @@ BasicView::BasicView(QIcon icon)
     connect(addonsButton, &QAbstractButton::clicked, this, &BasicView::addons);
     connect(advancedButton, &QAbstractButton::clicked, this, &BasicView::advanced);
     connect(settingsButton, &QAbstractButton::clicked, this, &BasicView::askSettings);
-    connect(aboutButton, &QAbstractButton::clicked, qApp, &QApplication::aboutQt);
+    connect(aboutButton, &QAbstractButton::clicked, this, &BasicView::displayAbout);
     connect(exitButton, &QAbstractButton::clicked, qApp, &QCoreApplication::quit);
 }
 
@@ -338,3 +339,60 @@ void BasicView::minikubeNotFound()
     form.addRow(&buttonBox);
     dialog.exec();
 }
+
+void BasicView::displayAbout(){
+    QDialog aboutDialog;
+    aboutDialog.setWindowTitle("About Minikube GUI");
+    aboutDialog.setFixedSize(300, 200);
+    QVBoxLayout mainLayout(&aboutDialog);
+
+    // iconLayout displays minikube icon
+    QHBoxLayout iconLayout;
+    iconLayout.setAlignment(Qt::AlignCenter);
+
+    QLabel iconLabel;
+    iconLabel.setPixmap(m_icon.pixmap(50, 50));
+    iconLayout.addWidget(&iconLabel);
+    mainLayout.addLayout(&iconLayout);
+
+    // introLayout displays minikube gui info, home URL, and license URL
+    QVBoxLayout introLayout;
+    introLayout.setContentsMargins(10, 10, 10, 10);
+    introLayout.setAlignment(Qt::AlignCenter);
+
+    QLabel introLabel;
+    introLabel.setText("A graphical interface for minikube.");
+    introLayout.addWidget(&introLabel);
+
+    // hyperlinkItemLayout
+    QHBoxLayout hyperlinkItemLayout;
+    hyperlinkItemLayout.setAlignment(Qt::AlignCenter);
+
+    QLabel githubURLLabel;
+    githubURLLabel.setText("<a href='https://github.com/kubernetes-sigs/minikube-gui'>GitHub</a>");
+    githubURLLabel.setOpenExternalLinks(true);
+    hyperlinkItemLayout.addWidget(&githubURLLabel);
+
+    QLabel licenseURLLabel;
+    licenseURLLabel.setText("<a href='https://raw.githubusercontent.com/kubernetes-sigs/minikube-gui/main/LICENSE'>License</a>");
+    licenseURLLabel.setOpenExternalLinks(true);
+    hyperlinkItemLayout.addWidget(&licenseURLLabel);
+
+    introLayout.addLayout(&hyperlinkItemLayout);
+    mainLayout.addLayout(&introLayout);
+
+    // versionItemLayout displays minikube gui version
+    // TODO: display minikube binary version
+    QHBoxLayout versionItemLayout;
+    versionItemLayout.setAlignment(Qt::AlignCenter);
+
+    QLabel versionLabel("Version: " + m_version.toString());
+    versionLabel.setStyleSheet("QLabel { color: gray; }");
+    versionLabel.setAlignment(Qt::AlignCenter);
+    versionLabel.setTextInteractionFlags(Qt::TextSelectableByMouse);
+    versionItemLayout.addWidget(&versionLabel);
+    mainLayout.addLayout(&versionItemLayout);
+
+    aboutDialog.exec();
+}
+
