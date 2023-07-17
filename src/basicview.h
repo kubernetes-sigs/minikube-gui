@@ -24,13 +24,14 @@ limitations under the License.
 #include <QPushButton>
 #include <QLabel>
 #include <QSettings>
+#include <QVersionNumber>
 
 class BasicView : public QObject
 {
     Q_OBJECT
 
 public:
-    explicit BasicView(QIcon icon);
+    explicit BasicView(QIcon icon, QVersionNumber version);
     QWidget *basicView;
     void update(Cluster cluster);
     void updateMounts(MountList ms);
@@ -38,6 +39,7 @@ public:
     void setFont(QFont font, QWidget *wid);
     void receivedSettings(Setting s);
     void minikubeNotFound();
+    void displayAbout();
 signals:
     void start();
     void stop();
@@ -74,6 +76,7 @@ private:
     QPushButton *aboutButton;
     QPushButton *exitButton;
     QIcon m_icon;
+    QVersionNumber m_version;
     MountList m_mountList;
     Setting m_setting;
     void askMount();

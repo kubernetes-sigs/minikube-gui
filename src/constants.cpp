@@ -26,5 +26,5 @@ const QString Constants::createIcon = "\uf0fe";
 
 const QString Constants::refreshIcon = "\uf021";
 const QString Constants::settingsIcon = "\uf1de";
-const QString Constants::aboutIcon = "\uf118";
+const QString Constants::aboutIcon = "\uf05a";
 const QString Constants::exitIcon = "\uf08b";
