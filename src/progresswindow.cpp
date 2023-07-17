@@ -47,7 +47,7 @@ void ProgressWindow::show()
 {
     m_dialog->setWindowIcon(m_icon);
     m_dialog->resize(300, 150);
-    m_dialog->setWindowFlags(Qt::FramelessWindowHint);
+    m_dialog->setWindowFlags(m_dialog->windowFlags() | Qt::FramelessWindowHint);
     m_dialog->setModal(true);
 
     QVBoxLayout form(m_dialog);

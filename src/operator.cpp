@@ -151,7 +151,6 @@ void Operator::createCluster(QStringList args)
 
 void Operator::startCommandStarting()
 {
-    commandStarting();
     m_progressWindow->setText("Starting...");
     m_progressWindow->show();
 }
