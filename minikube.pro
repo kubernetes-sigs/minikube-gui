@@ -14,6 +14,7 @@ HEADERS       = src/window.h \
                 src/operator.h \
                 src/paths.h \
                 src/progresswindow.h \
+                src/linkbutton.h \
                 src/serviceview.h \
                 src/setting.h \
                 src/settings.h \
@@ -34,6 +35,7 @@ SOURCES       = src/main.cpp \
                 src/operator.cpp \
                 src/paths.cpp \
                 src/progresswindow.cpp \
+                src/linkbutton.cpp \
                 src/serviceview.cpp \
                 src/setting.cpp \
                 src/settings.cpp \

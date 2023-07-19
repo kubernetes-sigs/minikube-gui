@@ -17,6 +17,7 @@ limitations under the License.
 #include "basicview.h"
 #include "fonts.h"
 #include "constants.h"
+#include "linkbutton.h"
 
 #include <QDialog>
 #include <QFormLayout>
@@ -53,6 +54,14 @@ BasicView::BasicView(QIcon icon,QVersionNumber version)
     addonsButton = new QPushButton(tr("addons"));
     advancedButton = new QPushButton(tr("cluster list"));
 
+    dockerEnvLinkButton = new LinkButton(Constants::linkIcon, "https://minikube.sigs.k8s.io/docs/commands/docker-env/");
+    serviceLinkButton = new LinkButton(Constants::linkIcon, "https://minikube.sigs.k8s.io/docs/commands/service/");
+    mountLinkButton = new LinkButton(Constants::linkIcon, "https://minikube.sigs.k8s.io/docs/commands/mount/");
+    tunnelLinkButton = new LinkButton(Constants::linkIcon, "https://minikube.sigs.k8s.io/docs/commands/tunnel/");
+    sshLinkButton = new LinkButton(Constants::linkIcon, "https://minikube.sigs.k8s.io/docs/commands/ssh/");
+    dashboardLinkButton = new LinkButton(Constants::linkIcon, "https://minikube.sigs.k8s.io/docs/commands/dashboard/");
+    addonsLinkButton = new LinkButton(Constants::linkIcon, "https://minikube.sigs.k8s.io/docs/commands/addons/");
+
     refreshButton = new QPushButton(Constants::refreshIcon);
     settingsButton = new QPushButton(Constants::settingsIcon);
     aboutButton = new QPushButton(Constants::aboutIcon);
@@ -67,6 +76,14 @@ BasicView::BasicView(QIcon icon,QVersionNumber version)
     Fonts::setFontAwesome(settingsButton);
     Fonts::setFontAwesome(aboutButton);
     Fonts::setFontAwesome(exitButton);
+
+    Fonts::setFontAwesome(dockerEnvLinkButton);
+    Fonts::setFontAwesome(serviceLinkButton);
+    Fonts::setFontAwesome(mountLinkButton);
+    Fonts::setFontAwesome(tunnelLinkButton);
+    Fonts::setFontAwesome(sshLinkButton);
+    Fonts::setFontAwesome(dashboardLinkButton);
+    Fonts::setFontAwesome(addonsLinkButton);
 
     topStatusButton->setToolTip(tr("cluster status, click to refresh"));
     dockerEnvButton->setToolTip(
@@ -88,14 +105,24 @@ BasicView::BasicView(QIcon icon,QVersionNumber version)
     buttonLayoutRow1->addWidget(deleteButton);
 
     QVBoxLayout *buttonLayoutRow2 = new QVBoxLayout;
-    buttonLayoutRow2->addWidget(dockerEnvButton);
-    buttonLayoutRow2->addWidget(serviceButton);
-    buttonLayoutRow2->addWidget(mountButton);
-    buttonLayoutRow2->addWidget(tunnelButton);
-    buttonLayoutRow2->addWidget(sshButton);
-    buttonLayoutRow2->addWidget(dashboardButton);
-    buttonLayoutRow2->addWidget(addonsButton);
+
+#define addRow(btn, linkbtn) do{        \
+    QHBoxLayout *row = new QHBoxLayout; \
+    row->addWidget(btn);                \
+    row->addWidget(linkbtn);            \
+    buttonLayoutRow2->addLayout(row);   \
+}while(0)
+
+    addRow(dockerEnvButton, dockerEnvLinkButton);
+    addRow(serviceButton, serviceLinkButton);
+    addRow(mountButton, mountLinkButton);
+    addRow(tunnelButton, tunnelLinkButton);
+    addRow(sshButton, sshLinkButton);
+    addRow(dashboardButton, dashboardLinkButton);
+    addRow(addonsButton, addonsLinkButton);
     buttonLayoutRow2->addWidget(advancedButton);
+
+#undef addRow
 
     QHBoxLayout *bottomBar = new QHBoxLayout;
     bottomBar->addWidget(settingsButton);
@@ -129,6 +156,14 @@ BasicView::BasicView(QIcon icon,QVersionNumber version)
     connect(settingsButton, &QAbstractButton::clicked, this, &BasicView::askSettings);
     connect(aboutButton, &QAbstractButton::clicked, this, &BasicView::displayAbout);
     connect(exitButton, &QAbstractButton::clicked, qApp, &QCoreApplication::quit);
+
+    connect(dockerEnvLinkButton, &LinkButton::openLink, this, &BasicView::openLink);
+    connect(serviceLinkButton, &LinkButton::openLink, this, &BasicView::openLink);
+    connect(mountLinkButton, &LinkButton::openLink, this, &BasicView::openLink);
+    connect(tunnelLinkButton, &LinkButton::openLink, this, &BasicView::openLink);
+    connect(sshLinkButton, &LinkButton::openLink, this, &BasicView::openLink);
+    connect(dashboardLinkButton, &LinkButton::openLink, this, &BasicView::openLink);
+    connect(addonsLinkButton, &LinkButton::openLink, this, &BasicView::openLink);
 }
 
 static QString getPauseLabel(bool isPaused)
