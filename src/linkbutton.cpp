@@ -23,8 +23,14 @@ limitations under the License.
 LinkButton::LinkButton(const QString &icon, const QString &link, QWidget *parent)
     : QPushButton(icon, parent), m_link(link)
 {
-    setFixedSize(QSize(28, 28));
+    setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     connect(this, SIGNAL(clicked()), this, SLOT(emitOpenLink()));
+}
+
+QSize LinkButton::sizeHint() const
+{
+    int x=font().pixelSize()+8;
+    return QSize(x, x);
 }
 
 void LinkButton::emitOpenLink()

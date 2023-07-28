@@ -25,6 +25,7 @@ class LinkButton: public QPushButton
 
 public:
     explicit LinkButton(const QString &icon, const QString &link, QWidget *parent = nullptr);
+    QSize sizeHint() const override;
        
 signals:
     void openLink(const QString &link);

@@ -22,6 +22,7 @@ limitations under the License.
 #include <QPalette>
 
 QFont Fonts::fontAwesome;
+QFont Fonts::fontAwesomeTiny;
 
 void Fonts::initFonts()
 {
@@ -35,6 +36,8 @@ void Fonts::loadFontAwesome()
         qWarning() << "FontAwesome cannot be loaded!";
     fontAwesome.setFamily("FontAwesome");
     fontAwesome.setPixelSize(20);
+    fontAwesomeTiny.setFamily("FontAwesome");
+    fontAwesomeTiny.setPixelSize(10);
 }
 
 void Fonts::setToolTipStyle()
@@ -51,4 +54,9 @@ void Fonts::setToolTipStyle()
 void Fonts::setFontAwesome(QWidget *wid)
 {
     wid->setFont(fontAwesome);
+}
+
+void Fonts::setFontAwesomeTiny(QWidget *wid)
+{
+    wid->setFont(fontAwesomeTiny);
 }

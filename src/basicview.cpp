@@ -77,13 +77,13 @@ BasicView::BasicView(QIcon icon,QVersionNumber version)
     Fonts::setFontAwesome(aboutButton);
     Fonts::setFontAwesome(exitButton);
 
-    Fonts::setFontAwesome(dockerEnvLinkButton);
-    Fonts::setFontAwesome(serviceLinkButton);
-    Fonts::setFontAwesome(mountLinkButton);
-    Fonts::setFontAwesome(tunnelLinkButton);
-    Fonts::setFontAwesome(sshLinkButton);
-    Fonts::setFontAwesome(dashboardLinkButton);
-    Fonts::setFontAwesome(addonsLinkButton);
+    Fonts::setFontAwesomeTiny(dockerEnvLinkButton);
+    Fonts::setFontAwesomeTiny(serviceLinkButton);
+    Fonts::setFontAwesomeTiny(mountLinkButton);
+    Fonts::setFontAwesomeTiny(tunnelLinkButton);
+    Fonts::setFontAwesomeTiny(sshLinkButton);
+    Fonts::setFontAwesomeTiny(dashboardLinkButton);
+    Fonts::setFontAwesomeTiny(addonsLinkButton);
 
     topStatusButton->setToolTip(tr("cluster status, click to refresh"));
     dockerEnvButton->setToolTip(
@@ -106,23 +106,23 @@ BasicView::BasicView(QIcon icon,QVersionNumber version)
 
     QVBoxLayout *buttonLayoutRow2 = new QVBoxLayout;
 
-#define addRow(btn, linkbtn) do{        \
-    QHBoxLayout *row = new QHBoxLayout; \
-    row->addWidget(btn);                \
-    row->addWidget(linkbtn);            \
-    buttonLayoutRow2->addLayout(row);   \
+#define addCommandRow(btn, linkbtn) do{          \
+    QHBoxLayout *row = new QHBoxLayout;          \
+    row->addWidget(btn);                         \
+    row->addWidget(linkbtn, 0, Qt::AlignBottom); \
+    buttonLayoutRow2->addLayout(row);            \
 }while(0)
 
-    addRow(dockerEnvButton, dockerEnvLinkButton);
-    addRow(serviceButton, serviceLinkButton);
-    addRow(mountButton, mountLinkButton);
-    addRow(tunnelButton, tunnelLinkButton);
-    addRow(sshButton, sshLinkButton);
-    addRow(dashboardButton, dashboardLinkButton);
-    addRow(addonsButton, addonsLinkButton);
+    addCommandRow(dockerEnvButton, dockerEnvLinkButton);
+    addCommandRow(serviceButton, serviceLinkButton);
+    addCommandRow(mountButton, mountLinkButton);
+    addCommandRow(tunnelButton, tunnelLinkButton);
+    addCommandRow(sshButton, sshLinkButton);
+    addCommandRow(dashboardButton, dashboardLinkButton);
+    addCommandRow(addonsButton, addonsLinkButton);
     buttonLayoutRow2->addWidget(advancedButton);
 
-#undef addRow
+#undef addCommandRow
 
     QHBoxLayout *bottomBar = new QHBoxLayout;
     bottomBar->addWidget(settingsButton);
