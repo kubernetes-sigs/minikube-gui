@@ -135,26 +135,25 @@ void Updater::downloadUpdate(QString link)
     form.addWidget(msgLabel);
     dialog.open();
     QProcess *process = new QProcess(this);
-    QString cmd = QString("cd $TMPDIR && curl -LO %1 && tar -xf minikube-gui-macos.tar.gz && rm "
-                          "minikube-gui-macos.tar.gz")
-                          .arg(link);
+    QString cmd = QString("cd $TMPDIR && curl -LO %1 && mkdir -p minikube-gui-macos && "
+                          "tar -xf minikube-gui-macos.tar.gz -C minikube-gui-macos && "
+                          "rm minikube-gui-macos.tar.gz").arg(link);
     process->start("bash", { "-c", cmd });
     process->waitForFinished(-1);
     QDialogButtonBox buttonBox(Qt::Horizontal, &dialog);
-    buttonBox.addButton(QString(tr("Restart")), QDialogButtonBox::AcceptRole);
+    buttonBox.addButton(QString(tr("Reopen GUI")), QDialogButtonBox::AcceptRole);
     connect(&buttonBox, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
     form.addRow(&buttonBox);
-    msgLabel->setText(
-            "Download complete!\n\nAfter clicking 'Restart' do the following:\n\n1. You will see: "
-            "\"minikube-gui cannot be opened...\" click 'Cancel'\n2. Your Appliciations folder "
-            "will be opened, right click on minikube-gui and click 'Open'");
+    msgLabel->setText("Download complete!\n\nPlease click 'Reopen GUI' to apply the update. \n\n"
+                      "The GUI will be restarted with the latest version while keeping your cluster running.");
     dialog.exec();
     process->start("bash",
                    { "-c",
-                     "cd $TMPDIR && rm -rf /Applications/minikube-gui.app/ && mv "
-                     "minikube-gui-macos/minikube-gui.app/ /Applications/ && rm -rf "
-                     "minikube-gui-macos && open -R /Applications/minikube-gui.app/ && open "
-                     "/Applications/minikube-gui.app/" });
+                     "cd $TMPDIR && rm -rf /Applications/minikube-gui.app/ &&"
+                     "mv minikube-gui-macos/bin/minikube-gui.app /Applications/ &&"
+                     "rm -rf minikube-gui-macos && "
+                     "xattr -d com.apple.quarantine /Applications/minikube-gui.app; true &&"
+                     "open /Applications/minikube-gui.app/" });
     exit(0);
 }
 
