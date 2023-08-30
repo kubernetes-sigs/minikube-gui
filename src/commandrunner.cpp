@@ -317,7 +317,7 @@ void CommandRunner::requestClusters()
 void CommandRunner::requestServiceList(QString pName)
 {
     m_command = "service";
-    QStringList args = { "-p", pName, "service", "list" };
+    QStringList args = { "-p", pName, "service", "list", "-o", "json" };
     executeMinikubeCommand(args);
 }
 

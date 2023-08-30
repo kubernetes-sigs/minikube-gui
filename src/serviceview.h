@@ -19,20 +19,28 @@ limitations under the License.
 
 #include <QIcon>
 #include <QDialog>
+#include <QPushButton>
+#include <QProcess>
 
+#include "commandrunner.h"
 class ServiceView : public QObject
 {
     Q_OBJECT
 
 public:
-    explicit ServiceView(QDialog *parent, QIcon icon);
+    explicit ServiceView(QDialog *parent, QIcon icon, CommandRunner *commandRunner,
+                         Settings *settings);
 
     void displayTable(QString);
 
 private:
+    void runMinikubeService(QString nameSpace, QString serviceName);
+
     QDialog *m_dialog;
     QIcon m_icon;
     QDialog *m_parent;
+    CommandRunner *m_commandRunner;
+    Settings *m_settings;
 };
 
 #endif // SERVICEVIEW_H
