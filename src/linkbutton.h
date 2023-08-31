@@ -18,6 +18,8 @@ limitations under the License.
 #define LINKBUTTON_H
 
 #include <QPushButton>
+#include <QSize>
+#include <QEnterEvent>
 
 class LinkButton: public QPushButton
 {
@@ -29,6 +31,10 @@ public:
        
 signals:
     void openLink(const QString &link);
+
+protected:
+    void enterEvent(QEnterEvent *event) override;
+    void leaveEvent(QEvent *event) override;
 
 private slots:
     void emitOpenLink();

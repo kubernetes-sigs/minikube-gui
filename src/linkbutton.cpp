@@ -18,12 +18,14 @@ limitations under the License.
 #include "constants.h"
 #include "fonts.h"
 
-#include <QSize>
+#include <QPalette>
 
 LinkButton::LinkButton(const QString &icon, const QString &link, QWidget *parent)
     : QPushButton(icon, parent), m_link(link)
 {
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    setStyleSheet("QPushButton { color: gray; background-color: transparent; border: none; }");
+    setToolTip("Open documentation on the default browser.");
     connect(this, SIGNAL(clicked()), this, SLOT(emitOpenLink()));
 }
 
@@ -31,6 +33,16 @@ QSize LinkButton::sizeHint() const
 {
     int x=font().pixelSize()+8;
     return QSize(x, x);
+}
+
+void LinkButton::enterEvent(QEnterEvent *event)
+{
+    setStyleSheet("QPushButton { color: dark; background-color: transparent; border: none; }");
+}
+
+void LinkButton::leaveEvent(QEvent *event)
+{
+    setStyleSheet("QPushButton { color: gray; background-color: transparent; border: none; }");
 }
 
 void LinkButton::emitOpenLink()

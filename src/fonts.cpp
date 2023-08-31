@@ -37,7 +37,7 @@ void Fonts::loadFontAwesome()
     fontAwesome.setFamily("FontAwesome");
     fontAwesome.setPixelSize(20);
     fontAwesomeTiny.setFamily("FontAwesome");
-    fontAwesomeTiny.setPixelSize(10);
+    fontAwesomeTiny.setPixelSize(14);
 }
 
 void Fonts::setToolTipStyle()

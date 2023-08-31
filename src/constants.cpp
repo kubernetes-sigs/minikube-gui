@@ -23,7 +23,7 @@ const QString Constants::unPauseIcon = "\uf04b";
 const QString Constants::deleteIcon = "\uf1f8";
 const QString Constants::reloadIcon = "\uf021";
 const QString Constants::createIcon = "\uf0fe";
-const QString Constants::linkIcon = "\uf08e";
+const QString Constants::linkIcon = "\uf05a";
 
 const QString Constants::refreshIcon = "\uf021";
 const QString Constants::settingsIcon = "\uf1de";
