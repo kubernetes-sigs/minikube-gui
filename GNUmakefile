@@ -16,7 +16,11 @@
 build-linux: ## Build minikube-gui for Linux
 	qmake
 	make -f Makefile
-	tar -czvf minikube-gui-linux.tar.gz -C ./bin ./minikube-gui
+	scripts/build-linux.sh
+	export VERSION=$(subst v,,$(VERSION)) && \
+	(cd ./bin && linuxdeployqt usr/share/applications/minikube-gui.desktop -verbose=1 -appimage)
+	mv ./bin/*.AppImage ./minikube-gui-linux.AppImage
+	tar -czvf minikube-gui-linux.tar.gz -C ./bin .
 
 .PHONY: build-macos
 build-macos: ## Build minikube-gui for macOS

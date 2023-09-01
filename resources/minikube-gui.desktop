@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Minikube
+Exec=minikube-gui
+Icon=minikube
+Categories=Development;
