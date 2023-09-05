@@ -18,6 +18,19 @@ jobs:
       - uses: jurplel/install-qt-action@b3ea5275e37b734d027040e2c7fe7a10ea2ef946
         with:
           cache: true
+      - name: cache linuxdeployqt
+        id: cache-appimage
+        uses: actions/cache@v3
+        with:
+          path: linuxdeployqt-continuous-x86_64.AppImage
+          key: linuxdeployqt-x86_64
+      - if: ${{ steps.cache-appimage.outputs.cache-hit != 'true' }}
+        name: download linuxdeployqt
+        run: |
+          curl -LO https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage
+      - name: install linuxdeployqt
+        run: |
+          sudo install linuxdeployqt-continuous-x86_64.AppImage /usr/local/bin/linuxdeployqt
       - name: build
         run: |
           make build-linux
