@@ -35,7 +35,11 @@ QSize LinkButton::sizeHint() const
     return QSize(x, x);
 }
 
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 void LinkButton::enterEvent(QEnterEvent *event)
+#else
+void LinkButton::enterEvent(QEvent *event)
+#endif
 {
     setStyleSheet("QPushButton { color: dark; background-color: transparent; border: none; }");
 }
