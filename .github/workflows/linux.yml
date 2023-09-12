@@ -25,7 +25,12 @@ jobs:
           curl -LO https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage
       - name: install linuxdeployqt
         run: |
-          sudo install linuxdeployqt-continuous-x86_64.AppImage /usr/local/bin/linuxdeployqt
+          chmod +x linuxdeployqt-continuous-x86_64.AppImage
+          ./linuxdeployqt-continuous-x86_64.AppImage --appimage-extract
+          sudo cp -pr squashfs-root/usr/bin/* /usr/bin/
+          sudo cp -pr squashfs-root/usr/lib/* /usr/lib/
+          rm -rf squashfs-root
+          chmod -x linuxdeployqt-continuous-x86_64.AppImage
       - name: build
         run: |
           make build-linux
