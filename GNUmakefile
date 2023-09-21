@@ -17,8 +17,9 @@ build-linux: ## Build minikube-gui for Linux
 	qmake
 	make -f Makefile
 	scripts/build-linux.sh
+	scripts/build-adwaita.sh
 	export VERSION=$(subst v,,$(VERSION)) && \
-	(cd ./bin && linuxdeployqt usr/share/applications/minikube-gui.desktop -verbose=1 -appimage)
+	(cd ./bin && linuxdeployqt usr/share/applications/minikube-gui.desktop -verbose=1 -appimage -executable=usr/plugins/styles/adwaita.so)
 	mv ./bin/*.AppImage ./minikube-gui-linux.AppImage
 	tar -czvf minikube-gui-linux.tar.gz -C ./bin .
 

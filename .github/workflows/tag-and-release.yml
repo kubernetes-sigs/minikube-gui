@@ -37,6 +37,11 @@ jobs:
           sudo cp -pr squashfs-root/usr/lib/* /usr/lib/
           rm -rf squashfs-root
           chmod -x linuxdeployqt-continuous-x86_64.AppImage
+      - name: cache adwaita-qt
+        uses: actions/cache@v3
+        with:
+          path: adwaita-qt-1.4.2.tar.gz
+          key: adwaita-qt-1.4.2.tar.gz
       - name: build
         run: |
           make build-linux
