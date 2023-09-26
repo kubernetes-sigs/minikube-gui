@@ -12,18 +12,46 @@ jobs:
           git tag "v$VERSION"
           git push origin "v$VERSION"
   build-linux-release:
-    runs-on: ubuntu-latest
+    # AppImage requires ubuntu focal
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608
       - uses: jurplel/install-qt-action@b3ea5275e37b734d027040e2c7fe7a10ea2ef946
         with:
           cache: true
+      - name: cache linuxdeployqt
+        id: cache-appimage
+        uses: actions/cache@v3
+        with:
+          path: linuxdeployqt-continuous-x86_64.AppImage
+          key: linuxdeployqt-x86_64
+      - if: ${{ steps.cache-appimage.outputs.cache-hit != 'true' }}
+        name: download linuxdeployqt
+        run: |
+          curl -LO https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage
+      - name: install linuxdeployqt
+        run: |
+          chmod +x linuxdeployqt-continuous-x86_64.AppImage
+          ./linuxdeployqt-continuous-x86_64.AppImage --appimage-extract
+          sudo cp -pr squashfs-root/usr/bin/* /usr/bin/
+          sudo cp -pr squashfs-root/usr/lib/* /usr/lib/
+          rm -rf squashfs-root
+          chmod -x linuxdeployqt-continuous-x86_64.AppImage
+      - name: cache adwaita-qt
+        uses: actions/cache@v3
+        with:
+          path: adwaita-qt-1.4.2.tar.gz
+          key: adwaita-qt-1.4.2.tar.gz
       - name: build
         run: |
           make build-linux
       - uses: actions/upload-artifact@a8a3f3ad30e3422c9c7b888a15615d19a852ae32
         with:
           name: minikube-gui-linux-release
+          path: ./minikube-gui-linux.AppImage
+      - uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce
+        with:
+          name: minikube-gui-linux-tar-release
           path: ./minikube-gui-linux.tar.gz
   build-macos-release:
     runs-on: macos-latest
