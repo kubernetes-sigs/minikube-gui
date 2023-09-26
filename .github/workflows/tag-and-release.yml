@@ -107,6 +107,9 @@ jobs:
           name: minikube-gui-linux-release
       - uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a
         with:
+          name: minikube-gui-linux-tar-release
+      - uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a
+        with:
           name: minikube-gui-macos-release
       - uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a
         with:
@@ -120,6 +123,7 @@ jobs:
           tag_name: 'refs/tags/v${{ env.version }}'
           files: |
             minikube-gui-linux.tar.gz
+            minikube-gui-linux.AppImage
             minikube-gui-macos.dmg
             minikube-gui-macos.tar.gz
             minikube-gui-windows.zip
