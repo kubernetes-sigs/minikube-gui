@@ -5,7 +5,7 @@ jobs:
   tag:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
       - name: Get Version
         run: |
           export VERSION=$(sed -n -e 's/.*QVersionNumber::fromString(\"\(.*\)\");/\1/p' src/window.cpp)
@@ -15,7 +15,7 @@ jobs:
     # AppImage requires ubuntu focal
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
       - uses: jurplel/install-qt-action@b3ea5275e37b734d027040e2c7fe7a10ea2ef946
         with:
           cache: true
@@ -56,7 +56,7 @@ jobs:
   build-macos-release:
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
       - uses: jurplel/install-qt-action@b3ea5275e37b734d027040e2c7fe7a10ea2ef946
         with:
           cache: true
@@ -74,7 +74,7 @@ jobs:
   build-windows-release:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
       - uses: jurplel/install-qt-action@b3ea5275e37b734d027040e2c7fe7a10ea2ef946
         with:
           cache: true
@@ -96,7 +96,7 @@ jobs:
       ]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
       - name: Get Version
         run: |
           export VERSION=$(sed -n -e 's/.*QVersionNumber::fromString(\"\(.*\)\");/\1/p' src/window.cpp)
@@ -134,7 +134,7 @@ jobs:
       ]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
       - uses: actions/setup-go@93397bea11091df50f3d7e59dc26a7711a8bcfbe
       - run: |
           export VERSION=$(sed -n -e 's/.*QVersionNumber::fromString(\"\(.*\)\");/\1/p' src/window.cpp)
