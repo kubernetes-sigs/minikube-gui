@@ -45,11 +45,11 @@ jobs:
       - name: build
         run: |
           make build-linux
-      - uses: actions/upload-artifact@694cdabd8bdb0f10b2cea11669e1bf5453eed0a6
+      - uses: actions/upload-artifact@26f96dfa697d77e81fd5907df203aa23a56210a8
         with:
           name: minikube-gui-linux-release
           path: ./minikube-gui-linux.AppImage
-      - uses: actions/upload-artifact@694cdabd8bdb0f10b2cea11669e1bf5453eed0a6
+      - uses: actions/upload-artifact@26f96dfa697d77e81fd5907df203aa23a56210a8
         with:
           name: minikube-gui-linux-tar-release
           path: ./minikube-gui-linux.tar.gz
@@ -63,11 +63,11 @@ jobs:
       - name: build
         run: |
           make build-macos
-      - uses: actions/upload-artifact@694cdabd8bdb0f10b2cea11669e1bf5453eed0a6
+      - uses: actions/upload-artifact@26f96dfa697d77e81fd5907df203aa23a56210a8
         with:
           name: minikube-gui-macos-release
           path: ./minikube-gui-macos.dmg
-      - uses: actions/upload-artifact@694cdabd8bdb0f10b2cea11669e1bf5453eed0a6
+      - uses: actions/upload-artifact@26f96dfa697d77e81fd5907df203aa23a56210a8
         with:
           name: minikube-gui-macos-tar-release
           path: ./minikube-gui-macos.tar.gz
@@ -82,7 +82,7 @@ jobs:
         shell: cmd
         run: |
           make build-windows
-      - uses: actions/upload-artifact@694cdabd8bdb0f10b2cea11669e1bf5453eed0a6
+      - uses: actions/upload-artifact@26f96dfa697d77e81fd5907df203aa23a56210a8
         with:
           name: minikube-gui-windows-release
           path: ./minikube-gui-windows.zip
