@@ -102,19 +102,19 @@ jobs:
           export VERSION=$(sed -n -e 's/.*QVersionNumber::fromString(\"\(.*\)\");/\1/p' src/window.cpp)
           echo "version=$VERSION" >> $GITHUB_ENV
           echo "$VERSION"
-      - uses: actions/download-artifact@eaceaf801fd36c7dee90939fad912460b18a1ffe
+      - uses: actions/download-artifact@87c55149d96e628cc2ef7e6fc2aab372015aec85
         with:
           name: minikube-gui-linux-release
-      - uses: actions/download-artifact@eaceaf801fd36c7dee90939fad912460b18a1ffe
+      - uses: actions/download-artifact@87c55149d96e628cc2ef7e6fc2aab372015aec85
         with:
           name: minikube-gui-linux-tar-release
-      - uses: actions/download-artifact@eaceaf801fd36c7dee90939fad912460b18a1ffe
+      - uses: actions/download-artifact@87c55149d96e628cc2ef7e6fc2aab372015aec85
         with:
           name: minikube-gui-macos-release
-      - uses: actions/download-artifact@eaceaf801fd36c7dee90939fad912460b18a1ffe
+      - uses: actions/download-artifact@87c55149d96e628cc2ef7e6fc2aab372015aec85
         with:
           name: minikube-gui-macos-tar-release
-      - uses: actions/download-artifact@eaceaf801fd36c7dee90939fad912460b18a1ffe
+      - uses: actions/download-artifact@87c55149d96e628cc2ef7e6fc2aab372015aec85
         with:
           name: minikube-gui-windows-release
       - uses: softprops/action-gh-release@de2c0eb89ae2a093876385947365aca7b0e5f844
