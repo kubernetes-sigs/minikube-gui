@@ -24,11 +24,13 @@ class Fonts
 public:
     static void initFonts();
     static void setFontAwesome(QWidget *wid);
+    static void setFontAwesomeTiny(QWidget *wid);
 
 private:
     static void loadFontAwesome();
     static void setToolTipStyle();
     static QFont fontAwesome;
+    static QFont fontAwesomeTiny;
 };
 
 #endif // FONTS_H

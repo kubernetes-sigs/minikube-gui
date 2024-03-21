@@ -24,6 +24,7 @@ limitations under the License.
 #include <QPushButton>
 #include <QStandardPaths>
 #include <QDebug>
+#include <QDesktopServices>
 
 Operator::Operator(AdvancedView *advancedView, BasicView *basicView, ServiceView *serviceView,
                    AddonsView *addonsView, CommandRunner *commandRunner, ErrorMessage *errorMessage,
@@ -61,6 +62,7 @@ Operator::Operator(AdvancedView *advancedView, BasicView *basicView, ServiceView
     connect(m_basicView, &BasicView::ssh, this, &Operator::sshConsole);
     connect(m_basicView, &BasicView::dashboard, this, &Operator::dashboardBrowser);
     connect(m_basicView, &BasicView::advanced, this, &Operator::toAdvancedView);
+    connect(m_basicView, &BasicView::openLink, this, &Operator::openLink);
 
     connect(m_advancedView, &AdvancedView::start, this, &Operator::startMinikube);
     connect(m_advancedView, &AdvancedView::stop, this, &Operator::stopMinikube);
@@ -541,4 +543,9 @@ void Operator::dashboardClose()
         dashboardProcess->terminate();
         dashboardProcess->waitForFinished();
     }
+}
+
+void Operator::openLink(QString link)
+{
+    QDesktopServices::openUrl(QUrl(link));
 }

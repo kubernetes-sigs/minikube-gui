@@ -91,6 +91,7 @@ private:
     void disableButtons();
     void updateAddons();
     void displayAddons();
+    void openLink(QString);
 
     AdvancedView *m_advancedView;
     BasicView *m_basicView;

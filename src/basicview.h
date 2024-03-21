@@ -20,6 +20,7 @@ limitations under the License.
 #include "cluster.h"
 #include "mount.h"
 #include "setting.h"
+#include "linkbutton.h"
 
 #include <QPushButton>
 #include <QLabel>
@@ -56,6 +57,7 @@ signals:
     void closeMount();
     void tunnel();
     void addons();
+    void openLink(QString);
 
 private:
     QPushButton *topStatusButton;
@@ -64,6 +66,7 @@ private:
     QPushButton *pauseButton;
     QPushButton *deleteButton;
     QPushButton *refreshButton;
+
     QPushButton *dockerEnvButton;
     QPushButton *serviceButton;
     QPushButton *mountButton;
@@ -71,6 +74,15 @@ private:
     QPushButton *sshButton;
     QPushButton *dashboardButton;
     QPushButton *addonsButton;
+
+    LinkButton *dockerEnvLinkButton;
+    LinkButton *serviceLinkButton;
+    LinkButton *mountLinkButton;
+    LinkButton *tunnelLinkButton;
+    LinkButton *sshLinkButton;
+    LinkButton *dashboardLinkButton;
+    LinkButton *addonsLinkButton;
+
     QPushButton *advancedButton;
     QPushButton *settingsButton;
     QPushButton *aboutButton;
