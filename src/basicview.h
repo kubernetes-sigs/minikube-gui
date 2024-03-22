@@ -20,6 +20,7 @@ limitations under the License.
 #include "cluster.h"
 #include "mount.h"
 #include "setting.h"
+#include "minikubebutton.h"
 
 #include <QPushButton>
 #include <QLabel>
@@ -59,22 +60,22 @@ signals:
 
 private:
     QPushButton *topStatusButton;
-    QPushButton *startButton;
-    QPushButton *stopButton;
-    QPushButton *pauseButton;
-    QPushButton *deleteButton;
-    QPushButton *refreshButton;
-    QPushButton *dockerEnvButton;
-    QPushButton *serviceButton;
-    QPushButton *mountButton;
-    QPushButton *tunnelButton;
-    QPushButton *sshButton;
-    QPushButton *dashboardButton;
-    QPushButton *addonsButton;
-    QPushButton *advancedButton;
-    QPushButton *settingsButton;
-    QPushButton *aboutButton;
-    QPushButton *exitButton;
+    MinikubeButton *startButton;
+    MinikubeButton *stopButton;
+    MinikubeButton *pauseButton;
+    MinikubeButton *deleteButton;
+    MinikubeButton *refreshButton;
+    MinikubeButton *dockerEnvButton;
+    MinikubeButton *serviceButton;
+    MinikubeButton *mountButton;
+    MinikubeButton *tunnelButton;
+    MinikubeButton *sshButton;
+    MinikubeButton *dashboardButton;
+    MinikubeButton *addonsButton;
+    MinikubeButton *advancedButton;
+    MinikubeButton *settingsButton;
+    MinikubeButton *aboutButton;
+    MinikubeButton *exitButton;
     QIcon m_icon;
     QVersionNumber m_version;
     MountList m_mountList;
