@@ -117,7 +117,7 @@ jobs:
       - uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16
         with:
           name: minikube-gui-windows-release
-      - uses: softprops/action-gh-release@a74c6b72af54cfa997e81df42d94703d6313a2d0
+      - uses: softprops/action-gh-release@fb2d03176f42a1f0dd433ca263f314051d3edd44
         with:
           name: 'v${{ env.version }}'
           tag_name: 'refs/tags/v${{ env.version }}'
