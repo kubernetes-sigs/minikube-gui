@@ -21,7 +21,7 @@ jobs:
           cache: true
       - name: cache linuxdeployqt
         id: cache-appimage
-        uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9
+        uses: actions/cache@2cdf405574d6ef1f33a1d12acccd3ae82f47b3f2
         with:
           path: linuxdeployqt-continuous-x86_64.AppImage
           key: linuxdeployqt-x86_64
@@ -38,7 +38,7 @@ jobs:
           rm -rf squashfs-root
           chmod -x linuxdeployqt-continuous-x86_64.AppImage
       - name: cache adwaita-qt
-        uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9
+        uses: actions/cache@2cdf405574d6ef1f33a1d12acccd3ae82f47b3f2
         with:
           path: adwaita-qt-1.4.2.tar.gz
           key: adwaita-qt-1.4.2.tar.gz
