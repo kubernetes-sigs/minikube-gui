@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
-      - uses: jurplel/install-qt-action@f03f05556819ceb3781ee2f455ec44c339d683c0
+      - uses: jurplel/install-qt-action@f45d390edc19bee3b8bcc1f325e1b10ecba9074e
         with:
           cache: true
       - name: cache linuxdeployqt
@@ -57,7 +57,7 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
-      - uses: jurplel/install-qt-action@f03f05556819ceb3781ee2f455ec44c339d683c0
+      - uses: jurplel/install-qt-action@f45d390edc19bee3b8bcc1f325e1b10ecba9074e
         with:
           cache: true
       - name: build
@@ -75,7 +75,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
-      - uses: jurplel/install-qt-action@f03f05556819ceb3781ee2f455ec44c339d683c0
+      - uses: jurplel/install-qt-action@f45d390edc19bee3b8bcc1f325e1b10ecba9074e
         with:
           cache: true
       - name: build
