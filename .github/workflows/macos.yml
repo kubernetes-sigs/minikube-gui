@@ -10,7 +10,7 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
-      - uses: jurplel/install-qt-action@f03f05556819ceb3781ee2f455ec44c339d683c0
+      - uses: jurplel/install-qt-action@c6c7281365daef91a238e1c2ddce4eaa94a2991d
         with:
           cache: true
       - name: build
