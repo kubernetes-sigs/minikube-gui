@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
-      - uses: jurplel/install-qt-action@c6c7281365daef91a238e1c2ddce4eaa94a2991d
+      - uses: jurplel/install-qt-action@12aa0336e1e410b3c6dff5e0722547f7a37e8c60
         with:
           cache: true
       - name: cache linuxdeployqt
